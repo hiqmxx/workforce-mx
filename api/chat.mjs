@@ -64,7 +64,7 @@ export default async function handler(req, res) {
   const prompt = `${systemPrompt()}\n\nVisitante: ${message}`;
   const payload = {
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
-    generationConfig: { temperature: 0.4, maxOutputTokens: 700 },
+    generationConfig: { temperature: 0.4, maxOutputTokens: 2000 },
   };
 
   let reply = null;
