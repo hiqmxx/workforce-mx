@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html><html lang='es'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>WORKFORCE MX | Soluciones digitales</title><style>*{margin:0;padding:0;box-sizing:border-box} :root{--bg:#0a0e17;--card:#111827;--accent:#3b82f6;--accent2:#06b6d4;--text:#e2e8f0;--muted:#94a3b8;--border:#1e293b} body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden} @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}} @keyframes slideInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}} @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}} .fade-in{animation:fadeInUp 0.8s ease both} .fade-in-left{animation:slideInLeft 0.8s ease both} .card{transition:all .3s ease;border-radius:16px} .card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,0.3)} #wf-floating-btn{position:fixed;bottom:30px;right:30px;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;border:none;font-size:1.8rem;cursor:pointer;box-shadow:0 8px 20px rgba(59,130,246,0.5);z-index:999;transition:all .3s ease;display:flex;align-items:center;justify-content:center} #wf-floating-btn:hover{transform:scale(1.1);box-shadow:0 12px 30px rgba(59,130,246,0.7)} #wf-form-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,14,23,0.85);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center} #wf-form-modal.active{display:flex} .wf-form-content{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.6);animation:fadeInUp 0.3s ease} .wf-form-content h3{font-size:1.8rem;font-weight:800;margin-bottom:1.5rem;text-align:center;background:linear-gradient(135deg,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent} #wf-close-btn{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);font-size:1.8rem;cursor:pointer;transition:color .2s} #wf-close-btn:hover{color:var(--text)} #wf-contact-form{display:flex;flex-direction:column;gap:1rem} #wf-contact-form select,#wf-contact-form input,#wf-contact-form textarea{width:100%;padding:0.875rem 1rem;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.95rem;transition:border .2s} #wf-contact-form select:focus,#wf-contact-form input:focus,#wf-contact-form textarea:focus{outline:none;border-color:var(--accent)} #wf-contact-form textarea{resize:vertical;min-height:100px} #wf-contact-form button[type=submit]{padding:1rem;background:linear-gradient(135deg,#3b82f6,#2563eb);color:white;border:none;border-radius:10px;font-weight:600;font-size:1rem;cursor:pointer;transition:all .3s;margin-top:0.5rem} #wf-contact-form button[type=submit]:hover{background:linear-gradient(135deg,#2563eb,#1d4ed8);transform:translateY(-2px);box-shadow:0 8px 20px rgba(59,130,246,0.4)} .wf-error{color:#f87171;font-size:0.875rem;margin-top:-0.5rem} #wf-success-msg{display:none;text-align:center;padding:2rem} #wf-success-msg.active{display:block} #wf-success-msg h4{color:#10b981;font-size:1.5rem;margin-bottom:0.75rem;font-weight:700} #wf-success-msg p{color:var(--text);font-size:1rem}</style></head><body>
+<nav style='position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,14,23,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)'><div style='max-width:1280px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center'><div style='font-size:1.75rem;font-weight:900;background:linear-gradient(135deg,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent'>WORKFORCE MX</div><div style='display:flex;gap:2rem'><a href='#inicio' style='color:var(--text);text-decoration:none;font-weight:500'>Inicio</a><a href='#servicios' style='color:var(--text);text-decoration:none;font-weight:500'>Servicios</a><button onclick="wfmxOpenChat()" style="background:rgba(59,130,246,0.12);border:1px solid #3b82f6;color:#93c5fd;border-radius:999px;padding:.4rem 1rem;font-weight:600;font-size:.85rem;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:.4rem;transition:all .2s">&#128172; Chat</button><a href='#productos' style='color:var(--text);text-decoration:none;font-weight:500'>Productos</a><a href='#contacto' style='color:var(--text);text-decoration:none;font-weight:500'>Contacto</a></div></div></nav>
+<section id='inicio' style='min-height:100vh;background:radial-gradient(ellipse at top,#1e293b 0%,#0a0e17 60%,#020617 100%);color:white;text-align:center;padding:160px 2rem 100px;position:relative;overflow:hidden'><div style='position:absolute;top:0;left:0;right:0;bottom:0;background:url(data:image/svg+xml,%3Csvg width=60 height=60 viewBox=0 0 60 60 xmlns=http://www.w3.org/2000/svg%3E%3Cg fill=none fill-rule=evenodd%3E%3Cg fill=%233b82f6 fill-opacity=0.03%3E%3Ccircle cx=30 cy=30 r=4/%3E%3C/g%3E%3C/svg%3E);opacity:0.5'></div><div style='max-width:900px;margin:0 auto;position:relative;z-index:1'><div class='fade-in' style='display:inline-block;padding:0.5rem 1.5rem;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.4);border-radius:50px;color:#93c5fd;font-size:0.875rem;font-weight:600;margin-bottom:2rem'>🚀 Soluciones digitales</div><h1 class='fade-in' style='font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;margin-bottom:1.5rem;line-height:1.1'>¿Tienes una idea, un proyecto o un proceso que <span style='background:linear-gradient(135deg,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent'>quieres mejorar?</span></h1><p class='fade-in' style='font-size:1.25rem;color:#cbd5e1;margin-bottom:2.5rem;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.8'>En <strong>WorkForce MX</strong> desarrollamos soluciones tecnologicas y creativas adaptadas a tus necesidades.</p><div class='fade-in' style='display:flex;gap:1rem;justify-content:center;flex-wrap:wrap'><a href='https://wa.me/523329531372' style='display:inline-flex;align-items:center;gap:0.5rem;padding:1rem 2.5rem;background:linear-gradient(135deg,#3b82f6,#2563eb);color:white;text-decoration:none;border-radius:12px;font-weight:600;font-size:1rem;transition:all .3s'>💬 Cotizar Gratuita</a><a href='#servicios' style='display:inline-flex;align-items:center;gap:0.5rem;padding:1rem 2.5rem;background:rgba(255,255,255,0.05);color:white;text-decoration:none;border:1px solid var(--border);border-radius:12px;font-weight:600;font-size:1rem;transition:all .3s'>Ver Servicios</a></div></div></section>
+<section id='confianza' style='padding:80px 2rem;background:var(--bg)'><div style='max-width:1200px;margin:0 auto'><h2 class='fade-in' style='text-align:center;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;margin-bottom:3rem'>Nuestra <span style='background:linear-gradient(135deg,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent'>Confianza</span></h2><div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem'><div class='card fade-in-left' style='background:var(--card);padding:2rem;text-align:center;border:1px solid var(--border)'><div style='font-size:2.5rem;margin-bottom:1rem'>👥</div><div style='font-size:1.5rem;font-weight:700;color:var(--accent)'>+50</div><div style='color:var(--muted)'> clientes satisfechos</div></div><div class='card fade-in-left' style='background:var(--card);padding:2rem;text-align:center;border:1px solid var(--border)'><div style='font-size:2.5rem;margin-bottom:1rem'>✅</div><div style='font-size:1.5rem;font-weight:700;color:var(--accent2)'>+20</div><div style='color:var(--muted)'> proyectos entregados</div></div><div class='card fade-in-left' style='background:var(--card);padding:2rem;text-align:center;border:1px solid var(--border)'><div style='font-size:2.5rem;margin-bottom:1rem'>👀</div><div style='font-size:1.5rem;font-weight:700;color:var(--accent)'>7</div><div style='color:var(--muted)'> proyectos en seguimiento</div></div><div class='card fade-in-left' style='background:var(--card);padding:2rem;text-align:center;border:1px solid var(--border)'><div style='font-size:2.5rem;margin-bottom:1rem'>💬</div><div style='font-size:1.2rem;font-weight:700;color:var(--accent2)'>Soporte</div><div style='color:var(--muted);font-size:0.9rem'>WhatsApp directo</div></div></div></div></section>
+<section id='servicios' style='padding:80px 2rem;background:var(--card)'><div style='max-width:1200px;margin:0 auto'><h2 class='fade-in' style='text-align:center;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;margin-bottom:3rem'>Nuestros <span style='background:linear-gradient(135deg,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent'>Servicios</span></h2><div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem'><div class='card fade-in-left' style='background:var(--bg);padding:2rem;border:1px solid var(--border)'><div style='font-size:2rem;margin-bottom:1rem'>⚙️</div><h3 style='font-size:1.25rem;font-weight:700;margin-bottom:0.5rem'>Programación y automatización</h3><p style='color:var(--muted);font-size:0.9rem'>Python, Java, JavaScript, HTML, CSS, PHP, C++, C#, SQL y más.</p></div><div class='card fade-in-left' style='background:var(--bg);padding:2rem;border:1px solid var(--border)'><div style='font-size:2rem;margin-bottom:1rem'>💻</div><h3 style='font-size:1.25rem;font-weight:700;margin-bottom:0.5rem'>Desarrollo de software</h3><p style='color:var(--muted);font-size:0.9rem'>Aplicaciones a medida para resolver problemas reales.</p></div><div class='card fade-in-left' style='background:var(--bg);padding:2rem;border:1px solid var(--border)'><div style='font-size:2rem;margin-bottom:1rem'>🌐</div><h3 style='font-size:1.25rem;font-weight:700;margin-bottom:0.5rem'>Desarrollo y diseño web</h3><p style='color:var(--muted);font-size:0.9rem'>Sitios web profesionales, rápidos y con identidad.</p></div><div class='card fade-in-left' style='background:var(--bg);padding:2rem;border:1px solid var(--border)'><div style='font-size:2rem;margin-bottom:1rem'>📊</div><h3 style='font-size:1.25rem;font-weight:700;margin-bottom:0.5rem'>Datos y automatización</h3><p style='color:var(--muted);font-size:0.9rem'>Dashboards, reportes y flujos automatizados.</p></div><div class='card fade-in-left' style='background:var(--bg);padding:2rem;border:1px solid var(--border)'><div style='font-size:2rem;margin-bottom:1rem'>🎬</div><h3 style='font-size:1.25rem;font-weight:700;margin-bottom:0.5rem'>Edición de video</h3><p style='color:var(--muted);font-size:0.9rem'>Contenido para redes sociales, publicidad y branding.</p></div><div class='card fade-in-left' style='background:var(--bg);padding:2rem;border:1px solid var(--border)'><div style='font-size:2rem;margin-bottom:1rem'>📚</div><h3 style='font-size:1.25rem;font-weight:700;margin-bottom:0.5rem'>Cursos y asesorías</h3><p style='color:var(--muted);font-size:0.9rem'>Capacitación práctica en tecnología para tu equipo.</p></div></div></div></section>
+<section id='productos' style='padding:80px 2rem;background:var(--bg)'><div style='max-width:1200px;margin:0 auto'><h2 class='fade-in' style='text-align:center;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;margin-bottom:3rem'>Nuestros <span style='background:linear-gradient(135deg,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent'>productos digitales</span></h2><div style='display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem'><div class='card fade-in-left' style='background:var(--card);padding:2rem;border:1px solid var(--border);text-align:center'><div style='font-size:2.5rem;margin-bottom:1rem'>📈</div><h3 style='font-size:1.3rem;font-weight:700;margin-bottom:0.5rem'>Sistema Control Empresarial</h3><div style='font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:1rem'>$2,999 <span style='font-size:1rem;color:var(--muted)'>MXN</span></div><p style='color:var(--muted);font-size:0.9rem'>Control de ventas, gastos, inventario y KPIs. Todo en un solo dashboard.</p></div><div class='card fade-in-left' style='background:var(--card);padding:2rem;border:1px solid var(--border);text-align:center'><div style='font-size:2.5rem;margin-bottom:1rem'>🧮</div><h3 style='font-size:1.3rem;font-weight:700;margin-bottom:0.5rem'>Calculadora de Costos y Recetas</h3><div style='font-size:2rem;font-weight:900;color:var(--accent2);margin-bottom:1rem'>$1,499 <span style='font-size:1rem;color:var(--muted)'>MXN</span></div><p style='color:var(--muted);font-size:0.9rem'>Cálculo exacto de costos por receta y precio de venta sugerido.</p></div><div class='card fade-in-left' style='background:var(--card);padding:2rem;border:1px solid var(--border);text-align:center'><div style='font-size:2.5rem;margin-bottom:1rem'>📦</div><h3 style='font-size:1.3rem;font-weight:700;margin-bottom:0.5rem'>Sistema Inventario y Fiados</h3><div style='font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:1rem'>$1,999 <span style='font-size:1rem;color:var(--muted)'>MXN</span></div><p style='color:var(--muted);font-size:0.9rem'>Control de inventario, clientes con adeudo y seguimiento de fiados.</p></div></div></div></section>
+<section id='contacto' style='padding:80px 2rem;background:linear-gradient(135deg,#0f172a 0%,#020617 100%);color:white;text-align:center'><div style='max-width:700px;margin:0 auto'><h2 class='fade-in' style='font-size:clamp(2rem,4vw,3rem);font-weight:900;margin-bottom:1rem'>¿Necesitas una solución? ¿Quieres aprender? ¿Tienes un proyecto?</h2><p class='fade-in' style='font-size:1.25rem;color:#cbd5e1;margin-bottom:2.5rem'>Mándanos un mensaje y cuéntanos qué necesitas. Te respondemos el mismo día.</p><a href='https://wa.me/523329531372' style='display:inline-flex;align-items:center;gap:0.5rem;padding:1.125rem 3rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;text-decoration:none;border-radius:12px;font-weight:700;font-size:1.1rem;transition:all .3s'>💬 Hablemos por WhatsApp</a><p style='margin-top:2rem;font-size:0.9rem;color:#94a3b8'>WhatsApp: 3329531372</p><p style='margin-top:1rem;font-size:0.95rem;color:#cbd5e1'>✉️ admin@workforcemx.com</p><p style='margin-top:0.5rem;font-size:0.9rem;color:#94a3b8'>📞 +52 33 2953 1372</p></div></section>
+<footer style='background:#020617;color:#94a3b8;padding:3rem 2rem;text-align:center'><div style='max-width:1280px;margin:0 auto'><div style='font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem'>WORKFORCE MX</div><p style='margin-bottom:1rem'>Tecnología, creatividad y conocimiento para tus proyectos.</p><p style='margin-bottom:1rem;color:#cbd5e1'>✉️ admin@workforcemx.com | 📞 +52 33 2953 1372</p><p style='font-size:0.875rem'>#WorkForceMX #Programación #Automatización #Python #DesarrolloWeb #Tecnología #Cursos #Asesorías #EdiciónDeVideo #Software #DiseñoDigital</p></div></footer>
+
+<!-- Botón flotante -->
+<button id="wf-floating-btn" onclick="openWfForm()">💬</button>
+
+<!-- Modal del formulario -->
+<div id="wf-form-modal">
+  <div class="wf-form-content">
+    <button id="wf-close-btn" onclick="closeWfForm()">×</button>
+    <h3>Cuéntanos tu proyecto</h3>
+    <form id="wf-contact-form" action="https://formsubmit.co/admin@workforcemx.com" method="POST">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_template" value="table">
+      <select id="wf-type" name="tipo" required>
+        <option value="" disabled selected>Selecciona el tipo de proyecto</option>
+        <option value="App">App</option>
+        <option value="Excel">Excel</option>
+        <option value="Edición">Edición</option>
+        <option value="Publicidad">Publicidad</option>
+        <option value="Página Web">Página Web</option>
+        <option value="Otro">Otro</option>
+      </select>
+      <input type="text" id="wf-name" name="nombre" placeholder="Nombre" required>
+      <input type="tel" id="wf-whatsapp" name="whatsapp" placeholder="WhatsApp" required>
+      <input type="email" id="wf-email" name="correo" placeholder="Correo">
+      <textarea id="wf-desc" name="descripcion" placeholder="Descripción del proyecto" required></textarea>
+      <input type="hidden" name="_subject" value="Nuevo proyecto desde Workforce MX">
+      <input type="hidden" name="_replyto" value="">
+      <button type="submit">Enviar</button>
+      <div id="wf-form-errors"></div>
+    </form>
+    <div id="wf-success-msg">
+      <h4>¡Registro enviado!</h4>
+      <p>Tu registro está hecho. Espera respuesta.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+function openWfForm(){
+  document.getElementById('wf-form-modal').classList.add('active');
+  document.getElementById('wf-contact-form').style.display = 'flex';
+  document.getElementById('wf-success-msg').classList.remove('active');
+  document.getElementById('wf-form-errors').innerHTML = '';
+}
+
+function closeWfForm(){
+  document.getElementById('wf-form-modal').classList.remove('active');
+}
+
+document.getElementById('wf-form-modal').addEventListener('click', function(e){
+  if(e.target.id === 'wf-form-modal'){
+    closeWfForm();
+  }
+});
+
+document.getElementById('wf-contact-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  
+  var name = document.getElementById('wf-name').value.trim();
+  var whatsapp = document.getElementById('wf-whatsapp').value.trim();
+  var desc = document.getElementById('wf-desc').value.trim();
+  var errors = [];
+  
+  if(name === ''){
+    errors.push('El nombre es obligatorio');
+  }
+  if(whatsapp === ''){
+    errors.push('El WhatsApp es obligatorio');
+  }
+  if(desc === ''){
+    errors.push('La descripción del proyecto es obligatoria');
+  }
+  
+  var errorDiv = document.getElementById('wf-form-errors');
+  errorDiv.innerHTML = '';
+  
+  if(errors.length > 0){
+    errors.forEach(function(err){
+      var p = document.createElement('p');
+      p.className = 'wf-error';
+      p.textContent = err;
+      errorDiv.appendChild(p);
+    });
+    return;
+  }
+  
+  var formData = new FormData(this);
+  var submitBtn = this.querySelector('button[type=submit]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Enviando...';
+  
+  fetch(this.action, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      'Accept': 'application/json'
+    }
+  }).then(function(response){
+    if(response.ok){
+      document.getElementById('wf-contact-form').style.display = 'none';
+      document.getElementById('wf-success-msg').classList.add('active');
+      setTimeout(function(){
+        closeWfForm();
+      }, 3000);
+    }else{
+      errorDiv.innerHTML = '<p class="wf-error">Hubo un error al enviar. Por favor intenta de nuevo.</p>';
+    }
+  }).catch(function(){
+    errorDiv.innerHTML = '<p class="wf-error">Hubo un error al enviar. Por favor intenta de nuevo.</p>';
+  }).finally(function(){
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Enviar';
+  });
+});
+</script>
+
+<script src="assets/js/chat.js"></script>
+</body></html>

@@ -1,0 +1,35 @@
+{
+  "_instrucciones": "EDITA ESTE ARCHIVO: pon aqui tus datos reales. Se puede cambiar cuando quieras, sin tocar codigo.",
+  "negocio": {
+    "nombre": "Workforce MX",
+    "descripcion": "Soluciones digitales en Mexico: programacion y automatizacion, desarrollo de software y web, datos y dashboards, edicion de video y cursos/asesorias para equipos.",
+    "contacto": {
+      "whatsapp": "+52 33 2953 1372",
+      "correo": "admin@workforcemx.com",
+      "horario": "EDITA con tus dias y horas reales (p. ej. Lunes a sabado 9:00-19:00)",
+      "ubicacion": "Mexico (EDITA con tu ciudad real)"
+    }
+  },
+  "servicios": [
+    { "nombre": "Programacion y automatizacion", "descripcion": "Python, Java, JavaScript, HTML, CSS, PHP, C++, C#, SQL y mas.", "precio": "Cotizacion por WhatsApp segun tu caso" },
+    { "nombre": "Desarrollo de software", "descripcion": "Aplicaciones a medida para resolver problemas reales.", "precio": "Cotizacion por WhatsApp segun tu caso" },
+    { "nombre": "Desarrollo y diseno web", "descripcion": "Sitios web profesionales, rapidos y con identidad.", "precio": "Cotizacion por WhatsApp segun tu caso" },
+    { "nombre": "Datos y automatizacion", "descripcion": "Dashboards, reportes y flujos automatizados.", "precio": "Cotizacion por WhatsApp segun tu caso" },
+    { "nombre": "Edicion de video", "descripcion": "Contenido para redes sociales, publicidad y branding.", "precio": "Cotizacion por WhatsApp segun tu caso" },
+    { "nombre": "Cursos y asesorias", "descripcion": "Capacitacion practica en tecnologia para tu equipo.", "precio": "Cotizacion por WhatsApp segun tu caso" },
+    { "nombre": "Excel (cursos y soluciones)", "descripcion": "Plantillas, macros, dashboards y capacitacion en Excel avanzado.", "precio": "Cotizacion por WhatsApp segun tu caso" }
+  ],
+  "preguntas_frecuentes": [
+    { "pregunta": "¿Que servicios ofrecen?", "respuesta": "Programacion y automatizacion, desarrollo de software y web, datos y dashboards, edicion de video, cursos y asesorias para equipos, y Excel avanzado." },
+    { "pregunta": "¿Como cotizo?", "respuesta": "Por WhatsApp al +52 33 2953 1372 o escribiendo a admin@workforcemx.com; te responde el mismo dia." },
+    { "pregunta": "¿Cuanto cuesta una pagina web?", "respuesta": "El precio depende del alcance (diseno, contenido, formularios, tienda, etc.). Te cotizamos por WhatsApp con tus requerimientos; sin compromiso." },
+    { "pregunta": "¿Dan cursos de Excel?", "respuesta": "Si. Capacitacion practica en Excel para tu equipo (plantillas, macros, dashboards); cotizacion personalizada por WhatsApp." },
+    { "pregunta": "¿Entregan portafolio de trabajos?", "respuesta": "Si, puedes ver ejemplos en la seccion de portafolio de la pagina." },
+    { "pregunta": "¿Donde estan?", "respuesta": "Mexico (EDITA con tu ubicacion exacta; por el area code 33 es Guadalajara/GDL)." }
+  ],
+  "tono": {
+    "estilo": "Tuteo, cercano y profesional, como un buen vendedor mexicano. Respuestas cortas.",
+    "si_responde": "Dudas de servicios, precios, horario, ubicacion, inscripcion y contacto. Agradece y pide WhatsApp si piden cotizacion/visita.",
+    "no_responde": "Temas ajenos a Workforce MX, politica, otros negocios, cotizaciones cerradas o compromisos de fecha/precio fuera de lo publicado. Nunca inventa precios que no esten en este archivo."
+  }
+}
