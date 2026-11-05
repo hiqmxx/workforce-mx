@@ -92,5 +92,6 @@ export default async function handler(req, res) {
     return;
   }
 
-  res.status(200).json({ reply });
+  const cleanReply = (reply || '').replace(/Â/g, '').trim();
+  res.status(200).json({ reply: cleanReply });
 }
