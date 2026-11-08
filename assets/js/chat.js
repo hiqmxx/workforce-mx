@@ -1,6 +1,7 @@
-﻿/* Workforce MX â€” chatbot widget (v2, mÃ¡s visible: botÃ³n grande + chip + pulso) */
+﻿/* Workforce MX — chatbot widget (v2, más visible: botón grande + chip + pulso + lead capture) */
 (function () {
   var API = "/api/chat";
+  var LEADS_API = "/api/leads";
   var ACCENT = "#3b82f6";
   var ACCENT2 = "#06b6d4";
   var BG = "#0a0e17";
@@ -38,11 +39,13 @@
     ".wfmx-bot{background:#1e293b;color:" + TEXT + ";border:1px solid " + BORDER + ";border-bottom-left-radius:4px;align-self:flex-start}" +
     ".wfmx-user{background:" + ACCENT + ";color:#fff;border-bottom-right-radius:4px;align-self:flex-end}" +
     ".wfmx-typing{opacity:.75;font-style:italic;color:" + MUTED + "}" +
-    "#wfmx-foot{padding:.65rem;border-top:1px solid " + BORDER + ";display:flex;gap:.5rem;background:" + CARD + "}" +
+    "#wfmx-foot{padding:.65rem;border-top:1px solid " + BORDER + ";display:flex;flex-direction:column;gap:.4rem;background:" + CARD + "}" +
+    "#wfmx-input-row{display:flex;gap:.5rem}" +
     "#wfmx-input{flex:1;background:" + BG + ";border:1px solid " + BORDER + ";border-radius:10px;padding:.65rem .75rem;color:" + TEXT + ";font-size:.9rem;outline:none}" +
     "#wfmx-input:focus{border-color:" + ACCENT + "}" +
     "#wfmx-send{background:linear-gradient(135deg," + ACCENT + "," + ACCENT2 + ");color:#fff;border:none;border-radius:10px;padding:.65rem .9rem;cursor:pointer;font-weight:700}" +
     "#wfmx-send:disabled{opacity:.5;cursor:default}" +
+    "#wfmx-privacy{font-size:.65rem;color:" + MUTED + ";text-align:center;line-height:1.3}" +
     "@media (max-width:480px){#wfmx-panel{right:8px;bottom:96px}#wfmx-btn{right:14px;bottom:16px;width:64px;height:64px;font-size:1.7rem}#wfmx-hint{right:92px;bottom:32px;font-size:.75rem}}";
   document.head.appendChild(css);
 
@@ -65,13 +68,17 @@
     '<div><div class="wfmx-title">Workforce MX</div><div class="wfmx-sub"><span class="wfmx-dot"></span>En linea &middot; responde al instante</div></div>' +
     '<button id="wfmx-close" aria-label="Cerrar chat">&times;</button></div>' +
     '<div id="wfmx-body"></div>' +
-    '<div id="wfmx-foot"><input id="wfmx-input" type="text" placeholder="Escribe tu pregunta..." autocomplete="off" maxlength="500" />' +
-    '<button id="wfmx-send">Enviar</button></div>';
+    '<div id="wfmx-foot">' +
+    '  <div id="wfmx-input-row"><input id="wfmx-input" type="text" placeholder="Escribe tu pregunta..." autocomplete="off" maxlength="500" />' +
+    '  <button id="wfmx-send">Enviar</button></div>' +
+    '  <p id="wfmx-privacy" style="display:none">Al compartir tu WhatsApp/nombre aceptas que te contactemos para cotizar.</p>' +
+    '</div>';
   document.body.appendChild(panel);
 
   var bodyEl = panel.querySelector("#wfmx-body");
   var inputEl = panel.querySelector("#wfmx-input");
   var sendBtn = panel.querySelector("#wfmx-send");
+  var privacyEl = panel.querySelector("#wfmx-privacy");
 
   function addMsg(text, who) {
     var d = document.createElement("div");
@@ -83,7 +90,7 @@
   }
 
   function greet() {
-    addMsg("Hola, soy el asistente de Workforce MX. Â¿Que necesitas? Puedo informarte sobre servicios, precios y como cotizar.", "bot");
+    addMsg("Hola, soy el asistente de Workforce MX. ¿Que necesitas? Puedo informarte sobre servicios, precios y como cotizar.", "bot");
   }
 
   function openPanel() {
@@ -101,6 +108,45 @@
 
   window.wfmxOpenChat = openPanel;
 
+  function extractPhone(text) {
+    var cleaned = text.replace(/[^\d+]/g, '');
+    var match = cleaned.match(/(\+?52\s*)?(\d{10})/);
+    if (match) return match[2];
+    var generic = text.match(/\b\d{10}\b/);
+    return generic ? generic[0] : null;
+  }
+
+  function hashKey(whatsapp, mensaje) {
+    var str = whatsapp + "|" + mensaje.slice(0, 200);
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+      hash = ((hash << 5) - hash) + str.charCodeAt(i);
+      hash |= 0;
+    }
+    return hash.toString(16);
+  }
+
+  function sendLead(whatsapp, mensaje) {
+    var key = hashKey(whatsapp, mensaje);
+    var sent = sessionStorage.getItem("wfmx_lead_sent");
+    if (sent === key) return Promise.resolve();
+    sessionStorage.setItem("wfmx_lead_sent", key);
+
+    var payload = {
+      nombre: "(chat)",
+      whatsapp: whatsapp,
+      mensaje: mensaje.slice(0, 500),
+      origen: "chat",
+      consentimiento: true
+    };
+
+    return fetch(LEADS_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).catch(function() {}); // never block chat
+  }
+
   async function send() {
     var text = inputEl.value.trim();
     if (!text) return;
@@ -109,6 +155,16 @@
     sendBtn.disabled = true;
     var typing = addMsg("escribiendo...", "bot");
     typing.classList.add("wfmx-typing");
+
+    var phone = extractPhone(text);
+    if (phone) {
+      sendLead(phone, text);
+      if (!privacyEl.dataset.shown) {
+        privacyEl.style.display = "block";
+        privacyEl.dataset.shown = "1";
+      }
+    }
+
     try {
       var res = await fetch(API, {
         method: "POST",
