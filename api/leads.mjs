@@ -1,9 +1,4 @@
 ﻿export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.status(405).json({ error: 'Método no permitido' });
-    return;
-  }
-
   const origin = req.headers.origin || '';
   const allowedOrigin = process.env.ALLOWED_ORIGIN || '*';
   const corsOrigin = allowedOrigin === '*' ? '*' : (origin === allowedOrigin ? origin : allowedOrigin);
@@ -13,6 +8,11 @@
 
   if (req.method === 'OPTIONS') {
     res.status(204).end();
+    return;
+  }
+
+  if (req.method !== 'POST') {
+    res.status(405).json({ error: 'Método no permitido' });
     return;
   }
 

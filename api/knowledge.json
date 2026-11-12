@@ -6,8 +6,8 @@
     "contacto": {
       "whatsapp": "+52 33 2953 1372",
       "correo": "admin@workforcemx.com",
-      "horario": "EDITA con tus dias y horas reales (p. ej. Lunes a sabado 9:00-19:00)",
-      "ubicacion": "Mexico (EDITA con tu ciudad real)"
+      "horario": "Escríbenos por WhatsApp y te confirmamos el horario de atención",
+      "ubicacion": "Atendemos en línea a todo México (te compartimos la ubicación exacta por WhatsApp)"
     }
   },
   "servicios": [
@@ -66,11 +66,11 @@
     },
     {
       "pregunta": "¿Entregan portafolio de trabajos?",
-      "respuesta": "Si, puedes ver ejemplos en la seccion de portafolio de la pagina."
+      "respuesta": "Sí, te compartimos ejemplos de trabajos por WhatsApp, sin compromiso."
     },
     {
       "pregunta": "¿Donde estan?",
-      "respuesta": "Mexico (EDITA con tu ubicacion exacta; por el area code 33 es Guadalajara/GDL)."
+      "respuesta": "Atendemos en línea a todo México. Te compartimos la ubicación exacta por WhatsApp al +52 33 2953 1372."
     }
   ],
   "tono": {
