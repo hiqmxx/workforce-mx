@@ -47,6 +47,38 @@
       "precio": "Cotizacion por WhatsApp segun tu caso"
     }
   ],
+  "productos": [
+    {
+      "nombre": "Sistema Control Empresarial",
+      "descripcion": "Ventas, gastos, inventario y clientes en un solo panel, con respaldos y reportes.",
+      "precio": "Cotización por WhatsApp"
+    },
+    {
+      "nombre": "Calculadora de Costos y Recetas",
+      "descripcion": "Calcula el costo real de cada producto y el precio al que conviene venderlo.",
+      "precio": "Cotización por WhatsApp"
+    },
+    {
+      "nombre": "Inventario y Fiados",
+      "descripcion": "Existencias, entradas y salidas, y control de lo que deben los clientes.",
+      "precio": "Cotización por WhatsApp"
+    },
+    {
+      "nombre": "Dashboards personalizados",
+      "descripcion": "Tableros de ventas, gastos y metas para decidir con datos.",
+      "precio": "Cotización por WhatsApp"
+    },
+    {
+      "nombre": "Kits por profesión",
+      "descripcion": "Plantillas y herramientas listas para cada oficio.",
+      "precio": "Cotización por WhatsApp"
+    },
+    {
+      "nombre": "Arquitectura de IA",
+      "descripcion": "Asistentes y automatizaciones con IA para atender y organizar el negocio.",
+      "precio": "Cotización por WhatsApp"
+    }
+  ],
   "preguntas_frecuentes": [
     {
       "pregunta": "¿Que servicios ofrecen?",
