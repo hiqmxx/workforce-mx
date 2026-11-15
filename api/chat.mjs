@@ -1,4 +1,4 @@
-import fs from 'node:fs';
+﻿import fs from 'node:fs';
 
 const knowledge = JSON.parse(fs.readFileSync(new URL('./knowledge.json', import.meta.url)));
 const RL = new Map(); // per-IP rate limit (best-effort, per Lambda instance)
@@ -24,6 +24,14 @@ function systemPrompt() {
     `CONTACTO: WhatsApp ${c.whatsapp} | Correo ${c.correo} | Horario ${c.horario} | Ubicación ${c.ubicacion}\n\n` +
     `TONO: ${k.tono.estilo}. Responde: ${k.tono.si_responde}. NO respondas: ${k.tono.no_responde}.`
   );
+}
+
+function fixMojibake(text) {
+  try {
+    const fixed = Buffer.from(text, 'latin1').toString('utf8');
+    if (!fixed.includes('\uFFFD')) return fixed;
+  } catch {}
+  return text.replace(/Â/g, '').trim();
 }
 
 export default async function handler(req, res) {
@@ -94,6 +102,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  const cleanReply = (reply || '').replace(/Â/g, '').trim();
+  const cleanReply = fixMojibake(reply || '');
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
   res.status(200).json({ reply: cleanReply });
 }
