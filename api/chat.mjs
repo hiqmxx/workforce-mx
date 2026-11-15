@@ -34,6 +34,16 @@ function fixMojibake(text) {
   return text.replace(/Â/g, '').trim();
 }
 
+const keys = [];
+for (let i = 1; i <= 3; i++) {
+  const k = process.env[`GEMINI_API_KEY_${i}`];
+  if (k && !keys.includes(k)) keys.push(k);
+}
+const legacyKey = process.env.GEMINI_API_KEY;
+if (legacyKey && !keys.includes(legacyKey)) keys.push(legacyKey);
+
+let currentKeyIndex = 0;
+
 export default async function handler(req, res) {
   // solo POST
   if (req.method !== 'POST') {
@@ -63,9 +73,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  // Llave en variable de entorno (nunca en el repo)
-  const key = process.env.GEMINI_API_KEY;
-  if (!key) {
+  if (keys.length === 0) {
     res.status(500).json({ error: 'Servidor mal configurado: falta GEMINI_API_KEY' });
     return;
   }
@@ -78,29 +86,42 @@ export default async function handler(req, res) {
   };
 
   let reply = null;
-  for (const model of models) {
-    try {
-      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-goog-api-key': key,
-        },
-        body: JSON.stringify(payload),
-      });
-      if (!r.ok) continue; // 503/429/otros: intentar con el siguiente modelo
-      const data = await r.json();
-      reply = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? null;
-      if (reply) break;
-    } catch {
-      continue; // error de red: intentar con el siguiente modelo
+  let workingKeyIndex = currentKeyIndex;
+  const keyCount = keys.length;
+
+  for (let offset = 0; offset < keyCount; offset++) {
+    const keyIndex = (currentKeyIndex + offset) % keyCount;
+    const key = keys[keyIndex];
+    for (const model of models) {
+      try {
+        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': key,
+          },
+          body: JSON.stringify(payload),
+        });
+        if (!r.ok) continue;
+        const data = await r.json();
+        reply = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? null;
+        if (reply) {
+          workingKeyIndex = keyIndex;
+          break;
+        }
+      } catch {
+        continue;
+      }
     }
+    if (reply) break;
   }
 
   if (!reply) {
     res.status(502).json({ error: 'El asistente no está disponible ahora. Intenta de nuevo o escríbenos por WhatsApp.' });
     return;
   }
+
+  currentKeyIndex = workingKeyIndex;
 
   const cleanReply = fixMojibake(reply || '');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
