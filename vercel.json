@@ -1,3 +1,6 @@
-﻿{
-  "cleanUrls": true
+{
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/edu", "destination": "/edu.html", "statusCode": 301 }
+  ]
 }
