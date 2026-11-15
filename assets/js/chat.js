@@ -1,6 +1,7 @@
-ï»¿/* Workforce MX â€” chatbot widget (v2, mÃ¡s visible: botÃ³n grande + chip + pulso + lead capture) */
+/* Workforce MX — chatbot widget (v2, más visible: botón grande + chip + pulso + lead capture) */
 (function () {
-  var API = "/api/chat";
+  var scriptEl = document.currentScript;
+  var API = (scriptEl && scriptEl.dataset.apiUrl) || "/api/chat";
   var ACCENT = "#3b82f6";
   var ACCENT2 = "#06b6d4";
   var BG = "#0a0e17";
@@ -63,7 +64,7 @@
   panel.setAttribute("role", "dialog");
   panel.innerHTML =
     '<div id="wfmx-head"><div class="wfmx-avatar">WF</div>' +
-    '<div><div class="wfmx-title">Workforce MX</div><div class="wfmx-sub"><span class="wfmx-dot"></span>En lÃ­nea &middot; responde al instante</div></div>' +
+    '<div><div class="wfmx-title">Workforce MX</div><div class="wfmx-sub"><span class="wfmx-dot"></span>En línea &middot; responde al instante</div></div>' +
     '<button id="wfmx-close" aria-label="Cerrar chat">&times;</button></div>' +
     '<div id="wfmx-body"></div>' +
     '<div id="wfmx-foot">' +
@@ -86,7 +87,7 @@
   }
 
   function greet() {
-    addMsg("Hola, soy el asistente de Workforce MX. Â¿QuÃ© necesitas? Te puedo orientar sobre servicios. Para cotizar, escrÃ­benos directo por WhatsApp al 3329531372 o al correo admin@workforcemx.com.", "bot");
+    addMsg("Hola, soy el asistente de Workforce MX. ¿Qué necesitas? Te puedo orientar sobre servicios. Para cotizar, escríbenos directo por WhatsApp al 3329531372 o al correo admin@workforcemx.com.", "bot");
   }
 
   function openPanel() {
@@ -149,3 +150,4 @@
     if (!bodyEl.dataset.greeted) hint.classList.add("show");
   }, 1500);
 })();
+

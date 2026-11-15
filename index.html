@@ -1,4 +1,4 @@
-?<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -16,6 +16,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WORKFORCE MX | Automatizo tu PC">
 <meta name="twitter:description" content="Soluciones digitales en México: scripts y bots, optimización de sistemas, programas a medida y desarrollo web.">
+<link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+<meta property="og:image" content="assets/logo.jpeg">
+<meta property="og:image:width" content="2752">
+<meta property="og:image:height" content="1536">
+<meta name="twitter:image" content="assets/logo.jpeg">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#020617;--bg2:#0a0e17;--card:#0f172a;--card2:#111827;--accent:#3b82f6;--neon:#06b6d4;--cyan:#22d3ee;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;--glow:0 0 20px rgba(6,182,212,.35)}
@@ -154,7 +159,10 @@ function closeWfForm(){document.getElementById('wf-form-modal').classList.remove
 document.getElementById('wf-form-modal').addEventListener('click',function(e){if(e.target.id==='wf-form-modal')closeWfForm()});
 document.getElementById('wf-contact-form').addEventListener('submit',function(e){e.preventDefault();var name=this.nombre.value.trim(),wp=this.whatsapp.value.trim(),desc=this.descripcion.value.trim(),err=[];if(!name)err.push('El nombre es obligatorio');if(!wp)err.push('El WhatsApp es obligatorio');if(!desc)err.push('La descripción del proyecto es obligatoria');var d=document.getElementById('wf-form-errors');d.innerHTML='';if(err.length){err.forEach(function(x){var p=document.createElement('p');p.className='wf-error';p.textContent=x;d.appendChild(p)});return}var btn=this.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Enviando...';fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('wf-contact-form').style.display='none';document.getElementById('wf-success-msg').classList.add('active');setTimeout(closeWfForm,3000)}else{d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}}).catch(function(){d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}).finally(function(){btn.disabled=false;btn.textContent='Enviar'})});
 </script>
-<script src="assets/js/chat.js"></script>
+<script src="assets/js/chat.js" data-api-url="/api/chat"></script>
 </body>
 </html>
+
+
+
 
