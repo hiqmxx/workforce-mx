@@ -1,5 +1,3 @@
 ﻿{
-  "rewrites": [
-    { "source": "/edu", "destination": "/edu.html" }
-  ]
+  "cleanUrls": true
 }
