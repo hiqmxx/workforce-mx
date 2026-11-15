@@ -1,0 +1,304 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboards de ventas | WorkForce MX</title>
+<meta name="description" content="Qué es un dashboard, KPIs de ventas, gastos, metas, visualizaciones, tomar decisiones con datos, herramientas simples. Convierte datos en decisiones.">
+<meta name="theme-color" content="#020617">
+<link rel="canonical" href="https://www.workforcemx.com/edu-leccion-dashboard">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="WorkForce MX">
+<meta property="og:title" content="Dashboards de ventas">
+<meta property="og:description" content="Crea tableros claros para decidir con datos: ventas, gastos y metas.">
+<meta property="og:url" content="https://www.workforcemx.com/edu-leccion-dashboard">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dashboards de ventas | WorkForce MX">
+<meta name="twitter:description" content="Aprende a crear dashboards de ventas para tomar mejores decisiones.">
+<link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020617;--bg2:#0a0e17;--card:#0f172a;--card2:#111827;--accent:#3b82f6;--neon:#06b6d4;--cyan:#22d3ee;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;--glow:0 0 20px rgba(6,182,212,.35)}
+body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(ellipse at top,#0b1226 0%,#020617 65%);color:var(--text);overflow-x:hidden}
+.logo-text{font-size:1.6rem;font-weight:900;letter-spacing:.08em}
+.logo-text span{color:var(--neon)}
+.glow{box-shadow:var(--glow);border:1px solid var(--border)}
+.btn-neon{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.2rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;text-decoration:none;border-radius:12px;font-weight:700;box-shadow:0 0 24px rgba(59,130,246,.5)}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.2rem;background:rgba(255,255,255,.05);color:white;text-decoration:none;border:1px solid var(--border);border-radius:12px;font-weight:600}
+.lang-badge{padding:.7rem .4rem;border:1px solid var(--border);border-radius:10px;text-align:center;background:rgba(15,23,42,.8);font-size:.82rem;font-weight:600}
+.card{border-radius:16px;transition:all .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 0 30px rgba(6,182,212,.35)}
+.svc-hex{width:56px;height:56px;margin:0 auto 1rem;border:2px solid var(--neon);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 0 16px rgba(6,182,212,.4)}
+#wf-form-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,.85);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center}
+#wf-form-modal.active{display:flex}
+.wf-form-content{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative}
+#wf-contact-form{display:none;flex-direction:column;gap:1rem}
+#wf-contact-form select,#wf-contact-form input,#wf-contact-form textarea{width:100%;padding:.875rem 1rem;background:#0a0e17;border:1px solid var(--border);border-radius:10px;color:var(--text)}
+#wf-success-msg{display:none;text-align:center;padding:2rem}
+#wf-success-msg.active{display:block}
+.wf-error{color:#f87171;font-size:.875rem}
+.lesson-content h2{font-size:1.5rem;font-weight:800;color:var(--neon);margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.lesson-content h3{font-size:1.2rem;font-weight:700;color:var(--text);margin:1.5rem 0 .75rem}
+.lesson-content p{line-height:1.8;color:var(--muted);margin-bottom:1rem}
+.lesson-content ul{margin:1rem 0 1rem 1.5rem;line-height:1.8;color:var(--muted)}
+.lesson-content li{margin-bottom:.5rem}
+.lesson-content code{background:rgba(59,130,246,.15);padding:.2rem .4rem;border-radius:6px;font-family:'JetBrains Mono',monospace;color:#93c5fd}
+.lesson-content pre{background:#0a0e17;border:1px solid var(--border);border-radius:10px;padding:1rem;overflow-x:auto;margin:1rem 0}
+.lesson-content pre code{background:none;padding:0;color:var(--text)}
+.highlight-box{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:10px;padding:1.5rem;margin:1.5rem 0}
+.highlight-box h4{color:var(--neon);font-weight:800;margin-bottom:.75rem}
+.kpi-card{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:1.25rem;margin:1rem 0}
+.kpi-card h4{color:var(--accent);margin-bottom:.5rem}
+.tool-card{background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.2);border-radius:10px;padding:1.25rem;margin:1rem 0}
+.tool-card h4{color:var(--neon);margin-bottom:.5rem}
+.btn-back{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.75rem;background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:10px;font-weight:600;text-decoration:none;transition:all .2s}
+.btn-back:hover{background:rgba(59,130,246,.3);color:#fff;border-color:#60a5fa}
+@media(max-width:768px){.lesson-content h2{font-size:1.3rem}.lesson-content h3{font-size:1.1rem}}
+</style>
+</head>
+<body>
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,6,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)">
+  <div style="max-width:1280px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center">
+    <div class="logo-text">WORKFORCE <span>MX</span></div>
+    <div style="display:flex;gap:1.5rem;align-items:center">
+      <a href="/" style="color:var(--text);text-decoration:none">Inicio</a>
+      <a href="#servicios" style="color:var(--text);text-decoration:none">Servicios</a>
+      <a href="#productos" style="color:var(--text);text-decoration:none">Productos</a>
+      <a href="/edu" style="color:var(--neon);text-decoration:none;font-weight:700">Educación</a>
+      <button onclick="wfmxOpenChat()" style="background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:999px;padding:.4rem 1rem;font-weight:600;cursor:pointer">💬 Chat</button>
+      <a href="#contacto" style="color:var(--text);text-decoration:none">Contacto</a>
+    </div>
+  </div>
+</nav>
+
+<header style="min-height:50vh;text-align:center;padding:140px 2rem 60px;position:relative">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="display:inline-block;padding:.5rem 1.5rem;border:1px solid rgba(6,182,212,.5);border-radius:50px;color:#67e8f9;font-size:.875rem;font-weight:600;margin-bottom:1.5rem">📈 Datos</div>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;line-height:1.1">Dashboards de<br><span style="color:var(--neon);text-shadow:0 0 30px rgba(6,182,212,.8)">ventas</span></h1>
+    <p style="font-size:1.2rem;color:#cbd5e1;margin-top:1.5rem;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.7">Deja de adivinar. Un buen dashboard te dice qué pasa, por qué y qué hacer. Convierte tus datos en decisiones rentables.</p>
+  </div>
+</header>
+
+<main style="padding:40px 2rem 80px">
+  <div style="max-width:900px;margin:0 auto">
+    <article class="lesson-content">
+      <section>
+        <h2>📊 Qué es un dashboard (y qué NO es)</h2>
+        <p>Un <strong>dashboard</strong> es una pantalla única que muestra tus métricas clave (KPIs) de forma visual, actualizada y accionable. <strong>No es un reporte de 20 páginas</strong>, no es un Excel con 50 pestañas, no es "datos bonitos sin contexto".</p>
+        <ul>
+          <li><strong>Una vista</strong>: todo cabe en una pantalla (scroll mínimo).</li>
+          <li><strong>Tiempo real / cerca</strong>: datos frescos (hoy, esta semana, mes actual).</li>
+          <li><strong>Accionable</strong>: cada número responde a \"¿qué hago con esto?\".</li>
+          <li><strong>Comparativo</strong>: actual vs meta, vs mes anterior, vs año anterior.</li>
+        </ul>
+        <div class="highlight-box">
+          <h4>Analogía del coche</h4>
+          <p>Tu dashboard = tablero del coche. Velocímetro (ventas), nivel gasolina (caja), temperatura (margen), check engine (alertas). No necesitas saber RPM del motor, inyección, presión aceite. Solo lo que te evita accidente o multa.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🎯 KPIs esenciales de ventas (los que importan)</h2>
+        <p>No midas todo. Mide lo que mueve la aguja. Estos 6 cubren 90% de necesidades PyME.</p>
+        <div class="kpi-card">
+          <h4>1. Ventas netas (Revenue) — \"¿Cuánto entró?\"</h4>
+          <p>Facturado - devoluciones - descuentos. Meta mensual vs real. Tendencia 12 meses. <strong>Desglose:</strong> por vendedor, canal, producto, región.</p>
+        </div>
+        <div class="kpi-card">
+          <h4>2. Ticket promedio — \"¿Cuánto gasta cada cliente?\"</h4>
+          <p>Ventas netas / # transacciones. Subirlo = más rentable sin más clientes. Cruzventa, upsell, paquetes.</p>
+        </div>
+        <div class="kpi-card">
+          <h4>3. Tasa de conversión — \"¿Cuántos prospectos cierran?\"</h4>
+          <p>Ventas ganadas / Oportunidades creadas. Por vendedor, canal, etapa. Baja = problema en propuesta, precio, seguimiento, calidad lead.</p>
+        </div>
+        <div class="kpi-card">
+          <h4>4. Ciclo de venta (días) — \"¿Qué tan rápido cerramos?\"</h4>
+          <p>Fecha primer contacto → fecha cierre. Promedio y mediana. Largo = capital de trabajo atrapado, riesgo de perder deal.</p>
+        </div>
+        <div class="kpi-card">
+          <h4>5. CAC (Costo de adquisición cliente) — \"¿Cuánto cuesta traer uno?\"</h4>
+          <p>Gasto marketing+ventas mes / clientes nuevos mes. Debe ser < LTV (valor vida cliente). Si CAC > LTV = pierdes dinero por cliente.</p>
+        </div>
+        <div class="kpi-card">
+          <h4>6. Margen de contribución — \"¿Qué queda tras costos variables?\"</h4>
+          <p>(Ventas - Costos variables) / Ventas %. Paga fijos y genera utilidad. Por producto/cliente/canal te dice dónde enfocar.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>💰 KPIs de gastos y salud financiera</h2>
+        <p>Vender mucho sin controlar gasto = trabajar gratis. Estos 4 te cuidan la caja.</p>
+        <div class="kpi-card">
+          <h4>Gastos operativos totales (OpEx)</h4>
+          <p>Nómina, renta, servicios, marketing, software, viajes. % vs ventas. Tendencia mes a mes.</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Flujo de caja (Cash Flow)</h4>
+          <p>Entradas reales (cobros) - Salidas reales (pagos). No facturación, <strong>cobro</strong>. Proyección 4-8 semanas.</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Cuentas por cobrar (Días promedio / Antigüedad)</h4>
+          <p>¿Cuánto tardan en pagarte? > 45-60 días = alerta. Top 5 deudores. % vencido > 90 días.</p>
+        </div>
+        <div class="kpi-card">
+          <h4>Utilidad neta / EBITDA</h4>
+          <p>Lo que realmente ganas. Última línea. Si ventas suben pero utilidad baja = revisa costos/margen.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🎯 Metas y visualizaciones que funcionan</h2>
+        <h3>Tipos de gráficos — cuándo usar cada uno</h3>
+        <table style="width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem">
+          <thead>
+            <tr style="background:rgba(6,182,212,.1);border-bottom:1px solid var(--border)">
+              <th style="padding:.75rem;text-align:left;color:var(--neon)">Gráfico</th>
+              <th style="padding:.75rem;text-align:left;color:var(--neon)">Para qué</th>
+              <th style="padding:.75rem;text-align:left;color:var(--neon)">Ejemplo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><strong>Línea</strong></td><td style="padding:.75rem">Tendencia temporal</td><td style="padding:.75rem">Ventas últimos 12 meses</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><strong>Barras / Columnas</strong></td><td style="padding:.75rem">Comparar categorías</td><td style="padding:.75rem">Ventas por vendedor / producto / canal</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><strong>Barras apiladas</strong></td><td style="padding:.75rem">Composición + total</td><td style="padding:.75rem">Ventas por canal (online/tienda/mayoreo) mes a mes</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><strong>KPI Card / Número grande</strong></td><td style="padding:.75rem">Métrica única crítica</td><td style="padding:.75rem">Ventas mes actual vs meta (1.2M / 1.5M = 80%)</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><strong>Gauge / Medidor</strong></td><td style="padding:.75rem">Progreso vs meta</td><td style="padding:.75rem">% cumplimiento cuota vendedor</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><strong>Dispersión (Scatter)</strong></td><td style="padding:.75rem">Relación 2 variables</td><td style="padding:.75rem">Ticket promedio vs frecuencia compra por cliente</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><strong>Mapa de calor</strong></td><td style="padding:.75rem">Intensidad en matriz</td><td style="padding:.75rem">Ventas por día semana x hora (cuándo vender más)</td></tr>
+            <tr><td style="padding:.75rem"><strong>Tabla con semáforo</strong></td><td style="padding:.75rem">Detalle + alerta visual</td><td style="padding:.75rem">Top 20 clientes: verde (crece), amarillo (plano), rojo (cae)</td></tr>
+          </tbody>
+        </table>
+        <div class="highlight-box">
+          <h4>Regla visual</h4>
+          <p>Máximo 6-8 widgets por dashboard. Uno principal (KPI card grande), 3-4 secundarios (barras/línea), 1-2 de detalle (tabla). Blanco = respira. Colores: verde=bueno, rojo=malo, amarillo=atención, azul=neutro. Consistencia siempre.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🧠 Tomar decisiones con datos (no corazonadas)</h2>
+        <p>El dashboard no decide por ti. Te da la evidencia. Tú decides. Flujo:</p>
+        <ol style="margin:1rem 0 1rem 1.5rem;line-height:2;color:var(--muted)">
+          <li><strong>Observa:</strong> \"Ventas bajaron 15% vs mes anterior\".</li>
+          <li><strong>Segmenta:</strong> \"Es solo canal online. Tienda y mayoreo estables\".</li>
+          <li><strong>Profundiza:</strong> \"Tráfico web igual, conversión cayó de 3.2% a 2.1%\".</li>
+          <li><strong>Hipotetiza:</strong> \"Cambiamos checkout la semana pasada → fricción nueva\".</li>
+          <li><strong>Actúa:</strong> \"Revertir cambio / A/B test / arreglar bug\".</li>
+          <li><strong>Mide:</strong> \"Semana siguiente conversión vuelve a 3% → fixed\".</li>
+        </ol>
+        <div class="highlight-box">
+          <h4>Preguntas que tu dashboard debe responder</h4>
+          <ul style="margin:0 0 0 1.5rem;color:var(--muted)">
+            <li>¿Vamos a cumplir la meta este mes? (Sí/No/Al límite)</li>
+            <li>¿Qué vendedor/producto/canal está fallando?</li>
+            <li>¿Hay algún cliente grande en riesgo (no compra hace 60 días)?</li>
+            <li>¿Tenemos caja para nómina y proveedores próximas 4 semanas?</li>
+            <li>¿Dónde invertir el próximo peso de marketing para mayor retorno?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>🛠️ Herramientas simples (elige tu nivel)</h2>
+        <div class="tool-card">
+          <h4>🟢 Nivel 1: Excel / Google Sheets (Gratis, ya lo tienes)</h4>
+          <p>Tablas dinámicas + Gráficos + Segmentadores + Formato condicional = dashboard funcional. Conecta a CSV/BD con Power Query. Publica en OneDrive/Drive para ver en móvil. <strong>Ideal para empezar HOY.</strong></p>
+        </div>
+        <div class="tool-card">
+          <h4>🟡 Nivel 2: Power BI (Gratis Desktop / Pro  user/mes)</h4>
+          <p>Modelado DAX, actualización programada, app móvil, row-level security, 100+ conectores. Curva de aprendizaje media. Estándar empresarial Microsoft.</p>
+        </div>
+        <div class="tool-card">
+          <h4>🟡 Nivel 2: Looker Studio / Data Studio (Gratis)</h4>
+          <p>Conectores nativos Google (Sheets, Ads, Analytics, BigQuery, SQL). Compartir por link, embebible. Muy visual, menos modelado que Power BI.</p>
+        </div>
+        <div class="tool-card">
+          <h4>🟠 Nivel 3: Metabase / Apache Superset (Open source, self-hosted)</h4>
+          <p>SQL nativo, dashboards bonitos, alertas, embebido. Requiere servidor (VPS, Docker). Control total, sin costos por usuario. Para equipos técnicos.</p>
+        </div>
+        <div class="tool-card">
+          <h4>🔴 Nivel 4: A medida (Python + Streamlit / Plotly Dash / FastAPI + React)</h4>
+          <p>Lo que hacemos en WorkForce MX. Integra tu ERP, CRM, BD, APIs. Lógica de negocio real, alertas por WhatsApp/Email, multi-tenant, white-label. Escalable, tuyo para siempre.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🏗️ Estructura práctica de un dashboard de ventas (plantilla)</h2>
+        <p>Copia esta estructura en tu herramienta:</p>
+        <pre><code>┌─────────────────────────────────────────────────────────────────┐
+│  📈 VENTAS MES ACTUAL          🎯 META MES        📊 VS AÑO PASADO │
+│  ,245,000        ████████░░  ,500,000 (83%)   +12% vs 2023    │
+├──────────────────┬──────────────────┬──────────────────┬──────────┤
+│ 📅 TENDENCIA 12M │ 👥 X VENDEDOR    │ 🛍️ X PRODUCTO    │ 🌐 X CANAL│
+│ (línea + meta)   │ (barras + %)     │ (barras apiladas)│ (donut)   │
+├──────────────────┴──────────────────┴──────────────────┴──────────┤
+│ 💰 GASTOS OPEX MES:  (33% ventas)    💵 FLUJO CAJA 4 SEM: + │
+├─────────────────────────────────────────────────────────────────┤
+│ ⚠️ ALERTAS: Cliente X 67 días sin comprar | Vendedor Y -25% vs meta │
+│ 📋 TOP 5 ACCIONES: 1) Llamar Cliente X  2) Revisar funnel online  │
+│                  3) Aprobar presupuesto campaña Q4  4) Cobrar facturas >60d │
+└─────────────────────────────────────────────────────────────────┘</code></pre>
+      </section>
+
+      <section>
+        <h2>🚀 Tu siguiente paso</h2>
+        <ol style="margin:1rem 0 1rem 1.5rem;line-height:2;color:var(--muted)">
+          <li>Define 3-5 KPIs que SI importan para TU negocio (no copies lista genérica).</li>
+          <li>Identifica dónde están los datos hoy (Excel, ERP, CRM, Sheets, BD).</li>
+          <li>Arma un MVP en Excel/Sheets esta semana: 1 hoja KPIs, 1 hoja gráficos.</li>
+          <li>Compártelo con tu socio/gerente. Pide feedback: \"¿Esto te sirve para decidir?\".</li>
+          <li>Itera. Automatiza actualización (Power Query, Apps Script, Python).</li>
+          <li>Cuando Excel se quede corto → Power BI / Looker / A medida.</li>
+        </ol>
+        <div class="highlight-box" style="text-align:center">
+          <h4>¿Quieres uno listo para tu negocio?</h4>
+          <p>En WorkForce MX construyo dashboards a medida: conecto tu ERP/CRM/Excel/BD, KPIs reales, alertas por WhatsApp, acceso móvil, multi-sucursal. <a href="https://wa.me/523329531372" style="color:var(--accent);font-weight:700">Hablemos por WhatsApp</a> y te muestro demo.</p>
+        </div>
+      </section>
+    </article>
+
+    <div style="text-align:center;margin-top:3rem">
+      <a href="/edu" class="btn-back">← Volver a lecciones</a>
+    </div>
+  </div>
+</main>
+
+<footer style="background:#020617;color:#94a3b8;padding:2.5rem 2rem;text-align:center">
+  <div class="logo-text" style="margin-bottom:.7rem">WORKFORCE <span>MX</span></div>
+  <p>✉️ admin@workforcemx.com | 📞 +52 33 2953 1372</p>
+  <p style="font-size:.85rem;margin-top:.7rem">#WorkForceMX #WFConnect #Educación</p>
+</footer>
+
+<div id="wf-form-modal">
+  <div class="wf-form-content">
+    <button onclick="closeWfForm()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.8rem;cursor:pointer">×</button>
+    <h3 style="text-align:center;margin-bottom:1.5rem">Cuéntanos tu proyecto</h3>
+    <form id="wf-contact-form" action="https://formsubmit.co/admin@workforcemx.com" method="POST">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_template" value="table">
+      <select name="tipo" required>
+        <option value="" disabled selected>Selecciona el tipo de proyecto</option>
+        <option value="App">App</option><option value="Excel">Excel</option><option value="Edición">Edición</option><option value="Publicidad">Publicidad</option><option value="Página Web">Página Web</option><option value="Otro">Otro</option>
+      </select>
+      <input type="text" name="nombre" placeholder="Nombre" required>
+      <input type="tel" name="whatsapp" placeholder="WhatsApp" required>
+      <input type="email" name="correo" placeholder="Correo">
+      <textarea name="descripcion" placeholder="Descripción del proyecto" required></textarea>
+      <input type="hidden" name="_subject" value="Nuevo proyecto desde Workforce MX">
+      <button type="submit" style="padding:1rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer">Enviar</button>
+      <div id="wf-form-errors"></div>
+    </form>
+    <div id="wf-success-msg"><h4 style="color:#10b981">¡Registro enviado!</h4><p>Tu registro está hecho. Espera respuesta.</p></div>
+  </div>
+</div>
+
+<script>
+function openWfForm(){document.getElementById('wf-form-modal').classList.add('active');document.getElementById('wf-contact-form').style.display='flex';document.getElementById('wf-success-msg').classList.remove('active')}
+function closeWfForm(){document.getElementById('wf-form-modal').classList.remove('active')}
+document.getElementById('wf-form-modal').addEventListener('click',function(e){if(e.target.id==='wf-form-modal')closeWfForm()});
+document.getElementById('wf-contact-form').addEventListener('submit',function(e){e.preventDefault();var name=this.nombre.value.trim(),wp=this.whatsapp.value.trim(),desc=this.descripcion.value.trim(),err=[];if(!name)err.push('El nombre es obligatorio');if(!wp)err.push('El WhatsApp es obligatorio');if(!desc)err.push('La descripción del proyecto es obligatoria');var d=document.getElementById('wf-form-errors');d.innerHTML='';if(err.length){err.forEach(function(x){var p=document.createElement('p');p.className='wf-error';p.textContent=x;d.appendChild(p)});return}var btn=this.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Enviando...';fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('wf-contact-form').style.display='none';document.getElementById('wf-success-msg').classList.add('active');setTimeout(closeWfForm,3000)}else{d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}}).catch(function(){d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}).finally(function(){btn.disabled=false;btn.textContent='Enviar'})});
+</script>
+<script src="assets/js/chat.js" data-api-url="/api/chat"></script>
+</body>
+</html>

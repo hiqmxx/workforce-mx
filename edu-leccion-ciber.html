@@ -1,0 +1,310 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ciberseguridad básica | WorkForce MX</title>
+<meta name="description" content="Contraseñas seguras, 2FA, phishing, actualizaciones, copias de seguridad, control de acceso, navegación segura. Protege tu negocio y tu vida digital.">
+<meta name="theme-color" content="#020617">
+<link rel="canonical" href="https://www.workforcemx.com/edu-leccion-ciber">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="WorkForce MX">
+<meta property="og:title" content="Ciberseguridad básica">
+<meta property="og:description" content="Control de acceso web y cómo protegerte de vulnerabilidades comunes.">
+<meta property="og:url" content="https://www.workforcemx.com/edu-leccion-ciber">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ciberseguridad básica | WorkForce MX">
+<meta name="twitter:description" content="Protege tu negocio y vida digital: contraseñas, 2FA, phishing, backups.">
+<link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020617;--bg2:#0a0e17;--card:#0f172a;--card2:#111827;--accent:#3b82f6;--neon:#06b6d4;--cyan:#22d3ee;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;--glow:0 0 20px rgba(6,182,212,.35)}
+body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(ellipse at top,#0b1226 0%,#020617 65%);color:var(--text);overflow-x:hidden}
+.logo-text{font-size:1.6rem;font-weight:900;letter-spacing:.08em}
+.logo-text span{color:var(--neon)}
+.glow{box-shadow:var(--glow);border:1px solid var(--border)}
+.btn-neon{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.2rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;text-decoration:none;border-radius:12px;font-weight:700;box-shadow:0 0 24px rgba(59,130,246,.5)}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.2rem;background:rgba(255,255,255,.05);color:white;text-decoration:none;border:1px solid var(--border);border-radius:12px;font-weight:600}
+.lang-badge{padding:.7rem .4rem;border:1px solid var(--border);border-radius:10px;text-align:center;background:rgba(15,23,42,.8);font-size:.82rem;font-weight:600}
+.card{border-radius:16px;transition:all .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 0 30px rgba(6,182,212,.35)}
+.svc-hex{width:56px;height:56px;margin:0 auto 1rem;border:2px solid var(--neon);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 0 16px rgba(6,182,212,.4)}
+#wf-form-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,.85);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center}
+#wf-form-modal.active{display:flex}
+.wf-form-content{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative}
+#wf-contact-form{display:none;flex-direction:column;gap:1rem}
+#wf-contact-form select,#wf-contact-form input,#wf-contact-form textarea{width:100%;padding:.875rem 1rem;background:#0a0e17;border:1px solid var(--border);border-radius:10px;color:var(--text)}
+#wf-success-msg{display:none;text-align:center;padding:2rem}
+#wf-success-msg.active{display:block}
+.wf-error{color:#f87171;font-size:.875rem}
+.lesson-content h2{font-size:1.5rem;font-weight:800;color:var(--neon);margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.lesson-content h3{font-size:1.2rem;font-weight:700;color:var(--text);margin:1.5rem 0 .75rem}
+.lesson-content p{line-height:1.8;color:var(--muted);margin-bottom:1rem}
+.lesson-content ul{margin:1rem 0 1rem 1.5rem;line-height:1.8;color:var(--muted)}
+.lesson-content li{margin-bottom:.5rem}
+.lesson-content code{background:rgba(59,130,246,.15);padding:.2rem .4rem;border-radius:6px;font-family:'JetBrains Mono',monospace;color:#93c5fd}
+.lesson-content pre{background:#0a0e17;border:1px solid var(--border);border-radius:10px;padding:1rem;overflow-x:auto;margin:1rem 0}
+.lesson-content pre code{background:none;padding:0;color:var(--text)}
+.highlight-box{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:10px;padding:1.5rem;margin:1.5rem 0}
+.highlight-box h4{color:var(--neon);font-weight:800;margin-bottom:.75rem}
+.check-item{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:1.25rem;margin:1rem 0;display:flex;gap:1rem;align-items:flex-start}
+.check-icon{width:2.5rem;height:2.5rem;background:rgba(16,185,129,.2);border:1px solid #10b981;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#10b981;font-size:1.25rem;flex-shrink:0}
+.btn-back{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.75rem;background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:10px;font-weight:600;text-decoration:none;transition:all .2s}
+.btn-back:hover{background:rgba(59,130,246,.3);color:#fff;border-color:#60a5fa}
+@media(max-width:768px){.lesson-content h2{font-size:1.3rem}.lesson-content h3{font-size:1.1rem}.check-item{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,6,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)">
+  <div style="max-width:1280px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center">
+    <div class="logo-text">WORKFORCE <span>MX</span></div>
+    <div style="display:flex;gap:1.5rem;align-items:center">
+      <a href="/" style="color:var(--text);text-decoration:none">Inicio</a>
+      <a href="#servicios" style="color:var(--text);text-decoration:none">Servicios</a>
+      <a href="#productos" style="color:var(--text);text-decoration:none">Productos</a>
+      <a href="/edu" style="color:var(--neon);text-decoration:none;font-weight:700">Educación</a>
+      <button onclick="wfmxOpenChat()" style="background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:999px;padding:.4rem 1rem;font-weight:600;cursor:pointer">💬 Chat</button>
+      <a href="#contacto" style="color:var(--text);text-decoration:none">Contacto</a>
+    </div>
+  </div>
+</nav>
+
+<header style="min-height:50vh;text-align:center;padding:140px 2rem 60px;position:relative">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="display:inline-block;padding:.5rem 1.5rem;border:1px solid rgba(6,182,212,.5);border-radius:50px;color:#67e8f9;font-size:.875rem;font-weight:600;margin-bottom:1.5rem">🔒 Seguridad</div>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;line-height:1.1">Ciberseguridad<br><span style="color:var(--neon);text-shadow:0 0 30px rgba(6,182,212,.8)">básica</span></h1>
+    <p style="font-size:1.2rem;color:#cbd5e1;margin-top:1.5rem;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.7">No hace falta ser experto. Unos hábitos simples te blindan contra el 95% de ataques. Tu negocio y tu tranquilidad lo valen.</p>
+  </div>
+</header>
+
+<main style="padding:40px 2rem 80px">
+  <div style="max-width:900px;margin:0 auto">
+    <article class="lesson-content">
+      <section>
+        <h2>🎯 La regla de oro</h2>
+        <div class="highlight-box" style="text-align:center;font-size:1.1rem">
+          <p><strong>La seguridad no es un producto, es un hábito.</strong> No compras "seguridad", la construyes con decisiones diarias. Empieza hoy, mejora mañana.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔐 1. Contraseñas seguras + Gestor</h2>
+        <p>El eslabón más débil. La gente reusa "Empresa2024!" en todo. Si una web filtra esa pass, tienen acceso a todo.</p>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Únicas:</strong> Una distinta para cada servicio. Si se filtra una, el resto a salvo.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Largas (16+ chars):</strong> Frase aleatoria > complejidad rara. <code>correcto-caballo-bateria-grapa</code> tarda siglos en fuerza bruta; <code>P@ssw0rd!</code> segundos.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Gestor de contraseñas (obligatorio):</strong> Bitwarden (gratis, open source), 1Password, KeePassXC. Genera, guarda, autocompleta, sincroniza. Solo recuerdas UNA master pass fuerte.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Revisa filtraciones:</strong> <a href="https://haveibeenpwned.com" style="color:var(--accent)">haveibeenpwned.com</a> → pon tu email → ve en qué brechas apareces → cambia esas passes YA.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🛡️ 2. Autenticación de dos factores (2FA / MFA)</h2>
+        <p>Tu contraseña puede robarse (phishing, keylogger, filtración). 2FA añade <strong>algo que TIENES</strong> (teléfono, llave hardware) o <strong>algo que ERES</strong> (huella, Face ID).</p>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Actívalo en TODO:</strong> Email, banca, redes, AWS/Azure, GitHub, gestor de passes, admin de tu web/hosting.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Orden de seguridad:</strong> Llave hardware (YubiKey) > App autenticadora (Authy, Google Auth, Microsoft Auth, Bitwarden) > SMS (mejor que nada, pero vulnerable a SIM swapping).</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Guarda códigos de respaldo:</strong> Al activar 2FA, te dan 8-10 códigos de emergencia. Guárdalos en papel (caja fuerte) o en tu gestor de passes. Si pierdes el 2FA, entras con esos.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🎣 3. Phishing: cómo no caer</h2>
+        <p>El 90%+ de ataques empiezan con un correo/link engañoso. Te suplantan: banco, SAT, Microsoft, Google, tu proveedor, un cliente.</p>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Verifica el remitente REAL:</strong> Pasa ratón sobre "De:" → mira el dominio. <code>factura@sat.gob.mx</code> pero dominio <code>sat-gob-mx-facturas.ru</code> = phishing.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Urgencia = señal de alarma:</strong> "Tu cuenta se cierra en 24h", "Pago rechazado, actúa ya", "Factura pendiente". Los legitimos no presionan así.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>No cliques links en email sospechoso:</strong> Entra manual al sitio (escribe URL o usa favorito). Si es de tu banco, abre la app oficial.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Adjuntos .exe, .zip, .scr, .iso, .img, .html:</strong> Pueden esconder malware. PDFs pueden tener exploits. Si no lo esperabas, no lo abras. Verifica por otro canal (llama, WhatsApp conocido).</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Spear phishing (dirigido):</strong> Usan tu nombre, empresa, proyecto real. "Hola Juan, adjunto el brief del proyecto Alfa". Más creíble. Verifica SIEMPRE.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔄 4. Actualizaciones: el parche gratis</h2>
+        <p>Vulnerabilidades conocidas = puertas abiertas. Los exploits masivos (WannaCry, Log4j, PrintNightmare) atacan sistemas SIN parchear semanas/meses después del fix.</p>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Windows Update:</strong> Automático + reinicios programados. No lo pauses semanas.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Navegador (Chrome/Edge/Firefox):</strong> Se actualizan solos, pero reinícialos de vez en cuando para aplicar.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Office, Adobe, drivers GPU, BIOS/UEFI, router, NAS, apps móviles:</strong> Revisa mensual.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Software EOL (fin de vida):</strong> Windows 7/8.1, Office 2013, viejas versiones de PHP/Python/Node. Si no tiene parches, MIGRA. Es un riesgo inaceptable.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>💾 5. Copias de seguridad: la red de seguridad</h2>
+        <p>Ransomware cifra tus archivos y pide rescate. Fallo de disco = todo perdido. Robo/incendio = todo perdido. <strong>Backup = recuperas.</strong></p>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Regla 3-2-1:</strong> 3 copias (original + 2 backups), 2 medios distintos (disco local + nube / 2 discos), 1 fuera de sede (nube / disco en casa de familiar / oficina distinta).</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Automatizado:</strong> Si depende de que tú lo hagas, fallará. Veeam Agent Free, Macrium Reflect Free, Duplicati, Restic, Backblaze, OneDrive/Google Drive (versionado), Synology Hyper Backup.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Prueba la restauración:</strong> Una vez al trimestre, restaura un archivo/carpeta aleatoria. Si no probaste, no tienes backup, tienes esperanza.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Inmutable / versionado:</strong> Que el ransomware no pueda cifrar/borrar el backup. Backblaze B2, Wasabi, S3 con Object Lock, discos desconectados (offline) tras backup.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🚪 6. Control de acceso: mínimo privilegio</h2>
+        <p>No des llaves maestras a quien solo necesita entrar a una habitación.</p>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Cuentas de usuario estándar (no admin) para uso diario:</strong> Instalar software → pide credenciales admin (UAC). Malware que entra por user estándar no puede tocar sistema.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Accesos por rol:</strong> Contabilidad ve contabilidad. Ventas ve CRM. Admin ve todo. Revoca accesos al salir alguien (offboarding inmediato).</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>VPN / Zero Trust para remoto:</strong> No expongas RDP (puerto 3389) a Internet. Nunca. Usa Tailscale, WireGuard, Cloudflare Tunnel, VPN corporativa.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Gestor de passes compartido (equipo):</strong> Bitwarden Organizations, 1Password Business. Compartes acceso SIN revelar la pass. Revocas en 1 click al salir alguien.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🌐 7. Navegación segura e higiene digital</h2>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Bloqueador de anuncios/rastreadores:</strong> uBlock Origin (gratis, open source, el mejor). Menos malvertising, menos tracking, web más rápida.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>DNS seguro:</strong> NextDNS, Cloudflare 1.1.1.1 for Families, Quad9. Bloquea dominios maliciosos, phishing, malware, telemetría a nivel red (funciona en todo el dispositivo/red).</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>HTTPS en todas partes:</strong> Navegador fuerza HTTPS. Si web no tiene candado → no pongas datos sensibles.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Extensiones mínimo y de confianza:</strong> Cada extensión es superficie de ataque. Revisa permisos. Elimina las que no usas.</div>
+        </div>
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <div><strong>Wi-Fi público:</strong> Evita banca/trabajo sensible. Si obligatorio → VPN de confianza (Mullvad, Proton, IVPN, o la tuya propia).</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>📋 Checklist rápida mensual (15 min)</h2>
+        <ol style="margin:1rem 0 1rem 1.5rem;line-height:2;color:var(--muted)">
+          <li>Revisa <a href="https://haveibeenpwned.com" style="color:var(--accent)">haveibeenpwned</a> → cambia passes filtradas.</li>
+          <li>Verifica 2FA activo en cuentas críticas (email, banca, admin, gestor passes).</li>
+          <li>Windows Update + reinicio pendiente → aplica.</li>
+          <li>Prueba restaurar 1 archivo del backup → confirma que funciona.</li>
+          <li>Revisa accesos de equipo: ¿alguien salió? ¿cambió rol? Revoca/ajusta.</li>
+          <li>Limpia extensiones navegador / apps móvil que no usas.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>🆘 ¿Te hackearon? Qué hacer YA</h2>
+        <ol style="margin:1rem 0 1rem 1.5rem;line-height:2;color:var(--muted)">
+          <li><strong>Desconecta de red</strong> (Wi-Fi off, cable out). Evita propagación/exfiltración.</li>
+          <li><strong>Cambia passes desde dispositivo LIMPIO</strong> (móvil, otra PC). Email primero → luego banca → luego resto. Activa 2FA si no estaba.</li>
+          <li><strong>Escanea con Windows Defender (offline scan)</strong> + Malwarebytes Free.</li>
+          <li><strong>Revisa reglas de reenvío en email</strong> (configuración → reenvío/POP/IMAP). Los atacantes ponen forward a su correo.</li>
+          <li><strong>Notifica a afectados</strong> (clientes, banco, plataforma). Transparencia = confianza.</li>
+          <li><strong>Restaura de backup limpio</strong> (anterior al compromiso).</li>
+          <li><strong>Denuncia</strong>: Policía Cibernética (México: 088 / @PoliciaCibernetica), fiscalía, plataforma.</li>
+        </ol>
+      </section>
+    </article>
+
+    <div style="text-align:center;margin-top:3rem">
+      <a href="/edu" class="btn-back">← Volver a lecciones</a>
+    </div>
+  </div>
+</main>
+
+<footer style="background:#020617;color:#94a3b8;padding:2.5rem 2rem;text-align:center">
+  <div class="logo-text" style="margin-bottom:.7rem">WORKFORCE <span>MX</span></div>
+  <p>✉️ admin@workforcemx.com | 📞 +52 33 2953 1372</p>
+  <p style="font-size:.85rem;margin-top:.7rem">#WorkForceMX #WFConnect #Educación</p>
+</footer>
+
+<div id="wf-form-modal">
+  <div class="wf-form-content">
+    <button onclick="closeWfForm()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.8rem;cursor:pointer">×</button>
+    <h3 style="text-align:center;margin-bottom:1.5rem">Cuéntanos tu proyecto</h3>
+    <form id="wf-contact-form" action="https://formsubmit.co/admin@workforcemx.com" method="POST">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_template" value="table">
+      <select name="tipo" required>
+        <option value="" disabled selected>Selecciona el tipo de proyecto</option>
+        <option value="App">App</option><option value="Excel">Excel</option><option value="Edición">Edición</option><option value="Publicidad">Publicidad</option><option value="Página Web">Página Web</option><option value="Otro">Otro</option>
+      </select>
+      <input type="text" name="nombre" placeholder="Nombre" required>
+      <input type="tel" name="whatsapp" placeholder="WhatsApp" required>
+      <input type="email" name="correo" placeholder="Correo">
+      <textarea name="descripcion" placeholder="Descripción del proyecto" required></textarea>
+      <input type="hidden" name="_subject" value="Nuevo proyecto desde Workforce MX">
+      <button type="submit" style="padding:1rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer">Enviar</button>
+      <div id="wf-form-errors"></div>
+    </form>
+    <div id="wf-success-msg"><h4 style="color:#10b981">¡Registro enviado!</h4><p>Tu registro está hecho. Espera respuesta.</p></div>
+  </div>
+</div>
+
+<script>
+function openWfForm(){document.getElementById('wf-form-modal').classList.add('active');document.getElementById('wf-contact-form').style.display='flex';document.getElementById('wf-success-msg').classList.remove('active')}
+function closeWfForm(){document.getElementById('wf-form-modal').classList.remove('active')}
+document.getElementById('wf-form-modal').addEventListener('click',function(e){if(e.target.id==='wf-form-modal')closeWfForm()});
+document.getElementById('wf-contact-form').addEventListener('submit',function(e){e.preventDefault();var name=this.nombre.value.trim(),wp=this.whatsapp.value.trim(),desc=this.descripcion.value.trim(),err=[];if(!name)err.push('El nombre es obligatorio');if(!wp)err.push('El WhatsApp es obligatorio');if(!desc)err.push('La descripción del proyecto es obligatoria');var d=document.getElementById('wf-form-errors');d.innerHTML='';if(err.length){err.forEach(function(x){var p=document.createElement('p');p.className='wf-error';p.textContent=x;d.appendChild(p)});return}var btn=this.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Enviando...';fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('wf-contact-form').style.display='none';document.getElementById('wf-success-msg').classList.add('active');setTimeout(closeWfForm,3000)}else{d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}}).catch(function(){d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}).finally(function(){btn.disabled=false;btn.textContent='Enviar'})});
+</script>
+<script src="assets/js/chat.js" data-api-url="/api/chat"></script>
+</body>
+</html>

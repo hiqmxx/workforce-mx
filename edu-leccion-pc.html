@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PC sin enredos — Componentes de PC | WorkForce MX</title>
+<meta name="description" content="Aprende los componentes básicos de una PC: CPU, RAM, almacenamiento, SSD vs HDD, placa base y GPU. Explicado simple para principiantes.">
+<meta name="theme-color" content="#020617">
+<link rel="canonical" href="https://www.workforcemx.com/edu-leccion-pc">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="WorkForce MX">
+<meta property="og:title" content="PC sin enredos — Componentes de PC">
+<meta property="og:description" content="CPU, RAM, almacenamiento, SSD vs HDD, placa base, GPU. Explicado simple para principiantes.">
+<meta property="og:url" content="https://www.workforcemx.com/edu-leccion-pc">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PC sin enredos — Componentes de PC | WorkForce MX">
+<meta name="twitter:description" content="Aprende los componentes básicos de una PC explicados de forma sencilla.">
+<link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020617;--bg2:#0a0e17;--card:#0f172a;--card2:#111827;--accent:#3b82f6;--neon:#06b6d4;--cyan:#22d3ee;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;--glow:0 0 20px rgba(6,182,212,.35)}
+body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(ellipse at top,#0b1226 0%,#020617 65%);color:var(--text);overflow-x:hidden}
+.logo-text{font-size:1.6rem;font-weight:900;letter-spacing:.08em}
+.logo-text span{color:var(--neon)}
+.glow{box-shadow:var(--glow);border:1px solid var(--border)}
+.btn-neon{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.2rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;text-decoration:none;border-radius:12px;font-weight:700;box-shadow:0 0 24px rgba(59,130,246,.5)}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.2rem;background:rgba(255,255,255,.05);color:white;text-decoration:none;border:1px solid var(--border);border-radius:12px;font-weight:600}
+.lang-badge{padding:.7rem .4rem;border:1px solid var(--border);border-radius:10px;text-align:center;background:rgba(15,23,42,.8);font-size:.82rem;font-weight:600}
+.card{border-radius:16px;transition:all .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 0 30px rgba(6,182,212,.35)}
+.svc-hex{width:56px;height:56px;margin:0 auto 1rem;border:2px solid var(--neon);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 0 16px rgba(6,182,212,.4)}
+#wf-form-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,.85);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center}
+#wf-form-modal.active{display:flex}
+.wf-form-content{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative}
+#wf-contact-form{display:none;flex-direction:column;gap:1rem}
+#wf-contact-form select,#wf-contact-form input,#wf-contact-form textarea{width:100%;padding:.875rem 1rem;background:#0a0e17;border:1px solid var(--border);border-radius:10px;color:var(--text)}
+#wf-success-msg{display:none;text-align:center;padding:2rem}
+#wf-success-msg.active{display:block}
+.wf-error{color:#f87171;font-size:.875rem}
+.lesson-content h2{font-size:1.5rem;font-weight:800;color:var(--neon);margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.lesson-content h3{font-size:1.2rem;font-weight:700;color:var(--text);margin:1.5rem 0 .75rem}
+.lesson-content p{line-height:1.8;color:var(--muted);margin-bottom:1rem}
+.lesson-content ul{margin:1rem 0 1rem 1.5rem;line-height:1.8;color:var(--muted)}
+.lesson-content li{margin-bottom:.5rem}
+.lesson-content code{background:rgba(59,130,246,.15);padding:.2rem .4rem;border-radius:6px;font-family:'JetBrains Mono',monospace;color:#93c5fd}
+.lesson-content pre{background:#0a0e17;border:1px solid var(--border);border-radius:10px;padding:1rem;overflow-x:auto;margin:1rem 0}
+.lesson-content pre code{background:none;padding:0;color:var(--text)}
+.highlight-box{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:10px;padding:1.5rem;margin:1.5rem 0}
+.highlight-box h4{color:var(--neon);font-weight:800;margin-bottom:.75rem}
+.btn-back{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.75rem;background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:10px;font-weight:600;text-decoration:none;transition:all .2s}
+.btn-back:hover{background:rgba(59,130,246,.3);color:#fff;border-color:#60a5fa}
+@media(max-width:768px){.lesson-content h2{font-size:1.3rem}.lesson-content h3{font-size:1.1rem}}
+</style>
+</head>
+<body>
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,6,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)">
+  <div style="max-width:1280px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center">
+    <div class="logo-text">WORKFORCE <span>MX</span></div>
+    <div style="display:flex;gap:1.5rem;align-items:center">
+      <a href="/" style="color:var(--text);text-decoration:none">Inicio</a>
+      <a href="#servicios" style="color:var(--text);text-decoration:none">Servicios</a>
+      <a href="#productos" style="color:var(--text);text-decoration:none">Productos</a>
+      <a href="/edu" style="color:var(--neon);text-decoration:none;font-weight:700">Educación</a>
+      <button onclick="wfmxOpenChat()" style="background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:999px;padding:.4rem 1rem;font-weight:600;cursor:pointer">💬 Chat</button>
+      <a href="#contacto" style="color:var(--text);text-decoration:none">Contacto</a>
+    </div>
+  </div>
+</nav>
+
+<header style="min-height:50vh;text-align:center;padding:140px 2rem 60px;position:relative">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="display:inline-block;padding:.5rem 1.5rem;border:1px solid rgba(6,182,212,.5);border-radius:50px;color:#67e8f9;font-size:.875rem;font-weight:600;margin-bottom:1.5rem">🖥️ Hardware</div>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;line-height:1.1">PC sin enredos —<br><span style="color:var(--neon);text-shadow:0 0 30px rgba(6,182,212,.8)">Componentes de PC</span></h1>
+    <p style="font-size:1.2rem;color:#cbd5e1;margin-top:1.5rem;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.7">Entiende qué hay dentro de tu computadora sin tecnicismos. CPU, RAM, almacenamiento, placa base y GPU explicados como si te lo contara un amigo.</p>
+  </div>
+</header>
+
+<main style="padding:40px 2rem 80px">
+  <div style="max-width:900px;margin:0 auto">
+    <article class="lesson-content">
+      <section>
+        <h2>🧠 CPU — El cerebro</h2>
+        <p>La <strong>CPU</strong> (Unidad Central de Procesamiento) es el componente que ejecuta las instrucciones. Piensa en ella como el jefe que coordina todo: abre programas, hace cálculos, maneja la lógica.</p>
+        <p>Lo que importa al elegir: <strong>núcleos</strong> (cuántas cosas hace a la vez) y <strong>velocidad</strong> (GHz, qué tan rápido procesa cada cosa). Para uso diario ofimático, 4-6 núcleos modernos sobran. Para edición, render o gaming, busca 8+ núcleos y buena velocidad single-core.</p>
+        <div class="highlight-box">
+          <h4>Tip rápido</h4>
+          <p>Intel Core i5 / Ryzen 5 = punto dulce precio-rendimiento. i7 / Ryzen 7 = más potencia. i9 / Ryzen 9 = trabajo pesado profesional.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>💾 RAM — La memoria de trabajo</h2>
+        <p>La <strong>RAM</strong> (Memoria de Acceso Aleatorio) es donde tu PC guarda lo que estás usando <strong>ahora mismo</strong>. Abres Chrome, Word, Spotify: todo vive en RAM mientras lo usas.</p>
+        <p>Más RAM = más cosas abiertas a la vez sin que se trabe. No hace que el PC sea "más rápido" en tareas individuales, pero evita el cuello de botella cuando multitasking.</p>
+        <ul>
+          <li><strong>4 GB</strong>: Mínimo vital. Solo lo básico (navegar, Word). Se queda corto rápido.</li>
+          <li><strong>8 GB</strong>: Estándar actual. Oficina, estudio, navegación con varias pestañas.</li>
+          <li><strong>16 GB</strong>: Ideal para gaming, creación de contenido, programación, multitasking serio.</li>
+          <li><strong>32 GB+</strong>: Profesional: edición de video 4K, 3D, máquinas virtuales, IA local.</li>
+        </ul>
+        <div class="highlight-box">
+          <h4>Mito de la RAM</h4>
+          <p>"Más RAM = PC más rápido". Falso. Si no la usas, no notas diferencia. La velocidad (MHz) y latencia (CL) importan más que la cantidad bruta una vez cubres tu necesidad.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>💿 Almacenamiento — SSD vs HDD</h2>
+        <p>Aquí guardas tus archivos, sistema operativo y programas <strong>de forma permanente</strong> (aunque apagues la PC).</p>
+        <h3>HDD (Disco Duro Mecánico)</h3>
+        <p>Tiene platos giratorios y cabezal físico. Barato por GB, gran capacidad (4-18 TB). Lento: 80-160 MB/s. Ruidoso, frágil a golpes. Útil solo para <strong>archivo masivo</strong> (backups, fotos, videos viejos).</p>
+        <h3>SSD (Unidad de Estado Sólido)</h3>
+        <p>Sin partes móviles. Rápido, silencioso, resistente. Tres tipos:</p>
+        <ul>
+          <li><strong>SATA SSD</strong>: 500-550 MB/s. Mejora enorme vs HDD. Buen upgrade barato.</li>
+          <li><strong>NVMe Gen3</strong>: 3,000-3,500 MB/s. Estándar actual. Arranca Windows en segundos.</li>
+          <li><strong>NVMe Gen4/Gen5</strong>: 5,000-14,000 MB/s. Para cargas pesadas (edición 4K, gaming extremo).</li>
+        </ul>
+        <div class="highlight-box">
+          <h4>Recomendación práctica</h4>
+          <p>Mínimo: <strong>500 GB NVMe</strong> para sistema + apps. Si necesitas más espacio, agrega un HDD barato o segundo SSD para archivos. Nunca instales Windows en HDD en 2024+.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔧 Placa Base (Motherboard) — La columna vertebral</h2>
+        <p>Conecta <strong>todo</strong>: CPU, RAM, almacenamiento, GPU, puertos USB, red, audio. No mejora rendimiento directo, pero define <strong>qué puedes conectar y actualizar</strong>.</p>
+        <p>Claves: <strong>socket</strong> (compatibilidad CPU), <strong>chipset</strong> (características: overclock, puertos PCIe, USB), <strong>fase de alimentación (VRM)</strong> (importante si overclockeas), <strong>ranuras RAM</strong> (2 vs 4), <strong>M.2 slots</strong> (cuántos SSD NVMe caben).</p>
+        <div class="highlight-box">
+          <h4>No te compliques</h4>
+          <p>Para 90% de usuarios: placa B-series (Intel B760, AMD B650) de marca conocida (ASUS, MSI, Gigabyte, ASRock) con buen VRM y los puertos que necesitas. Evita las "de entrada" más baratas si piensas meterle CPU potente.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🎮 GPU — Tarjeta gráfica</h2>
+        <p>Procesa todo lo visual: juegos, render 3D, edición de video, múltiples monitores, IA. Tiene su propia memoria (VRAM) y procesador.</p>
+        <ul>
+          <li><strong>Integrada</strong> (en la CPU): Básica. Oficina, video, navegación. Sin costo extra.</li>
+          <li><strong>Dedicada gama entrada</strong> (RTX 3050, RX 6600): 1080p gaming medio/alto, edición ligera.</li>
+          <li><strong>Gama media</strong> (RTX 4060/4070, RX 7700 XT): 1440p gaming, render, IA local. Punto dulce.</li>
+          <li><strong>Gama alta/pro</strong> (RTX 4080/4090, RTX 6000 Ada): 4K, IA seria, trabajo profesional certificado.</li>
+        </ul>
+        <div class="highlight-box">
+          <h4>VRAM: la clave oculta</h4>
+          <p>Para 1080p: 8 GB OK. 1440p: 12-16 GB. 4K / IA local / 3D: 16-24 GB+. Si te quedas sin VRAM, el sistema usa RAM del sistema (lentísimo).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔌 Fuente de Poder (PSU) — No la ignores</h2>
+        <p>Convierte corriente de la pared en energía limpia para tus componentes. Una mala PSU puede matar todo lo demás.</p>
+        <ul>
+          <li>Certificación <strong>80 Plus Bronze/Gold</strong> mínimo.</li>
+          <li>Potencia: suma consumo CPU+GPU + 100-150W margen. Ej: RTX 4070 (200W) + Ryzen 7 (65W) = ~265W → PSU 600-750W.</li>
+          <li>Marcas confiables: Seasonic, Corsair (RM/RMi/HX), be quiet!, Super Flower, EVGA (G/P/T series).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>❄️ Refrigeración</h2>
+        <p><strong>Air cooler</strong> (disipador aire): Barato, confiable, sin mantenimiento. Noctua, Thermalright, be quiet! — top tier.</p>
+        <p><strong>AIO líquido</strong> (All-In-One): Mejor estética, maneja picos de calor mejor, algo de riesgo (bomba, fugas raras). 240mm/280mm para CPU media, 360mm/420mm para alta gama.</p>
+        <div class="highlight-box">
+          <h4>Regla de oro</h4>
+          <p>Un buen air cooler de -60 (Thermalright Phantom Spirit, Peerless Assassin) le gana a muchos AIO de +. Solo ve AIO si quieres estética o CPU muy caliente (i9, Ryzen 9 7950X).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>📋 Resumen rápido para tu próxima PC</h2>
+        <table style="width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem">
+          <thead>
+            <tr style="background:rgba(6,182,212,.1);border-bottom:1px solid var(--border)">
+              <th style="padding:.75rem;text-align:left;color:var(--neon)">Uso principal</th>
+              <th style="padding:.75rem;text-align:left;color:var(--neon)">CPU</th>
+              <th style="padding:.75rem;text-align:left;color:var(--neon)">RAM</th>
+              <th style="padding:.75rem;text-align:left;color:var(--neon)">Almacenamiento</th>
+              <th style="padding:.75rem;text-align:left;color:var(--neon)">GPU</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem">Oficina / Estudio</td><td style="padding:.75rem">i5-13400 / R5 7500F</td><td style="padding:.75rem">16 GB DDR5</td><td style="padding:.75rem">500 GB NVMe</td><td style="padding:.75rem">Integrada</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem">Gaming 1080p</td><td style="padding:.75rem">i5-13600K / R5 7600X</td><td style="padding:.75rem">16-32 GB DDR5</td><td style="padding:.75rem">1 TB NVMe</td><td style="padding:.75rem">RTX 4060 / RX 7600</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem">Gaming 1440p / Creación</td><td style="padding:.75rem">i7-13700K / R7 7800X3D</td><td style="padding:.75rem">32 GB DDR5</td><td style="padding:.75rem">1-2 TB NVMe</td><td style="padding:.75rem">RTX 4070 / 4070 Super</td></tr>
+            <tr><td style="padding:.75rem">Pro: Video 4K / 3D / IA</td><td style="padding:.75rem">i9-13900K / R9 7950X / Threadripper</td><td style="padding:.75rem">64-128 GB DDR5</td><td style="padding:.75rem">2-4 TB NVMe Gen4</td><td style="padding:.75rem">RTX 4080/4090 / Pro</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </article>
+
+    <div style="text-align:center;margin-top:3rem">
+      <a href="/edu" class="btn-back">← Volver a lecciones</a>
+    </div>
+  </div>
+</main>
+
+<footer style="background:#020617;color:#94a3b8;padding:2.5rem 2rem;text-align:center">
+  <div class="logo-text" style="margin-bottom:.7rem">WORKFORCE <span>MX</span></div>
+  <p>✉️ admin@workforcemx.com | 📞 +52 33 2953 1372</p>
+  <p style="font-size:.85rem;margin-top:.7rem">#WorkForceMX #WFConnect #Educación</p>
+</footer>
+
+<div id="wf-form-modal">
+  <div class="wf-form-content">
+    <button onclick="closeWfForm()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.8rem;cursor:pointer">×</button>
+    <h3 style="text-align:center;margin-bottom:1.5rem">Cuéntanos tu proyecto</h3>
+    <form id="wf-contact-form" action="https://formsubmit.co/admin@workforcemx.com" method="POST">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_template" value="table">
+      <select name="tipo" required>
+        <option value="" disabled selected>Selecciona el tipo de proyecto</option>
+        <option value="App">App</option><option value="Excel">Excel</option><option value="Edición">Edición</option><option value="Publicidad">Publicidad</option><option value="Página Web">Página Web</option><option value="Otro">Otro</option>
+      </select>
+      <input type="text" name="nombre" placeholder="Nombre" required>
+      <input type="tel" name="whatsapp" placeholder="WhatsApp" required>
+      <input type="email" name="correo" placeholder="Correo">
+      <textarea name="descripcion" placeholder="Descripción del proyecto" required></textarea>
+      <input type="hidden" name="_subject" value="Nuevo proyecto desde Workforce MX">
+      <button type="submit" style="padding:1rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer">Enviar</button>
+      <div id="wf-form-errors"></div>
+    </form>
+    <div id="wf-success-msg"><h4 style="color:#10b981">¡Registro enviado!</h4><p>Tu registro está hecho. Espera respuesta.</p></div>
+  </div>
+</div>
+
+<script>
+function openWfForm(){document.getElementById('wf-form-modal').classList.add('active');document.getElementById('wf-contact-form').style.display='flex';document.getElementById('wf-success-msg').classList.remove('active')}
+function closeWfForm(){document.getElementById('wf-form-modal').classList.remove('active')}
+document.getElementById('wf-form-modal').addEventListener('click',function(e){if(e.target.id==='wf-form-modal')closeWfForm()});
+document.getElementById('wf-contact-form').addEventListener('submit',function(e){e.preventDefault();var name=this.nombre.value.trim(),wp=this.whatsapp.value.trim(),desc=this.descripcion.value.trim(),err=[];if(!name)err.push('El nombre es obligatorio');if(!wp)err.push('El WhatsApp es obligatorio');if(!desc)err.push('La descripción del proyecto es obligatoria');var d=document.getElementById('wf-form-errors');d.innerHTML='';if(err.length){err.forEach(function(x){var p=document.createElement('p');p.className='wf-error';p.textContent=x;d.appendChild(p)});return}var btn=this.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Enviando...';fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('wf-contact-form').style.display='none';document.getElementById('wf-success-msg').classList.add('active');setTimeout(closeWfForm,3000)}else{d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}}).catch(function(){d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}).finally(function(){btn.disabled=false;btn.textContent='Enviar'})});
+</script>
+<script src="assets/js/chat.js" data-api-url="/api/chat"></script>
+</body>
+</html>

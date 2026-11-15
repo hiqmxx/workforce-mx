@@ -1,0 +1,389 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python para negocios | WorkForce MX</title>
+<meta name="description" content="Automatiza tareas repetitivas con Python: leer/escribir Excel, enviar emails, web scraping básico. Ejemplo de script simple incluido.">
+<meta name="theme-color" content="#020617">
+<link rel="canonical" href="https://www.workforcemx.com/edu-leccion-python">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="WorkForce MX">
+<meta property="og:title" content="Python para negocios">
+<meta property="og:description" content="Automatiza tareas repetitivas y procesos de tu negocio con Python.">
+<meta property="og:url" content="https://www.workforcemx.com/edu-leccion-python">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python para negocios | WorkForce MX">
+<meta name="twitter:description" content="Aprende a automatizar Excel, emails y web scraping con Python.">
+<link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020617;--bg2:#0a0e17;--card:#0f172a;--card2:#111827;--accent:#3b82f6;--neon:#06b6d4;--cyan:#22d3ee;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;--glow:0 0 20px rgba(6,182,212,.35)}
+body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(ellipse at top,#0b1226 0%,#020617 65%);color:var(--text);overflow-x:hidden}
+.logo-text{font-size:1.6rem;font-weight:900;letter-spacing:.08em}
+.logo-text span{color:var(--neon)}
+.glow{box-shadow:var(--glow);border:1px solid var(--border)}
+.btn-neon{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.2rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;text-decoration:none;border-radius:12px;font-weight:700;box-shadow:0 0 24px rgba(59,130,246,.5)}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.2rem;background:rgba(255,255,255,.05);color:white;text-decoration:none;border:1px solid var(--border);border-radius:12px;font-weight:600}
+.lang-badge{padding:.7rem .4rem;border:1px solid var(--border);border-radius:10px;text-align:center;background:rgba(15,23,42,.8);font-size:.82rem;font-weight:600}
+.card{border-radius:16px;transition:all .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 0 30px rgba(6,182,212,.35)}
+.svc-hex{width:56px;height:56px;margin:0 auto 1rem;border:2px solid var(--neon);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 0 16px rgba(6,182,212,.4)}
+#wf-form-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,.85);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center}
+#wf-form-modal.active{display:flex}
+.wf-form-content{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative}
+#wf-contact-form{display:none;flex-direction:column;gap:1rem}
+#wf-contact-form select,#wf-contact-form input,#wf-contact-form textarea{width:100%;padding:.875rem 1rem;background:#0a0e17;border:1px solid var(--border);border-radius:10px;color:var(--text)}
+#wf-success-msg{display:none;text-align:center;padding:2rem}
+#wf-success-msg.active{display:block}
+.wf-error{color:#f87171;font-size:.875rem}
+.lesson-content h2{font-size:1.5rem;font-weight:800;color:var(--neon);margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.lesson-content h3{font-size:1.2rem;font-weight:700;color:var(--text);margin:1.5rem 0 .75rem}
+.lesson-content p{line-height:1.8;color:var(--muted);margin-bottom:1rem}
+.lesson-content ul{margin:1rem 0 1rem 1.5rem;line-height:1.8;color:var(--muted)}
+.lesson-content li{margin-bottom:.5rem}
+.lesson-content code{background:rgba(59,130,246,.15);padding:.2rem .4rem;border-radius:6px;font-family:'JetBrains Mono',monospace;color:#93c5fd}
+.lesson-content pre{background:#0a0e17;border:1px solid var(--border);border-radius:10px;padding:1rem;overflow-x:auto;margin:1rem 0}
+.lesson-content pre code{background:none;padding:0;color:#e2e8f0}
+.highlight-box{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:10px;padding:1.5rem;margin:1.5rem 0}
+.highlight-box h4{color:var(--neon);font-weight:800;margin-bottom:.75rem}
+.btn-back{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.75rem;background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:10px;font-weight:600;text-decoration:none;transition:all .2s}
+.btn-back:hover{background:rgba(59,130,246,.3);color:#fff;border-color:#60a5fa}
+@media(max-width:768px){.lesson-content h2{font-size:1.3rem}.lesson-content h3{font-size:1.1rem}}
+</style>
+</head>
+<body>
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,6,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)">
+  <div style="max-width:1280px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center">
+    <div class="logo-text">WORKFORCE <span>MX</span></div>
+    <div style="display:flex;gap:1.5rem;align-items:center">
+      <a href="/" style="color:var(--text);text-decoration:none">Inicio</a>
+      <a href="#servicios" style="color:var(--text);text-decoration:none">Servicios</a>
+      <a href="#productos" style="color:var(--text);text-decoration:none">Productos</a>
+      <a href="/edu" style="color:var(--neon);text-decoration:none;font-weight:700">Educación</a>
+      <button onclick="wfmxOpenChat()" style="background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:999px;padding:.4rem 1rem;font-weight:600;cursor:pointer">💬 Chat</button>
+      <a href="#contacto" style="color:var(--text);text-decoration:none">Contacto</a>
+    </div>
+  </div>
+</nav>
+
+<header style="min-height:50vh;text-align:center;padding:140px 2rem 60px;position:relative">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="display:inline-block;padding:.5rem 1.5rem;border:1px solid rgba(6,182,212,.5);border-radius:50px;color:#67e8f9;font-size:.875rem;font-weight:600;margin-bottom:1.5rem">🐍 Programación</div>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;line-height:1.1">Python para<br><span style="color:var(--neon);text-shadow:0 0 30px rgba(6,182,212,.8)">negocios</span></h1>
+    <p style="font-size:1.2rem;color:#cbd5e1;margin-top:1.5rem;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.7">No necesitas ser programador. Python es la navaja suiza para automatizar lo aburrido: Excel, emails, web, reportes. Te enseño lo justo para empezar hoy.</p>
+  </div>
+</header>
+
+<main style="padding:40px 2rem 80px">
+  <div style="max-width:900px;margin:0 auto">
+    <article class="lesson-content">
+      <section>
+        <h2>🐍 Qué es Python (y por qué a ti te importa)</h2>
+        <p>Python es un lenguaje de programación <strong>legible, potente y con librerías para todo</strong>. Se escribe casi como inglés y hace el trabajo pesado por ti.</p>
+        <ul>
+          <li><strong>Sintaxis limpia</strong>: indentación en vez de llaves, se lee como pseudocódigo.</li>
+          <li><strong>Ecosistema brutal</strong>: <code>pandas</code> (datos/Excel), <code>openpyxl</code> (Excel nativo), <code>requests</code> (web), <code>smtplib</code> (email), <code>selenium/playwright</code> (navegador real), <code>beautifulsoup</code> (scraping), <code>schedule</code> (tareas programadas).</li>
+          <li><strong>Corre en todo lado</strong>: Windows, Mac, Linux, servidores, contenedores, la nube.</li>
+          <li><strong>Gratis y open source</strong>: sin licencias, comunidad enorme, miles de tutoriales.</li>
+        </ul>
+        <div class="highlight-box">
+          <h4>La mentalidad correcta</h4>
+          <p>No aprendas Python "por si acaso". Aprende a <strong>resolver TU problema</strong>: "Tardo 2 horas copiando datos de 20 Excels a uno maestro" → script de 15 min → ahorras 2 horas/semana = 100 horas/año. Eso es ROI real.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🛠️ Instalación rápida (Windows)</h2>
+        <ol style="margin:1rem 0 1rem 1.5rem;line-height:2;color:var(--muted)">
+          <li>Ve a <a href="https://python.org/downloads" style="color:var(--accent)">python.org/downloads</a> → Descarga instalador Windows (64-bit).</li>
+          <li><strong>MUY IMPORTANTE</strong>: Marca <code>☑ Add Python to PATH</code> antes de instalar.</li>
+          <li>Instala → Abre PowerShell/CMD → escribe <code>python --version</code> → debe salir versión (ej. 3.12.x).</li>
+          <li>Editor: <strong>VS Code</strong> (gratis, mejor experiencia) + extensión <code>Python</code> de Microsoft. O <strong>PyCharm Community</strong>.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>📦 Librerías esenciales para negocios</h2>
+        <table style="width:100%;border-collapse:collapse;margin:1rem 0;font-size:.95rem">
+          <thead>
+            <tr style="background:rgba(6,182,212,.1);border-bottom:1px solid var(--border)">
+              <th style="padding:.75rem;text-align:left;color:var(--neon)">Librería</th>
+              <th style="padding:.75rem;text-align:left;color:var(--neon)">Para qué</th>
+              <th style="padding:.75rem;text-align:left;color:var(--neon)">Instalar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><code>pandas</code></td><td style="padding:.75rem">Leer/escribir Excel, CSV, JSON; limpiar, filtrar, agrupar, pivotar datos. <strong>La navaja suiza.</strong></td><td style="padding:.75rem"><code>pip install pandas openpyxl</code></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><code>openpyxl</code></td><td style="padding:.75rem">Manipular .xlsx nativo: formato, fórmulas, gráficos, validaciones, hoja protegida.</td><td style="padding:.75rem"><code>pip install openpyxl</code></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><code>requests</code></td><td style="padding:.75rem">Peticiones HTTP simples: APIs, descargar archivos, webhooks, consultar servicios.</td><td style="padding:.75rem"><code>pip install requests</code></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><code>beautifulsoup4</code></td><td style="padding:.75rem">Parsear HTML estático (scraping simple). Rápido, ligero.</td><td style="padding:.75rem"><code>pip install beautifulsoup4 lxml</code></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><code>selenium / playwright</code></td><td style="padding:.75rem">Automatizar navegador REAL (JavaScript, login, clicks, scroll, captchas). Playwright = más moderno/rápido.</td><td style="padding:.75rem"><code>pip install playwright && playwright install</code></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.75rem"><code>python-dotenv</code></td><td style="padding:.75rem">Cargar variables de entorno (.env) para no hardcodear contraseñas, API keys.</td><td style="padding:.75rem"><code>pip install python-dotenv</code></td></tr>
+            <tr><td style="padding:.75rem"><code>schedule</code></td><td style="padding:.75rem">Programar tareas dentro del script: <code>cada día a las 8:00</code>, <code>cada lunes</code>, <code>cada 10 min</code>.</td><td style="padding:.75rem"><code>pip install schedule</code></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>📊 Caso 1: Leer y escribir Excel (pandas + openpyxl)</h2>
+        <p>El 80% de automatización de oficina es "juntar Excels, limpiar, sacar reporte".</p>
+        <pre><code>import pandas as pd
+
+# 1. Leer múltiples archivos de una carpeta
+archivos = ['ventas_ene.xlsx', 'ventas_feb.xlsx', 'ventas_mar.xlsx']
+dfs = [pd.read_excel(a) for a in archivos]
+todo = pd.concat(dfs, ignore_index=True)
+
+# 2. Limpiar: quitar duplicados, nulos, estandarizar
+todo = todo.drop_duplicates()
+todo['fecha'] = pd.to_datetime(todo['fecha'], errors='coerce')
+todo['cliente'] = todo['cliente'].str.strip().str.title()
+
+# 3. Agrupar y resumir
+resumen = todo.groupby(['cliente', 'producto']).agg(
+    total_ventas=('importe', 'sum'),
+    num_pedidos=('pedido_id', 'count')
+).reset_index()
+
+# 4. Exportar a Excel con formato
+with pd.ExcelWriter('reporte_consolidado.xlsx', engine='openpyxl') as writer:
+    resumen.to_excel(writer, sheet_name='Resumen', index=False)
+    todo.to_excel(writer, sheet_name='Detalle', index=False)
+
+print('✅ Reporte generado: reporte_consolidado.xlsx')</code></pre>
+        <div class="highlight-box">
+          <h4>Tip pro</h4>
+          <p>Usa <code>pd.read_excel(..., dtype={'columna': str})</code> para forzar texto y evitar que pandas convierta códigos con ceros a la izquierda (ej. <code>00123</code> → <code>123</code>).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>📧 Caso 2: Enviar emails automáticos (smtplib + email)</h2>
+        <p>Envía reportes, alertas, recordatorios. Usa <strong>contraseña de aplicación</strong> (no tu pass principal) en Gmail/Outlook.</p>
+        <pre><code>import smtplib
+from email.message import EmailMessage
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Lee .env con EMAIL_USER, EMAIL_PASS
+
+def enviar_email(destino, asunto, cuerpo, adjunto_path=None):
+    msg = EmailMessage()
+    msg['Subject'] = asunto
+    msg['From'] = os.getenv('EMAIL_USER')
+    msg['To'] = destino
+    msg.set_content(cuerpo)
+
+    if adjunto_path:
+        with open(adjunto_path, 'rb') as f:
+            msg.add_attachment(f.read(), maintype='application',
+                               subtype='vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                               filename=os.path.basename(adjunto_path))
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASS'))
+        smtp.send_message(msg)
+    print(f'📧 Enviado a {destino}')
+
+# Uso
+enviar_email(
+    'jefe@empresa.com',
+    'Reporte semanal ventas',
+    'Hola, adjunto el reporte consolidado de esta semana.',
+    'reporte_consolidado.xlsx'
+)</code></pre>
+        <div class="highlight-box">
+          <h4>Seguridad</h4>
+          <p>NUNCA pongas contraseñas en el código. Crea archivo <code>.env</code> (añádelo a <code>.gitignore</code>):<br><code>EMAIL_USER=tu@email.com</code><br><code>EMAIL_PASS=contraseña_app_16_chars</code></p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🌐 Caso 3: Web scraping básico (requests + BeautifulSoup)</h2>
+        <p>Extrae datos de webs públicas: precios, catálogos, noticias, tablas. <strong>Respeta robots.txt y términos de uso.</strong></p>
+        <pre><code>import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+url = 'https://ejemplo.com/productos'
+headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+
+resp = requests.get(url, headers=headers, timeout=10)
+resp.raise_for_status()
+
+soup = BeautifulSoup(resp.text, 'lxml')
+
+productos = []
+for item in soup.select('.producto-card'):
+    nombre = item.select_one('.nombre').get_text(strip=True)
+    precio = item.select_one('.precio').get_text(strip=True)
+    stock = item.select_one('.stock').get_text(strip=True)
+    productos.append({'nombre': nombre, 'precio': precio, 'stock': stock})
+
+df = pd.DataFrame(productos)
+df.to_excel('productos_scrapeados.xlsx', index=False)
+print(f'✅ {len(df)} productos guardados')</code></pre>
+        <div class="highlight-box">
+          <h4>Cuándo usar Selenium/Playwright</h4>
+          <p>Si la web carga datos con JavaScript (React, Vue, SPA), <code>requests</code> no ve el contenido renderizado. Ahí usa <code>playwright</code> (más rápido y fiable que Selenium hoy).</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>⏰ Caso 4: Automatizar ejecución (schedule + Windows Task Scheduler)</h2>
+        <p>Que corra solo mientras duermes.</p>
+        <pre><code>import schedule
+import time
+from mi_script import generar_reporte, enviar_email
+
+# Definir tareas
+schedule.every().day.at('07:00').do(generar_reporte)
+schedule.every().monday.at('08:00').do(enviar_email, 'jefe@empresa.com', 'Reporte semanal', 'Adjunto reporte', 'reporte.xlsx')
+schedule.every(10).minutes.do(verificar_stock_web)
+
+print('⏳ Scheduler corriendo... (Ctrl+C para parar)')
+while True:
+    schedule.run_pending()
+    time.sleep(1)</code></pre>
+        <div class="highlight-box">
+          <h4>En producción: Task Scheduler de Windows</h4>
+          <p>No dejes consola abierta. Crea tarea programada:<br>
+          Acción: <code>python.exe</code><br>
+          Argumentos: <code>C:\ruta\script.py</code><br>
+          Iniciar en: <code>C:\ruta\</code><br>
+          Trigger: Diario, Semanal, Al iniciar sesión, etc. Corre en segundo plano, sin ventana.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>🎯 Script completo de ejemplo: "Consolida y avisa"</h2>
+        <p>Este script une todo: lee Excels de carpeta → consolida → guarda reporte → email al jefe. Cópialo, adapta rutas y credenciales, úsalo.</p>
+        <pre><code>#!/usr/bin/env python3
+# consolida_ventas.py — Ejecuta: python consolida_ventas.py
+import os, glob, pandas as pd, smtplib
+from email.message import EmailMessage
+from dotenv import load_dotenv
+
+load_dotenv()
+CARPETA_DATOS = r'C:\Users\TuUsuario\Documents\Ventas_Mensuales'
+REPORTE_SALIDA = 'reporte_ventas_consolidado.xlsx'
+EMAIL_DESTINO = 'director@empresa.com'
+
+def main():
+    print('🔄 Buscando archivos...')
+    archivos = glob.glob(os.path.join(CARPETA_DATOS, '*.xlsx'))
+    if not archivos:
+        print('❌ No hay .xlsx en la carpeta')
+        return
+
+    print(f'📂 Encontrados {len(archivos)} archivos')
+    dfs = []
+    for a in archivos:
+        try:
+            df = pd.read_excel(a)
+            df['archivo_origen'] = os.path.basename(a)
+            dfs.append(df)
+        except Exception as e:
+            print(f'⚠️ Error leyendo {a}: {e}')
+
+    todo = pd.concat(dfs, ignore_index=True)
+    todo = todo.drop_duplicates()
+    todo['fecha'] = pd.to_datetime(todo['fecha'], errors='coerce')
+
+    # Resumen por vendedor y mes
+    todo['mes'] = todo['fecha'].dt.to_period('M')
+    resumen = todo.groupby(['vendedor', 'mes']).agg(
+        total=('importe', 'sum'),
+        pedidos=('pedido_id', 'count')
+    ).reset_index()
+
+    # Guardar Excel con 2 hojas
+    with pd.ExcelWriter(REPORTE_SALIDA, engine='openpyxl') as w:
+        resumen.to_excel(w, sheet_name='Resumen', index=False)
+        todo.to_excel(w, sheet_name='Detalle', index=False)
+
+    print(f'✅ Reporte guardado: {REPORTE_SALIDA}')
+
+    # Email
+    enviar_email(EMAIL_DESTINO, 'Reporte consolidado ventas',
+                 'Adjunto reporte automático generado hoy.', REPORTE_SALIDA)
+
+def enviar_email(to, subject, body, attachment):
+    msg = EmailMessage()
+    msg['Subject'], msg['From'], msg['To'] = subject, os.getenv('EMAIL_USER'), to
+    msg.set_content(body)
+    with open(attachment, 'rb') as f:
+        msg.add_attachment(f.read(), maintype='application',
+                           subtype='vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                           filename=os.path.basename(attachment))
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as s:
+        s.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASS'))
+        s.send_message(msg)
+    print('📧 Email enviado')
+
+if __name__ == '__main__':
+    main()</code></pre>
+      </section>
+
+      <section>
+        <h2>🚀 Tu siguiente paso</h2>
+        <ol style="margin:1rem 0 1rem 1.5rem;line-height:2;color:var(--muted)">
+          <li>Identifica UNA tarea repetitiva que haces en Excel/email/web (15-60 min/semana).</li>
+          <li>Instala Python + VS Code + <code>pip install pandas openpyxl requests python-dotenv</code>.</li>
+          <li>Copia el script ejemplo, cambia rutas/emails, pon tu <code>.env</code>.</li>
+          <li>Ejecuta: <code>python consolida_ventas.py</code>. Verifica que funciona.</li>
+          <li>Automatiza con Task Scheduler. Olvídate.</li>
+        </ol>
+        <div class="highlight-box" style="text-align:center">
+          <h4>¿Atascado? Te ayudo.</h4>
+          <p>En WorkForce MX automatizo esto para ti: scripts a medida, integraciones, bots, dashboards. <a href="https://wa.me/523329531372" style="color:var(--accent);font-weight:700">Escríbeme por WhatsApp</a> y vemos tu caso.</p>
+        </div>
+      </section>
+    </article>
+
+    <div style="text-align:center;margin-top:3rem">
+      <a href="/edu" class="btn-back">← Volver a lecciones</a>
+    </div>
+  </div>
+</main>
+
+<footer style="background:#020617;color:#94a3b8;padding:2.5rem 2rem;text-align:center">
+  <div class="logo-text" style="margin-bottom:.7rem">WORKFORCE <span>MX</span></div>
+  <p>✉️ admin@workforcemx.com | 📞 +52 33 2953 1372</p>
+  <p style="font-size:.85rem;margin-top:.7rem">#WorkForceMX #WFConnect #Educación</p>
+</footer>
+
+<div id="wf-form-modal">
+  <div class="wf-form-content">
+    <button onclick="closeWfForm()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.8rem;cursor:pointer">×</button>
+    <h3 style="text-align:center;margin-bottom:1.5rem">Cuéntanos tu proyecto</h3>
+    <form id="wf-contact-form" action="https://formsubmit.co/admin@workforcemx.com" method="POST">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_template" value="table">
+      <select name="tipo" required>
+        <option value="" disabled selected>Selecciona el tipo de proyecto</option>
+        <option value="App">App</option><option value="Excel">Excel</option><option value="Edición">Edición</option><option value="Publicidad">Publicidad</option><option value="Página Web">Página Web</option><option value="Otro">Otro</option>
+      </select>
+      <input type="text" name="nombre" placeholder="Nombre" required>
+      <input type="tel" name="whatsapp" placeholder="WhatsApp" required>
+      <input type="email" name="correo" placeholder="Correo">
+      <textarea name="descripcion" placeholder="Descripción del proyecto" required></textarea>
+      <input type="hidden" name="_subject" value="Nuevo proyecto desde Workforce MX">
+      <button type="submit" style="padding:1rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer">Enviar</button>
+      <div id="wf-form-errors"></div>
+    </form>
+    <div id="wf-success-msg"><h4 style="color:#10b981">¡Registro enviado!</h4><p>Tu registro está hecho. Espera respuesta.</p></div>
+  </div>
+</div>
+
+<script>
+function openWfForm(){document.getElementById('wf-form-modal').classList.add('active');document.getElementById('wf-contact-form').style.display='flex';document.getElementById('wf-success-msg').classList.remove('active')}
+function closeWfForm(){document.getElementById('wf-form-modal').classList.remove('active')}
+document.getElementById('wf-form-modal').addEventListener('click',function(e){if(e.target.id==='wf-form-modal')closeWfForm()});
+document.getElementById('wf-contact-form').addEventListener('submit',function(e){e.preventDefault();var name=this.nombre.value.trim(),wp=this.whatsapp.value.trim(),desc=this.descripcion.value.trim(),err=[];if(!name)err.push('El nombre es obligatorio');if(!wp)err.push('El WhatsApp es obligatorio');if(!desc)err.push('La descripción del proyecto es obligatoria');var d=document.getElementById('wf-form-errors');d.innerHTML='';if(err.length){err.forEach(function(x){var p=document.createElement('p');p.className='wf-error';p.textContent=x;d.appendChild(p)});return}var btn=this.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Enviando...';fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('wf-contact-form').style.display='none';document.getElementById('wf-success-msg').classList.add('active');setTimeout(closeWfForm,3000)}else{d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}}).catch(function(){d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}).finally(function(){btn.disabled=false;btn.textContent='Enviar'})});
+</script>
+<script src="assets/js/chat.js" data-api-url="/api/chat"></script>
+</body>
+</html>

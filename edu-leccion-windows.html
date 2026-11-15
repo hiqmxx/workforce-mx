@@ -1,0 +1,309 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atajos de Windows | WorkForce MX</title>
+<meta name="description" content="Domina Windows con atajos: Win+E, Win+D, Win+L, Win+V, Win+Shift+S, Win+I, Win+flechas, Ctrl+Shift+Esc. Productividad pura.">
+<meta name="theme-color" content="#020617">
+<link rel="canonical" href="https://www.workforcemx.com/edu-leccion-windows">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="WorkForce MX">
+<meta property="og:title" content="Atajos de Windows">
+<meta property="og:description" content="Combinaciones de teclas y trucos para ser más productivo en Windows.">
+<meta property="og:url" content="https://www.workforcemx.com/edu-leccion-windows">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Atajos de Windows | WorkForce MX">
+<meta name="twitter:description" content="Los atajos esenciales de Windows para volar en tu PC.">
+<link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020617;--bg2:#0a0e17;--card:#0f172a;--card2:#111827;--accent:#3b82f6;--neon:#06b6d4;--cyan:#22d3ee;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;--glow:0 0 20px rgba(6,182,212,.35)}
+body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(ellipse at top,#0b1226 0%,#020617 65%);color:var(--text);overflow-x:hidden}
+.logo-text{font-size:1.6rem;font-weight:900;letter-spacing:.08em}
+.logo-text span{color:var(--neon)}
+.glow{box-shadow:var(--glow);border:1px solid var(--border)}
+.btn-neon{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.2rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;text-decoration:none;border-radius:12px;font-weight:700;box-shadow:0 0 24px rgba(59,130,246,.5)}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.2rem;background:rgba(255,255,255,.05);color:white;text-decoration:none;border:1px solid var(--border);border-radius:12px;font-weight:600}
+.lang-badge{padding:.7rem .4rem;border:1px solid var(--border);border-radius:10px;text-align:center;background:rgba(15,23,42,.8);font-size:.82rem;font-weight:600}
+.card{border-radius:16px;transition:all .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 0 30px rgba(6,182,212,.35)}
+.svc-hex{width:56px;height:56px;margin:0 auto 1rem;border:2px solid var(--neon);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 0 16px rgba(6,182,212,.4)}
+#wf-form-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,.85);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center}
+#wf-form-modal.active{display:flex}
+.wf-form-content{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative}
+#wf-contact-form{display:none;flex-direction:column;gap:1rem}
+#wf-contact-form select,#wf-contact-form input,#wf-contact-form textarea{width:100%;padding:.875rem 1rem;background:#0a0e17;border:1px solid var(--border);border-radius:10px;color:var(--text)}
+#wf-success-msg{display:none;text-align:center;padding:2rem}
+#wf-success-msg.active{display:block}
+.wf-error{color:#f87171;font-size:.875rem}
+.lesson-content h2{font-size:1.5rem;font-weight:800;color:var(--neon);margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.lesson-content h3{font-size:1.2rem;font-weight:700;color:var(--text);margin:1.5rem 0 .75rem}
+.lesson-content p{line-height:1.8;color:var(--muted);margin-bottom:1rem}
+.lesson-content ul{margin:1rem 0 1rem 1.5rem;line-height:1.8;color:var(--muted)}
+.lesson-content li{margin-bottom:.5rem}
+.lesson-content code{background:rgba(59,130,246,.15);padding:.2rem .4rem;border-radius:6px;font-family:'JetBrains Mono',monospace;color:#93c5fd;font-size:1rem}
+.lesson-content pre{background:#0a0e17;border:1px solid var(--border);border-radius:10px;padding:1rem;overflow-x:auto;margin:1rem 0}
+.lesson-content pre code{background:none;padding:0;color:var(--text)}
+.highlight-box{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:10px;padding:1.5rem;margin:1.5rem 0}
+.highlight-box h4{color:var(--neon);font-weight:800;margin-bottom:.75rem}
+.shortcut-card{background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:1.25rem;margin:1rem 0;display:flex;gap:1rem;align-items:flex-start}
+.shortcut-keys{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.5rem 1rem;font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent);white-space:nowrap;min-width:180px}
+.shortcut-desc{flex:1}
+.btn-back{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.75rem;background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:10px;font-weight:600;text-decoration:none;transition:all .2s}
+.btn-back:hover{background:rgba(59,130,246,.3);color:#fff;border-color:#60a5fa}
+@media(max-width:768px){.lesson-content h2{font-size:1.3rem}.lesson-content h3{font-size:1.1rem}.shortcut-card{flex-direction:column}.shortcut-keys{min-width:auto}}
+</style>
+</head>
+<body>
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,6,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)">
+  <div style="max-width:1280px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center">
+    <div class="logo-text">WORKFORCE <span>MX</span></div>
+    <div style="display:flex;gap:1.5rem;align-items:center">
+      <a href="/" style="color:var(--text);text-decoration:none">Inicio</a>
+      <a href="#servicios" style="color:var(--text);text-decoration:none">Servicios</a>
+      <a href="#productos" style="color:var(--text);text-decoration:none">Productos</a>
+      <a href="/edu" style="color:var(--neon);text-decoration:none;font-weight:700">Educación</a>
+      <button onclick="wfmxOpenChat()" style="background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:999px;padding:.4rem 1rem;font-weight:600;cursor:pointer">💬 Chat</button>
+      <a href="#contacto" style="color:var(--text);text-decoration:none">Contacto</a>
+    </div>
+  </div>
+</nav>
+
+<header style="min-height:50vh;text-align:center;padding:140px 2rem 60px;position:relative">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="display:inline-block;padding:.5rem 1.5rem;border:1px solid rgba(6,182,212,.5);border-radius:50px;color:#67e8f9;font-size:.875rem;font-weight:600;margin-bottom:1.5rem">🪟 Software</div>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;line-height:1.1">Atajos de<br><span style="color:var(--neon);text-shadow:0 0 30px rgba(6,182,212,.8)">Windows</span></h1>
+    <p style="font-size:1.2rem;color:#cbd5e1;margin-top:1.5rem;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.7">La tecla Windows (⊞) es tu superpoder. Estos atajos te ahorran clicks y te hacen ver pro. Memoriza los top 5 y ya ganas.</p>
+  </div>
+</header>
+
+<main style="padding:40px 2rem 80px">
+  <div style="max-width:900px;margin:0 auto">
+    <article class="lesson-content">
+      <section>
+        <h2>⭐ Top 5 — Aprende estos YA</h2>
+        <p>Si solo aprendes 5, que sean estos. Uso diario garantizado.</p>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + E</span>
+          <div class="shortcut-desc"><strong>Abrir Explorador de archivos</strong> — Al instante. Sin buscar icono, sin Win+R → explorer. <strong>El #1 que debes memorizar.</strong></div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + D</span>
+          <div class="shortcut-desc"><strong>Mostrar/ocultar Escritorio</strong> — Minimiza todo al instante. Otra vez: restaura. Perfecto para "jefe pasando" o acceder a acceso directo en escritorio.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + L</span>
+          <div class="shortcut-desc"><strong>Bloquear sesión</strong> — Seguridad instantánea. Te vas a café → Win+L. Vuelves → PIN/huella/face. <strong>Hábito obligatorio en oficina.</strong></div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + V</span>
+          <div class="shortcut-desc"><strong>Historial del portapapeles</strong> — Actívalo la primera vez (te pide). Guarda últimas 25 copias (texto, imágenes). Pega la de hace 10 min. <strong>Cambia la vida.</strong></div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + Shift + S</span>
+          <div class="shortcut-desc"><strong>Captura de pantalla (recorte)</strong> — Rectángulo, ventana, pantalla completa, forma libre. Se copia al portapapeles + notificación para anotar. Olvídate de PrtScn + Paint.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>⚙️ Sistema y configuración</h2>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + I</span>
+          <div class="shortcut-desc"><strong>Abrir Configuración</strong> — Directo a la app moderna. Más rápido que Inicio → engranaje.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + A</span>
+          <div class="shortcut-desc"><strong>Centro de acciones / Configuración rápida</strong> — Wi-Fi, Bluetooth, brillo, modo enfoque, proyección, nearby sharing.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + X</span>
+          <div class="shortcut-desc"><strong>Menú usuario avanzado (Power User)</strong> — Acceso directo: Admin. tareas, Admin. dispositivos, PowerShell, Ejecutar, Apagar, etc. <strong>Menú oculto pro.</strong></div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Ctrl + Shift + Esc</span>
+          <div class="shortcut-desc"><strong>Administrador de tareas directo</strong> — Salta Ctrl+Alt+Supr. Abre Admin. tareas al instante. Imprescindible cuando algo se cuelga.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + R</span>
+          <div class="shortcut-desc"><strong>Ejecutar</strong> — Comandos rápidos: <code>cmd</code>, <code>powershell</code>, <code>msconfig</code>, <code>regedit</code>, <code>control</code>, <code>.</code> (carpeta usuario), <code>shell:startup</code>.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + Pausa</span>
+          <div class="shortcut-desc"><strong>Propiedades del sistema (Acerca de)</strong> — Ver RAM, CPU, versión Windows, nombre equipo, ID producto. Rápido para specs.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🪟 Gestión de ventanas (Snap / Snapping)</h2>
+        <p>Windows 10/11 tiene el mejor gestor de ventanas nativo. Úsalo.</p>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + Flecha Izq / Der</span>
+          <div class="shortcut-desc"><strong>Anclar ventana a la mitad</strong> — Izquierda o derecha. Luego Win+Arriba/Abajo = cuadrante (esquina). Base del multitarea serio.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + Flecha Arriba / Abajo</span>
+          <div class="shortcut-desc"><strong>Maximizar / Restaurar / Minimizar</strong> — Si está a mitad: mueve a cuadrante superior/inferior. Si maximizada: restaura. Si normal: minimiza.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + Z</span>
+          <div class="shortcut-desc"><strong>Diseños de ajuste (Snap Layouts)</strong> — Windows 11: pasa ratón por botón maximizar o Win+Z → elige layout (2, 3, 4 ventanas).</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + Tab</span>
+          <div class="shortcut-desc"><strong>Vista de tareas (Timeline)</strong> — Ve todas las ventanas abiertas + escritorios virtuales + historial de actividades. Esc para salir.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + Ctrl + D</span>
+          <div class="shortcut-desc"><strong>Nuevo escritorio virtual</strong> — Separa trabajo / personal / proyectos. Win+Ctrl+Flecha Izq/Der = cambiar. Win+Ctrl+F4 = cerrar actual.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + Inicio</span>
+          <div class="shortcut-desc"><strong>Minimizar todo MENOS la activa</strong> — Limpia el ruido, foco en lo que haces.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + Shift + Flecha Izq/Der</span>
+          <div class="shortcut-desc"><strong>Mover ventana a otro monitor</strong> — Multi-monitor: pasa ventana al monitor de al lado al instante.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>🔍 Búsqueda y lanzamiento</h2>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + S / Win + Q</span>
+          <div class="shortcut-desc"><strong>Búsqueda de Windows</strong> — Escribe nombre de app, archivo, config, web. Enter = abre. <strong>La forma más rápida de lanzar cualquier cosa.</strong></div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + 1 / 2 / 3 ... 9</span>
+          <div class="shortcut-desc"><strong>Abrir app anclada en barra</strong> — Por posición (1 = primera a la derecha de Inicio). Win+Shift+1 = nueva instancia.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + T</span>
+          <div class="shortcut-desc"><strong>Ciclar apps en barra</strong> — Flechas para moverte, Enter para abrir/focus. Sin ratón.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>♿ Accesibilidad y extras útiles</h2>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + + / -</span>
+          <div class="shortcut-desc"><strong>Lupa (Zoom)</strong> — Win++ = acerca, Win+- = aleja, Win+Esc = cierra. Ideal para presentar o leer letra chica.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + H</span>
+          <div class="shortcut-desc"><strong>Dictado por voz</strong> — Habla y escribe. Funciona bien en español. Micrófono + permiso primera vez.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + . (punto) / ; (punto y coma)</span>
+          <div class="shortcut-desc"><strong>Panel emojis / kaomojis / símbolos</strong> — 🎉 😎 📊 → inserta en cualquier campo de texto.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + G</span>
+          <div class="shortcut-desc"><strong>Barra de juegos (Xbox Game Bar)</strong> — Grabar pantalla (Win+Alt+R), captura, audio, rendimiento, widgets. No solo para gamers.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + Alt + R</span>
+          <div class="shortcut-desc"><strong>Iniciar/parar grabación pantalla</strong> — Directo sin abrir Game Bar. Guarda en Capturas/Vídeos.</div>
+        </div>
+        <div class="shortcut-card">
+          <span class="shortcut-keys">Win + K</span>
+          <div class="shortcut-desc"><strong>Conectar / Proyectar</strong> — Pantalla inalámbrica (Miracast), dock, segunda pantalla. Rápido para presentar.</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>💡 Combos de poder (flujos reales)</h2>
+        <div class="highlight-box">
+          <h4>Setup mañana productiva</h4>
+          <p><code>Win+D</code> (limpiar) → <code>Win+1</code> (navegador) → <code>Win+Flecha Izq</code> → <code>Win+2</code> (Outlook/Teams) → <code>Win+Flecha Der</code> → <code>Win+Flecha Arriba</code> (cuadrante sup. der. para notas/To-Do).</p>
+        </div>
+        <div class="highlight-box">
+          <h4>Algo se cuelga</h4>
+          <p><code>Ctrl+Shift+Esc</code> (Admin. tareas) → busca proceso → Supr / Clic derecho → Finalizar. Si todo congelado: <code>Ctrl+Alt+Supr</code> → Admin. tareas.</p>
+        </div>
+        <div class="highlight-box">
+          <h4>Captura y comparte</h4>
+          <p><code>Win+Shift+S</code> (recorte) → anota si quieres → <code>Ctrl+V</code> en WhatsApp/Teams/Email. Listo.</p>
+        </div>
+        <div class="highlight-box">
+          <h4>Portapapeles multi-elemento</h4>
+          <p>Copias 3 cosas seguidas (<code>Ctrl+C</code> x3) → <code>Win+V</code> → clic en la que quieras pegar. Funciona entre apps.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>📋 Chuleta rápida (guárdala)</h2>
+        <table style="width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem">
+          <thead>
+            <tr style="background:rgba(6,182,212,.1);border-bottom:1px solid var(--border)">
+              <th style="padding:.6rem;text-align:left;color:var(--neon)">Atajo</th>
+              <th style="padding:.6rem;text-align:left;color:var(--neon)">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+E</code></td><td style="padding:.6rem">Explorador de archivos</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+D</code></td><td style="padding:.6rem">Mostrar Escritorio</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+L</code></td><td style="padding:.6rem">Bloquear sesión</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+V</code></td><td style="padding:.6rem">Historial portapapeles</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+Shift+S</code></td><td style="padding:.6rem">Captura recorte</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+I</code></td><td style="padding:.6rem">Configuración</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+X</code></td><td style="padding:.6rem">Menú avanzado (Power User)</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Ctrl+Shift+Esc</code></td><td style="padding:.6rem">Admin. tareas directo</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+Flechas</code></td><td style="padding:.6rem">Snap ventanas (mitad/cuadrante)</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+Tab</code></td><td style="padding:.6rem">Vista tareas / Escritorios virtuales</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+Ctrl+D</code></td><td style="padding:.6rem">Nuevo escritorio virtual</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+S</code></td><td style="padding:.6rem">Búsqueda universal</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+.</code></td><td style="padding:.6rem">Emojis / símbolos</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+G</code></td><td style="padding:.6rem">Game Bar (grabar pantalla)</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:.6rem"><code>Win+Shift+Flecha</code></td><td style="padding:.6rem">Mover ventana a otro monitor</td></tr>
+            <tr><td style="padding:.6rem"><code>Win+R</code></td><td style="padding:.6rem">Ejecutar (cmd, powershell, etc.)</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </article>
+
+    <div style="text-align:center;margin-top:3rem">
+      <a href="/edu" class="btn-back">← Volver a lecciones</a>
+    </div>
+  </div>
+</main>
+
+<footer style="background:#020617;color:#94a3b8;padding:2.5rem 2rem;text-align:center">
+  <div class="logo-text" style="margin-bottom:.7rem">WORKFORCE <span>MX</span></div>
+  <p>✉️ admin@workforcemx.com | 📞 +52 33 2953 1372</p>
+  <p style="font-size:.85rem;margin-top:.7rem">#WorkForceMX #WFConnect #Educación</p>
+</footer>
+
+<div id="wf-form-modal">
+  <div class="wf-form-content">
+    <button onclick="closeWfForm()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.8rem;cursor:pointer">×</button>
+    <h3 style="text-align:center;margin-bottom:1.5rem">Cuéntanos tu proyecto</h3>
+    <form id="wf-contact-form" action="https://formsubmit.co/admin@workforcemx.com" method="POST">
+      <input type="hidden" name="_captcha" value="true">
+      <input type="hidden" name="_template" value="table">
+      <select name="tipo" required>
+        <option value="" disabled selected>Selecciona el tipo de proyecto</option>
+        <option value="App">App</option><option value="Excel">Excel</option><option value="Edición">Edición</option><option value="Publicidad">Publicidad</option><option value="Página Web">Página Web</option><option value="Otro">Otro</option>
+      </select>
+      <input type="text" name="nombre" placeholder="Nombre" required>
+      <input type="tel" name="whatsapp" placeholder="WhatsApp" required>
+      <input type="email" name="correo" placeholder="Correo">
+      <textarea name="descripcion" placeholder="Descripción del proyecto" required></textarea>
+      <input type="hidden" name="_subject" value="Nuevo proyecto desde Workforce MX">
+      <button type="submit" style="padding:1rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer">Enviar</button>
+      <div id="wf-form-errors"></div>
+    </form>
+    <div id="wf-success-msg"><h4 style="color:#10b981">¡Registro enviado!</h4><p>Tu registro está hecho. Espera respuesta.</p></div>
+  </div>
+</div>
+
+<script>
+function openWfForm(){document.getElementById('wf-form-modal').classList.add('active');document.getElementById('wf-contact-form').style.display='flex';document.getElementById('wf-success-msg').classList.remove('active')}
+function closeWfForm(){document.getElementById('wf-form-modal').classList.remove('active')}
+document.getElementById('wf-form-modal').addEventListener('click',function(e){if(e.target.id==='wf-form-modal')closeWfForm()});
+document.getElementById('wf-contact-form').addEventListener('submit',function(e){e.preventDefault();var name=this.nombre.value.trim(),wp=this.whatsapp.value.trim(),desc=this.descripcion.value.trim(),err=[];if(!name)err.push('El nombre es obligatorio');if(!wp)err.push('El WhatsApp es obligatorio');if(!desc)err.push('La descripción del proyecto es obligatoria');var d=document.getElementById('wf-form-errors');d.innerHTML='';if(err.length){err.forEach(function(x){var p=document.createElement('p');p.className='wf-error';p.textContent=x;d.appendChild(p)});return}var btn=this.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Enviando...';fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('wf-contact-form').style.display='none';document.getElementById('wf-success-msg').classList.add('active');setTimeout(closeWfForm,3000)}else{d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}}).catch(function(){d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}).finally(function(){btn.disabled=false;btn.textContent='Enviar'})});
+</script>
+<script src="assets/js/chat.js" data-api-url="/api/chat"></script>
+</body>
+</html>
