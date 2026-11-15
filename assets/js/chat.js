@@ -87,7 +87,7 @@
   }
 
   function greet() {
-    addMsg("Hola, soy el asistente de Workforce MX. ¿Qué necesitas? Te puedo orientar sobre servicios. Para cotizar, escríbenos directo por WhatsApp al 3329531372 o al correo admin@workforcemx.com.", "bot");
+    addMsg("Hola, soy el asistente de Workforce MX. Que necesitas? Te puedo orientar sobre servicios. Para cotizar, escribenos directo por WhatsApp al 3329531372 o al correo admin@workforcemx.com.", "bot");
   }
 
   function openPanel() {
