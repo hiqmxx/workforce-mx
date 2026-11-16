@@ -23,147 +23,251 @@
 <meta name="twitter:image" content="assets/logo.jpeg">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#020617;--bg2:#0a0e17;--card:#0f172a;--card2:#111827;--accent:#3b82f6;--neon:#06b6d4;--cyan:#22d3ee;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;--glow:0 0 20px rgba(6,182,212,.35)}
-body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(ellipse at top,#0b1226 0%,#020617 65%);color:var(--text);overflow-x:hidden}
-.logo-text{font-size:1.6rem;font-weight:900;letter-spacing:.08em}
+:root{
+  --bg:#020617;--bg2:#0a0e17;--card:#0f172a;--card2:#111827;
+  --accent:#3b82f6;--neon:#06b6d4;--cyan:#22d3ee;
+  --text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;
+  --glow:0 0 20px rgba(6,182,212,.35);
+  --radius:16px;--radius-sm:10px;
+}
+body{font-family:"Inter",system-ui,sans-serif;background:radial-gradient(ellipse at top,#0b1226 0%,#020617 65%);color:var(--text);overflow-x:hidden;line-height:1.6}
+.logo-text{font-size:clamp(1.25rem,4vw,1.6rem);font-weight:900;letter-spacing:.08em}
 .logo-text span{color:var(--neon)}
 .glow{box-shadow:var(--glow);border:1px solid var(--border)}
-.btn-neon{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.2rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;text-decoration:none;border-radius:12px;font-weight:700;box-shadow:0 0 24px rgba(59,130,246,.5)}
-.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;padding:1rem 2.2rem;background:rgba(255,255,255,.05);color:white;text-decoration:none;border:1px solid var(--border);border-radius:12px;font-weight:600}
-.lang-badge{padding:.7rem .4rem;border:1px solid var(--border);border-radius:10px;text-align:center;background:rgba(15,23,42,.8);font-size:.82rem;font-weight:600}
-.card{border-radius:16px;transition:all .3s}
+.btn-neon{display:inline-flex;align-items:center;gap:.5rem;padding:clamp(.875rem,3vw,1rem) clamp(1.5rem,4vw,2.2rem);background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;text-decoration:none;border-radius:12px;font-weight:700;box-shadow:0 0 24px rgba(59,130,246,.5);min-height:48px;min-width:48px;transition:.2s}
+.btn-neon:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(59,130,246,.6)}
+.btn-neon:active{transform:translateY(0)}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;padding:clamp(.875rem,3vw,1rem) clamp(1.5rem,4vw,2.2rem);background:rgba(255,255,255,.05);color:white;text-decoration:none;border:1px solid var(--border);border-radius:12px;font-weight:600;min-height:48px;min-width:48px;transition:.2s}
+.btn-ghost:hover{background:rgba(255,255,255,.1);border-color:var(--accent)}
+.lang-badge{padding:clamp(.5rem,2vw,.7rem) clamp(.3rem,1.5vw,.4rem);border:1px solid var(--border);border-radius:10px;text-align:center;background:rgba(15,23,42,.8);font-size:clamp(.7rem,2vw,.82rem);font-weight:600;white-space:nowrap}
+.card{border-radius:var(--radius);transition:all .3s}
 .card:hover{transform:translateY(-4px);box-shadow:0 0 30px rgba(6,182,212,.35)}
-.svc-hex{width:56px;height:56px;margin:0 auto 1rem;border:2px solid var(--neon);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 0 16px rgba(6,182,212,.4)}
-#wf-form-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,.85);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center}
+.svc-hex{width:clamp(48px,12vw,56px);height:clamp(48px,12vw,56px);margin:0 auto 1rem;border:2px solid var(--neon);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:clamp(1.2rem,3vw,1.5rem);box-shadow:0 0 16px rgba(6,182,212,.4)}
+#wf-form-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,.85);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center;padding:1rem}
 #wf-form-modal.active{display:flex}
-.wf-form-content{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative}
+.wf-form-content{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);max-width:500px;width:100%;max-height:90vh;overflow-y:auto;padding:clamp(1.5rem,4vw,2rem);position:relative}
 #wf-contact-form{display:none;flex-direction:column;gap:1rem}
-#wf-contact-form select,#wf-contact-form input,#wf-contact-form textarea{width:100%;padding:.875rem 1rem;background:#0a0e17;border:1px solid var(--border);border-radius:10px;color:var(--text)}
+#wf-contact-form select,#wf-contact-form input,#wf-contact-form textarea{width:100%;padding:clamp(.75rem,2.5vw,.875rem) 1rem;background:#0a0e17;border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:1rem}
+#wf-contact-form textarea{min-height:120px}
 #wf-success-msg{display:none;text-align:center;padding:2rem}
 #wf-success-msg.active{display:block}
 .wf-error{color:#f87171;font-size:.875rem}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,6,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-container{max-width:1280px;margin:0 auto;padding:1rem clamp(1rem,4vw,2rem);display:flex;justify-content:space-between;align-items:center}
+.nav-links{display:flex;gap:clamp(1rem,3vw,1.5rem);align-items:center;list-style:none}
+.nav-links a{color:var(--text);text-decoration:none;font-weight:500;transition:.2s;padding:.5rem 0;font-size:clamp(.9rem,2.5vw,1rem)}
+.nav-links a:hover{color:var(--neon)}
+.nav-links .btn-chat{background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:999px;padding:.4rem 1rem;font-weight:600;cursor:pointer;font-size:clamp(.85rem,2.5vw,.95rem);min-height:40px;display:inline-flex;align-items:center;gap:.4rem;white-space:nowrap}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:.5rem;color:var(--text)}
+.nav-toggle i{font-size:clamp(1.25rem,4vw,1.5rem)}
+
+section{padding:clamp(50px,10vw,70px) clamp(1rem,4vw,2rem)}
+section h2{font-size:clamp(1.8rem,5vw,2.5rem);font-weight:900;margin-bottom:clamp(1.5rem,4vw,2.5rem);text-align:center}
+section h2 span{color:var(--neon)}
+
+.section-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:clamp(1rem,3vw,1.5rem);max-width:1200px;margin:0 auto}
+.section-grid-prod{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(1rem,3vw,1.5rem);max-width:1200px;margin:0 auto}
+.section-grid-tech{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:clamp(.5rem,2vw,.7rem);max-width:1000px;margin:0 auto}
+
+#inicio{min-height:100vh;text-align:center;padding:clamp(120px,25vh,150px) clamp(1rem,4vw,2rem) clamp(60px,12vw,80px);position:relative}
+.hero-content{max-width:900px;margin:0 auto}
+.hero-badge{display:inline-block;padding:clamp(.4rem,1.5vw,.5rem) clamp(1rem,3vw,1.5rem);border:1px solid rgba(6,182,212,.5);border-radius:50px;color:#67e8f9;font-size:clamp(.75rem,2vw,.875rem);font-weight:600;margin-bottom:clamp(1rem,3vw,1.5rem)}
+.hero-title{font-size:clamp(2.5rem,8vw,5rem);font-weight:900;line-height:.95;margin-bottom:clamp(.75rem,2vw,1rem)}
+.hero-title span{color:var(--neon);text-shadow:0 0 clamp(20px,5vw,30px) rgba(6,182,212,.8)}
+.hero-sub{font-size:clamp(1.1rem,3vw,1.3rem);color:#67e8f9;margin-bottom:clamp(.5rem,1.5vw,1rem)}
+.hero-desc{color:#cbd5e1;max-width:700px;margin:0 auto clamp(1.5rem,4vw,2.5rem);line-height:1.8;font-size:clamp(1rem,2.5vw,1.1rem)}
+.hero-buttons{display:flex;gap:clamp(.75rem,2.5vw,1rem);justify-content:center;flex-wrap:wrap}
+
+#confianza{background:transparent}
+.confianza-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:clamp(1rem,3vw,1.5rem);max-width:1200px;margin:0 auto}
+.confianza-card{background:var(--card);padding:clamp(1.5rem,4vw,2rem);border-radius:var(--radius);border:1px solid var(--border);transition:all .3s}
+.confianza-card:hover{transform:translateY(-4px);box-shadow:var(--glow);border-color:var(--neon)}
+.confianza-icon{font-size:clamp(1.8rem,4vw,2.2rem);margin-bottom:.5rem}
+.confianza-title{font-size:clamp(1.1rem,3vw,1.3rem);font-weight:800;color:var(--neon);margin-bottom:.25rem}
+.confianza-desc{color:var(--muted);font-size:clamp(.85rem,2.5vw,.9rem)}
+
+#servicios{background:rgba(15,23,42,.6)}
+.servicios-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:clamp(1rem,3vw,1.5rem);max-width:1200px;margin:0 auto}
+.servicio-card{background:var(--card);padding:clamp(1.5rem,4vw,2rem);border-radius:var(--radius);text-align:center;border:1px solid var(--border);transition:all .3s}
+.servicio-card:hover{transform:translateY(-4px);box-shadow:var(--glow);border-color:var(--neon)}
+.tech-badges{margin-top:clamp(1.5rem,4vw,2.5rem)}
+.tech-title{text-align:center;color:var(--neon);font-weight:800;margin-bottom:1rem;font-size:clamp(1rem,2.5vw,1.1rem)}
+
+#productos .section-grid-prod .card{display:flex;flex-direction:column;gap:.7rem;background:var(--card);padding:clamp(1.5rem,4vw,2rem);border-radius:var(--radius);border:1px solid var(--border)}
+#productos .section-grid-prod .card:hover{transform:translateY(-4px);box-shadow:var(--glow);border-color:var(--neon)}
+#productos .card h3{font-weight:800;font-size:clamp(1.1rem,3vw,1.2rem);margin-top:.5rem}
+#productos .card p{color:var(--muted);font-size:clamp(.85rem,2.5vw,.9rem);flex:1}
+#productos .card a{color:#67e8f9;font-weight:700;text-decoration:none;font-size:clamp(.85rem,2.5vw,.9rem);align-self:flex-start}
+#productos .card a:hover{text-decoration:underline}
+
+#contacto{background:linear-gradient(135deg,#0f172a,#020617);text-align:center}
+.contact-content{max-width:700px;margin:0 auto}
+.contact-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:900;margin-bottom:1rem;line-height:1.2}
+.contact-sub{color:#cbd5e1;margin-bottom:1rem;font-size:clamp(1rem,2.5vw,1.1rem)}
+.contact-wa{font-size:clamp(1.2rem,3.5vw,1.4rem);font-weight:800;color:var(--neon);margin-bottom:clamp(1rem,3vw,1.5rem)}
+.contact-info{color:#cbd5e1;font-size:clamp(.9rem,2.5vw,1rem)}
+.contact-motto{margin-top:clamp(1rem,3vw,1.5rem);color:#67e8f9;font-weight:700;font-size:clamp(.9rem,2.5vw,1rem)}
+
+footer{background:#020617;color:#94a3b8;padding:clamp(1.5rem,4vw,2.5rem) clamp(1rem,4vw,2rem);text-align:center}
+.footer-logo{margin-bottom:.7rem}
+.footer-contacts{font-size:clamp(.85rem,2.5vw,.9rem)}
+.footer-tags{font-size:clamp(.75rem,2vw,.85rem);margin-top:.7rem;color:#64748b}
+
+/* Mobile nav */
+@media (max-width: 768px) {
+  .nav-toggle{display:block}
+  .nav-links{
+    position:fixed;top:58px;left:0;right:0;
+    background:rgba(2,6,23,.98);backdrop-filter:blur(12px);
+    flex-direction:column;align-items:center;
+    padding:clamp(1rem,3vw,1.5rem);gap:clamp(.75rem,2.5vw,1rem);
+    border-bottom:1px solid var(--border);
+    transform:translateY(-100%);opacity:0;visibility:hidden;transition:.3s;
+    box-shadow:0 10px 30px rgba(0,0,0,.4)
+  }
+  .nav-links.active{transform:translateY(0);opacity:1;visibility:visible}
+  .nav-links a,.nav-links .btn-chat{width:100%;text-align:center;padding:clamp(.75rem,2.5vw,.875rem) 0}
+  .nav-links .btn-chat{justify-content:center}
+}
+
+@media (max-width: 480px) {
+  .hero-title{line-height:1.05}
+  .svc-hex{width:44px;height:44px;font-size:1.2rem}
+  .lang-badge{font-size:.7rem;padding:.4rem .3rem}
+}
 </style>
 </head>
 <body>
-<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,6,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)">
-  <div style="max-width:1280px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center">
+<nav>
+  <div class="nav-container">
     <div class="logo-text">WORKFORCE <span>MX</span></div>
-    <div style="display:flex;gap:1.5rem;align-items:center">
-      <a href="#inicio" style="color:var(--text);text-decoration:none">Inicio</a>
-      <a href="#servicios" style="color:var(--text);text-decoration:none">Servicios</a>
-      <a href="#productos" style="color:var(--text);text-decoration:none">Productos</a>
-      <a href="/edu" style="color:var(--neon);text-decoration:none;font-weight:700">Educación</a>
-      <button onclick="wfmxOpenChat()" style="background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:999px;padding:.4rem 1rem;font-weight:600;cursor:pointer">💬 Chat</button>
-      <a href="#contacto" style="color:var(--text);text-decoration:none">Contacto</a>
-    </div>
+    <button class="nav-toggle" aria-label="Abrir menú" onclick="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="/edu" style="color:var(--neon);font-weight:700">Educación</a></li>
+      <li><button class="btn-chat" onclick="wfmxOpenChat()"><i class="fas fa-comment"></i> Chat</button></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
   </div>
 </nav>
 
-<section id="inicio" style="min-height:100vh;text-align:center;padding:150px 2rem 80px;position:relative">
-  <div style="max-width:900px;margin:0 auto">
-    <div style="display:inline-block;padding:.5rem 1.5rem;border:1px solid rgba(6,182,212,.5);border-radius:50px;color:#67e8f9;font-size:.875rem;font-weight:600;margin-bottom:1.5rem">🚀 Soluciones digitales</div>
-    <h1 style="font-size:clamp(2.8rem,7vw,5rem);font-weight:900;line-height:.95">AUTOMATIZO<br><span style="color:var(--neon);text-shadow:0 0 30px rgba(6,182,212,.8)">TU PC</span></h1>
-    <p style="font-size:1.3rem;color:#67e8f9;margin:1rem 0">Ahorra tiempo, trabaja más inteligente</p>
-    <p style="color:#cbd5e1;max-width:700px;margin:0 auto 2.5rem;line-height:1.8">En <strong>WorkForce MX</strong> desarrollamos soluciones tecnológicas y creativas adaptadas a tus necesidades.</p>
-    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+<section id="inicio">
+  <div class="hero-content">
+    <div class="hero-badge">🚀 Soluciones digitales</div>
+    <h1 class="hero-title">AUTOMATIZO<br><span>TU PC</span></h1>
+    <p class="hero-sub">Ahorra tiempo, trabaja más inteligente</p>
+    <p class="hero-desc">En <strong>WorkForce MX</strong> desarrollamos soluciones tecnológicas y creativas adaptadas a tus necesidades.</p>
+    <div class="hero-buttons">
       <a class="btn-neon" href="https://wa.me/523329531372">💬 Cotiza gratis</a>
       <a class="btn-ghost" href="#servicios">Ver Servicios</a>
     </div>
   </div>
 </section>
 
-<section id="confianza" style="padding:70px 2rem">
-  <div style="max-width:1200px;margin:0 auto;text-align:center">
-    <h2 style="font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;margin-bottom:2.5rem">Nuestra <span style="color:var(--neon)">Confianza</span></h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem">
-      <div class="card glow" style="background:var(--card);padding:2rem"><div style="font-size:2.2rem">🎯</div><div style="font-size:1.3rem;font-weight:800;color:var(--neon)">Trato directo</div><div style="color:var(--muted)">hablas con quien programa</div></div>
-      <div class="card glow" style="background:var(--card);padding:2rem"><div style="font-size:2.2rem">⚡</div><div style="font-size:1.3rem;font-weight:800;color:var(--neon)">Entregas puntuales</div><div style="color:var(--muted)">sin promesas que no se cumplen</div></div>
-      <div class="card glow" style="background:var(--card);padding:2rem"><div style="font-size:2.2rem">💬</div><div style="font-size:1.3rem;font-weight:800;color:var(--neon)">Soporte por WhatsApp</div><div style="color:var(--muted)">respuesta el mismo día</div></div>
-      <div class="card glow" style="background:var(--card);padding:2rem"><div style="font-size:2.2rem">✅</div><div style="font-size:1.3rem;font-weight:800;color:var(--neon)">Precios claros</div><div style="color:var(--muted)">cotización sin compromiso</div></div>
-    </div>
+<section id="confianza">
+  <h2>Nuestra <span>Confianza</span></h2>
+  <div class="confianza-grid">
+    <div class="confianza-card"><div class="confianza-icon">🎯</div><div class="confianza-title">Trato directo</div><div class="confianza-desc">hablas con quien programa</div></div>
+    <div class="confianza-card"><div class="confianza-icon">⚡</div><div class="confianza-title">Entregas puntuales</div><div class="confianza-desc">sin promesas que no se cumplen</div></div>
+    <div class="confianza-card"><div class="confianza-icon">💬</div><div class="confianza-title">Soporte por WhatsApp</div><div class="confianza-desc">respuesta el mismo día</div></div>
+    <div class="confianza-card"><div class="confianza-icon">✅</div><div class="confianza-title">Precios claros</div><div class="confianza-desc">cotización sin compromiso</div></div>
   </div>
 </section>
 
-<section id="servicios" style="padding:70px 2rem;background:rgba(15,23,42,.6)">
-  <div style="max-width:1200px;margin:0 auto">
-    <h2 style="text-align:center;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;margin-bottom:2rem">Nuestros <span style="color:var(--neon)">Servicios</span></h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-bottom:2.5rem">
-      <div class="card glow" style="background:var(--card);padding:2rem;text-align:center"><div class="svc-hex">⚙️</div><h3 style="font-weight:800;margin-bottom:.5rem">SCRIPTS Y BOTS</h3><p style="color:var(--muted);font-size:.9rem">Automatiza tareas repetitivas, procesos y flujos de trabajo.</p></div>
-      <div class="card glow" style="background:var(--card);padding:2rem;text-align:center"><div class="svc-hex">🖥️</div><h3 style="font-weight:800;margin-bottom:.5rem">OPTIMIZACIÓN DE SISTEMAS</h3><p style="color:var(--muted);font-size:.9rem">Mejora el rendimiento de tu PC y tus aplicaciones.</p></div>
-      <div class="card glow" style="background:var(--card);padding:2rem;text-align:center"><div class="svc-hex">💾</div><h3 style="font-weight:800;margin-bottom:.5rem">PROGRAMAS A MEDIDA</h3><p style="color:var(--muted);font-size:.9rem">Soluciones personalizadas para tus necesidades.</p></div>
-      <div class="card glow" style="background:var(--card);padding:2rem;text-align:center"><div class="svc-hex">&lt;/&gt;</div><h3 style="font-weight:800;margin-bottom:.5rem">DESARROLLO WEB</h3><p style="color:var(--muted);font-size:.9rem">Sitios, APIs, dashboards y más.</p></div>
-    </div>
-    <h3 style="text-align:center;color:var(--neon);font-weight:800;margin-bottom:1rem">LENGUAJES Y TECNOLOGÍAS QUE USO</h3>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:.7rem;max-width:1000px;margin:0 auto">
-      <div class="lang-badge">Python</div><div class="lang-badge">Java</div><div class="lang-badge">JavaScript</div><div class="lang-badge">HTML</div><div class="lang-badge">CSS</div><div class="lang-badge">PHP</div><div class="lang-badge">C++</div><div class="lang-badge">C#</div><div class="lang-badge">SQL</div><div class="lang-badge">Y MÁS</div>
-    </div>
+<section id="servicios">
+  <h2>Nuestros <span>Servicios</span></h2>
+  <div class="servicios-grid">
+    <div class="servicio-card"><div class="svc-hex">⚙️</div><h3 style="font-weight:800;margin-bottom:.5rem;font-size:clamp(1.1rem,3vw,1.2rem)">SCRIPTS Y BOTS</div><p style="color:var(--muted);font-size:clamp(.85rem,2.5vw,.9rem)">Automatiza tareas repetitivas, procesos y flujos de trabajo.</p></div>
+    <div class="servicio-card"><div class="svc-hex">🖥️</div><h3 style="font-weight:800;margin-bottom:.5rem;font-size:clamp(1.1rem,3vw,1.2rem)">OPTIMIZACIÓN DE SISTEMAS</div><p style="color:var(--muted);font-size:clamp(.85rem,2.5vw,.9rem)">Mejora el rendimiento de tu PC y tus aplicaciones.</p></div>
+    <div class="servicio-card"><div class="svc-hex">💾</div><h3 style="font-weight:800;margin-bottom:.5rem;font-size:clamp(1.1rem,3vw,1.2rem)">PROGRAMAS A MEDIDA</div><p style="color:var(--muted);font-size:clamp(.85rem,2.5vw,.9rem)">Soluciones personalizadas para tus necesidades.</p></div>
+    <div class="servicio-card"><div class="svc-hex"></></div><h3 style="font-weight:800;margin-bottom:.5rem;font-size:clamp(1.1rem,3vw,1.2rem)">DESARROLLO WEB</div><p style="color:var(--muted);font-size:clamp(.85rem,2.5vw,.9rem)">Sitios, APIs, dashboards y más.</p></div>
+  </div>
+  <h3 class="tech-title">LENGUAJES Y TECNOLOGÍAS QUE USO</h3>
+  <div class="section-grid-tech">
+    <div class="lang-badge">Python</div><div class="lang-badge">Java</div><div class="lang-badge">JavaScript</div><div class="lang-badge">HTML</div>
+    <div class="lang-badge">CSS</div><div class="lang-badge">PHP</div><div class="lang-badge">C++</div><div class="lang-badge">C#</div>
+    <div class="lang-badge">SQL</div><div class="lang-badge">Y MÁS</div>
   </div>
 </section>
 
-<section id="productos" style="padding:70px 2rem">
-  <div style="max-width:1200px;margin:0 auto">
-    <h2 style="text-align:center;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:900;margin-bottom:.6rem">Nuestros <span style="color:var(--neon)">Productos</span></h2>
-    <p style="text-align:center;color:var(--muted);margin-bottom:2.5rem">Sistemas listos para usarse en tu negocio. Te cotizamos sin compromiso.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem">
-      <div class="card glow" style="background:var(--card);padding:2rem;display:flex;flex-direction:column;gap:.7rem"><div class="svc-hex">📊</div><h3 style="font-weight:800">SISTEMA CONTROL EMPRESARIAL</h3><p style="color:var(--muted);font-size:.9rem;flex:1">Ventas, gastos, inventario y clientes en un solo panel, con respaldos y reportes.</p><a href="https://wa.me/523329531372" style="color:#67e8f9;font-weight:700;text-decoration:none;font-size:.9rem">Cotizar por WhatsApp →</a></div>
-      <div class="card glow" style="background:var(--card);padding:2rem;display:flex;flex-direction:column;gap:.7rem"><div class="svc-hex">🧮</div><h3 style="font-weight:800">CALCULADORA DE COSTOS Y RECETAS</h3><p style="color:var(--muted);font-size:.9rem;flex:1">Sabe cuánto te cuesta cada producto y a qué precio te conviene venderlo.</p><a href="https://wa.me/523329531372" style="color:#67e8f9;font-weight:700;text-decoration:none;font-size:.9rem">Cotizar por WhatsApp →</a></div>
-      <div class="card glow" style="background:var(--card);padding:2rem;display:flex;flex-direction:column;gap:.7rem"><div class="svc-hex">📦</div><h3 style="font-weight:800">INVENTARIO Y FIADOS</h3><p style="color:var(--muted);font-size:.9rem;flex:1">Existencias, entradas y salidas, y el control de lo que te deben tus clientes.</p><a href="https://wa.me/523329531372" style="color:#67e8f9;font-weight:700;text-decoration:none;font-size:.9rem">Cotizar por WhatsApp →</a></div>
-      <div class="card glow" style="background:var(--card);padding:2rem;display:flex;flex-direction:column;gap:.7rem"><div class="svc-hex">📈</div><h3 style="font-weight:800">DASHBOARDS PERSONALIZADOS</h3><p style="color:var(--muted);font-size:.9rem;flex:1">Tus números en un tablero claro: ventas, gastos y metas, listo para decidir.</p><a href="https://wa.me/523329531372" style="color:#67e8f9;font-weight:700;text-decoration:none;font-size:.9rem">Cotizar por WhatsApp →</a></div>
-      <div class="card glow" style="background:var(--card);padding:2rem;display:flex;flex-direction:column;gap:.7rem"><div class="svc-hex">🤖</div><h3 style="font-weight:800">ARQUITECTURA DE IA</h3><p style="color:var(--muted);font-size:.9rem;flex:1">Asistentes y automatizaciones con IA que atienden y organizan tu negocio.</p><a href="https://wa.me/523329531372" style="color:#67e8f9;font-weight:700;text-decoration:none;font-size:.9rem">Cotizar por WhatsApp →</a></div>
-    </div>
+<section id="productos">
+  <h2>Nuestros <span>Productos</span></h2>
+  <p style="text-align:center;color:var(--muted);margin-bottom:clamp(1.5rem,4vw,2.5rem);font-size:clamp(.95rem,2.5vw,1rem)">Sistemas listos para usarse en tu negocio. Te cotizamos sin compromiso.</p>
+  <div class="section-grid-prod">
+    <div class="card glow"><div class="svc-hex">📊</div><h3 style="font-weight:800">SISTEMA CONTROL EMPRESARIAL</h3><p style="color:var(--muted);font-size:clamp(.85rem,2.5vw,.9rem);flex:1">Ventas, gastos, inventario y clientes en un solo panel, con respaldos y reportes.</p><a href="https://wa.me/523329531372" style="color:#67e8f9;font-weight:700;text-decoration:none;font-size:clamp(.85rem,2.5vw,.9rem)">Cotizar por WhatsApp →</a></div>
+    <div class="card glow"><div class="svc-hex">🧮</div><h3 style="font-weight:800">CALCULADORA DE COSTOS Y RECETAS</h3><p style="color:var(--muted);font-size:clamp(.85rem,2.5vw,.9rem);flex:1">Sabe cuánto te cuesta cada producto y a qué precio te conviene venderlo.</p><a href="https://wa.me/523329531372" style="color:#67e8f9;font-weight:700;text-decoration:none;font-size:clamp(.85rem,2.5vw,.9rem)">Cotizar por WhatsApp →</a></div>
+    <div class="card glow"><div class="svc-hex">📦</div><h3 style="font-weight:800">INVENTARIO Y FIADOS</h3><p style="color:var(--muted);font-size:clamp(.85rem,2.5vw,.9rem);flex:1">Existencias, entradas y salidas, y el control de lo que te deben tus clientes.</p><a href="https://wa.me/523329531372" style="color:#67e8f9;font-weight:700;text-decoration:none;font-size:clamp(.85rem,2.5vw,.9rem)">Cotizar por WhatsApp →</a></div>
+    <div class="card glow"><div class="svc-hex">📈</div><h3 style="font-weight:800">DASHBOARDS PERSONALIZADOS</h3><p style="color:var(--muted);font-size:clamp(.85rem,2.5vw,.9rem);flex:1">Tus números en un tablero claro: ventas, gastos y metas, listo para decidir.</p><a href="https://wa.me/523329531372" style="color:#67e8f9;font-weight:700;text-decoration:none;font-size:clamp(.85rem,2.5vw,.9rem)">Cotizar por WhatsApp →</a></div>
+    <div class="card glow"><div class="svc-hex">🤖</div><h3 style="font-weight:800">ARQUITECTURA DE IA</h3><p style="color:var(--muted);font-size:clamp(.85rem,2.5vw,.9rem);flex:1">Asistentes y automatizaciones con IA que atienden y organizan tu negocio.</p><a href="https://wa.me/523329531372" style="color:#67e8f9;font-weight:700;text-decoration:none;font-size:clamp(.85rem,2.5vw,.9rem)">Cotizar por WhatsApp →</a></div>
   </div>
 </section>
 
-<section id="contacto" style="padding:70px 2rem;text-align:center;background:linear-gradient(135deg,#0f172a,#020617)">
-  <div style="max-width:700px;margin:0 auto">
-    <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:900;margin-bottom:1rem">¿Necesitas una solución? ¿Quieres aprender? ¿Tienes un proyecto?</h2>
-    <p style="color:#cbd5e1;margin-bottom:1rem">Consulta sin compromiso</p>
-    <p style="font-size:1.4rem;font-weight:800;color:var(--neon)">WhatsApp: 3329531372</p>
-    <a class="btn-neon" style="margin:1.5rem 0" href="https://wa.me/523329531372">💬 Hablemos por WhatsApp</a>
-    <p style="color:#cbd5e1">✉️ admin@workforcemx.com &nbsp;|&nbsp; 📞 +52 33 2953 1372</p>
-    <p style="margin-top:1.5rem;color:#67e8f9;font-weight:700">TU IDEA + MI CÓDIGO = RESULTADOS</p>
+<section id="contacto">
+  <div class="contact-content">
+    <h2 class="contact-title">¿Necesitas una solución? ¿Quieres aprender? ¿Tienes un proyecto?</h2>
+    <p class="contact-sub">Consulta sin compromiso</p>
+    <p class="contact-wa">WhatsApp: 3329531372</p>
+    <a class="btn-neon" style="margin:clamp(1rem,3vw,1.5rem) 0" href="https://wa.me/523329531372">💬 Hablemos por WhatsApp</a>
+    <p class="contact-info">✉️ admin@workforcemx.com &nbsp;|&nbsp; 📞 +52 33 2953 1372</p>
+    <p class="contact-motto">TU IDEA + MI CÓDIGO = RESULTADOS</p>
   </div>
 </section>
 
-<footer style="background:#020617;color:#94a3b8;padding:2.5rem 2rem;text-align:center">
-  <div class="logo-text" style="margin-bottom:.7rem">WORKFORCE <span>MX</span></div>
-  <p>✉️ admin@workforcemx.com | 📞 +52 33 2953 1372</p>
-  <p style="font-size:.85rem;margin-top:.7rem">#WorkForceMX #Programación #Automatización #Python #DesarrolloWeb #Tecnología</p>
+<footer>
+  <div class="footer-logo logo-text">WORKFORCE <span>MX</span></div>
+  <p class="footer-contacts">✉️ admin@workforcemx.com | 📞 +52 33 2953 1372</p>
+  <p class="footer-tags">#WorkForceMX #Programación #Automatización #Python #DesarrolloWeb #Tecnología</p>
 </footer>
 
 <div id="wf-form-modal">
   <div class="wf-form-content">
-    <button onclick="closeWfForm()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.8rem;cursor:pointer">×</button>
-    <h3 style="text-align:center;margin-bottom:1.5rem">Cuéntanos tu proyecto</h3>
+    <button onclick="closeWfForm()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.8rem;cursor:pointer" aria-label="Cerrar">×</button>
+    <h3 style="text-align:center;margin-bottom:1.5rem;font-size:clamp(1.2rem,3vw,1.4rem)">Cuéntanos tu proyecto</h3>
     <form id="wf-contact-form" action="https://formsubmit.co/admin@workforcemx.com" method="POST">
       <input type="hidden" name="_captcha" value="true">
       <input type="hidden" name="_template" value="table">
       <select name="tipo" required>
         <option value="" disabled selected>Selecciona el tipo de proyecto</option>
-        <option value="App">App</option><option value="Excel">Excel</option><option value="Edición">Edición</option><option value="Publicidad">Publicidad</option><option value="Página Web">Página Web</option><option value="Otro">Otro</option>
+        <option value="App">App</option><option value="Excel">Excel</option><option value="Edición">Edición</option>
+        <option value="Publicidad">Publicidad</option><option value="Página Web">Página Web</option><option value="Otro">Otro</option>
       </select>
       <input type="text" name="nombre" placeholder="Nombre" required>
       <input type="tel" name="whatsapp" placeholder="WhatsApp" required>
       <input type="email" name="correo" placeholder="Correo">
       <textarea name="descripcion" placeholder="Descripción del proyecto" required></textarea>
       <input type="hidden" name="_subject" value="Nuevo proyecto desde Workforce MX">
-      <button type="submit" style="padding:1rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer">Enviar</button>
+      <button type="submit" style="padding:clamp(.875rem,3vw,1rem);background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer;min-height:48px;font-size:1rem">Enviar</button>
       <div id="wf-form-errors"></div>
     </form>
-    <div id="wf-success-msg"><h4 style="color:#10b981">¡Registro enviado!</h4><p>Tu registro está hecho. Espera respuesta.</p></div>
+    <div id="wf-success-msg"><h4 style="color:#10b981;margin-bottom:.5rem">¡Registro enviado!</h4><p>Tu registro está hecho. Espera respuesta.</p></div>
   </div>
 </div>
 
 <script>
-function openWfForm(){document.getElementById('wf-form-modal').classList.add('active');document.getElementById('wf-contact-form').style.display='flex';document.getElementById('wf-success-msg').classList.remove('active')}
-function closeWfForm(){document.getElementById('wf-form-modal').classList.remove('active')}
-document.getElementById('wf-form-modal').addEventListener('click',function(e){if(e.target.id==='wf-form-modal')closeWfForm()});
-document.getElementById('wf-contact-form').addEventListener('submit',function(e){e.preventDefault();var name=this.nombre.value.trim(),wp=this.whatsapp.value.trim(),desc=this.descripcion.value.trim(),err=[];if(!name)err.push('El nombre es obligatorio');if(!wp)err.push('El WhatsApp es obligatorio');if(!desc)err.push('La descripción del proyecto es obligatoria');var d=document.getElementById('wf-form-errors');d.innerHTML='';if(err.length){err.forEach(function(x){var p=document.createElement('p');p.className='wf-error';p.textContent=x;d.appendChild(p)});return}var btn=this.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Enviando...';fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('wf-contact-form').style.display='none';document.getElementById('wf-success-msg').classList.add('active');setTimeout(closeWfForm,3000)}else{d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}}).catch(function(){d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}).finally(function(){btn.disabled=false;btn.textContent='Enviar'})});
+function toggleMenu() {
+  const navLinks = document.getElementById("navLinks");
+  const toggle = document.querySelector(".nav-toggle i");
+  navLinks.classList.toggle("active");
+  toggle.classList.toggle("fa-bars");
+  toggle.classList.toggle("fa-times");
+}
+document.querySelectorAll(".nav-links a").forEach(link => {
+  link.addEventListener("click", () => {
+    document.getElementById("navLinks").classList.remove("active");
+    document.querySelector(".nav-toggle i").classList.add("fa-bars");
+    document.querySelector(".nav-toggle i").classList.remove("fa-times");
+  });
+});
+function openWfForm(){document.getElementById("wf-form-modal").classList.add("active");document.getElementById("wf-contact-form").style.display="flex";document.getElementById("wf-success-msg").classList.remove("active")}
+function closeWfForm(){document.getElementById("wf-form-modal").classList.remove("active")}
+document.getElementById("wf-form-modal").addEventListener("click",function(e){if(e.target.id==="wf-form-modal")closeWfForm()});
+document.getElementById("wf-contact-form").addEventListener("submit",function(e){e.preventDefault();var name=this.nombre.value.trim(),wp=this.whatsapp.value.trim(),desc=this.descripcion.value.trim(),err=[];if(!name)err.push("El nombre es obligatorio");if(!wp)err.push("El WhatsApp es obligatorio");if(!desc)err.push("La descripción del proyecto es obligatoria");var d=document.getElementById("wf-form-errors");d.innerHTML="";if(err.length){err.forEach(function(x){var p=document.createElement("p");p.className="wf-error";p.textContent=x;d.appendChild(p)});return}var btn=this.querySelector("button[type=submit]");btn.disabled=true;btn.textContent="Enviando...";fetch(this.action,{method:"POST",body:new FormData(this),headers:{"Accept":"application/json"}}).then(function(r){if(r.ok){document.getElementById("wf-contact-form").style.display="none";document.getElementById("wf-success-msg").classList.add("active");setTimeout(closeWfForm,3000)}else{d.innerHTML="<p class=\"wf-error\">Hubo un error al enviar.</p>"}}).catch(function(){d.innerHTML="<p class=\"wf-error\">Hubo un error al enviar.</p>"}).finally(function(){btn.disabled=false;btn.textContent="Enviar"})});
 </script>
 <script src="assets/js/chat.js" data-api-url="/api/chat"></script>
 </body>
 </html>
-
-
-
-
