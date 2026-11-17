@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web scraping ético con Python | WorkForce MX</title>
+<meta name="description" content="Aprende web scraping responsable con Python usando requests y BeautifulSoup: HTML, selectores, límites legales, robots.txt y buenas prácticas.">
+<meta name="theme-color" content="#020617">
+<link rel="canonical" href="https://www.workforcemx.com/edu-leccion-scraping.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="WorkForce MX">
+<meta property="og:title" content="Web scraping ético con Python">
+<meta property="og:description" content="Aprende web scraping responsable con Python usando requests y BeautifulSoup: HTML, selectores, límites legales, robots.txt y buenas prácticas.">
+<meta property="og:url" content="https://www.workforcemx.com/edu-leccion-scraping.html">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Web scraping ético con Python | WorkForce MX">
+<meta name="twitter:description" content="Aprende web scraping responsable con Python usando requests y BeautifulSoup: HTML, selectores, límites legales, robots.txt y buenas prácticas.">
+<link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020617;--bg2:#0a0e17;--card:#0f172a;--card2:#111827;--accent:#3b82f6;--neon:#06b6d4;--cyan:#22d3ee;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;--glow:0 0 20px rgba(6,182,212,.35)}
+body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(ellipse at top,#0b1226 0%,#020617 65%);color:var(--text);overflow-x:hidden}
+.logo-text{font-size:1.6rem;font-weight:900;letter-spacing:.08em}
+.logo-text span{color:var(--neon)}
+#wf-form-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,.85);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center}
+#wf-form-modal.active{display:flex}
+.wf-form-content{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative}
+#wf-contact-form{display:none;flex-direction:column;gap:1rem}
+#wf-contact-form select,#wf-contact-form input,#wf-contact-form textarea{width:100%;padding:.875rem 1rem;background:#0a0e17;border:1px solid var(--border);border-radius:10px;color:var(--text)}
+#wf-success-msg{display:none;text-align:center;padding:2rem}
+#wf-success-msg.active{display:block}
+.wf-error{color:#f87171;font-size:.875rem}
+.lesson-content h2{font-size:clamp(1.25rem,2.5vw,1.5rem);font-weight:800;color:var(--neon);margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.lesson-content h3{font-size:clamp(1.05rem,2vw,1.2rem);font-weight:700;color:var(--text);margin:1.5rem 0 .75rem}
+.lesson-content p{line-height:1.8;color:var(--muted);margin-bottom:1rem;font-size:clamp(.98rem,1.5vw,1.05rem)}
+.lesson-content ul,.lesson-content ol{margin:1rem 0 1rem 1.5rem;line-height:1.8;color:var(--muted)}
+.lesson-content li{margin-bottom:.5rem}
+.lesson-content code{background:rgba(59,130,246,.15);padding:.2rem .4rem;border-radius:6px;font-family:'JetBrains Mono',Consolas,monospace;color:#93c5fd}
+.lesson-content pre{background:#0a0e17;border:1px solid var(--border);border-radius:10px;padding:1rem;overflow-x:auto;margin:1rem 0}
+.lesson-content pre code{background:none;padding:0;color:#e2e8f0}
+.highlight-box{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:10px;padding:1.5rem;margin:1.5rem 0}
+.highlight-box h4{color:var(--neon);font-weight:800;margin-bottom:.75rem}
+.btn-back{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.75rem;background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:10px;font-weight:600;text-decoration:none;transition:all .2s}
+.btn-back:hover{background:rgba(59,130,246,.3);color:#fff;border-color:#60a5fa}
+.related a{color:#93c5fd;text-decoration:none}
+.related a:hover{color:#fff;text-decoration:underline}
+@media(max-width:768px){.top-links{display:none}}
+</style>
+</head>
+<body>
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,6,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)">
+  <div style="max-width:1280px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center">
+    <div class="logo-text">WORKFORCE <span>MX</span></div>
+    <div class="top-links" style="display:flex;gap:1.5rem;align-items:center">
+      <a href="/" style="color:var(--text);text-decoration:none">Inicio</a>
+      <a href="#servicios" style="color:var(--text);text-decoration:none">Servicios</a>
+      <a href="#productos" style="color:var(--text);text-decoration:none">Productos</a>
+      <a href="/edu" style="color:var(--neon);text-decoration:none;font-weight:700">Educación</a>
+      <button onclick="wfmxOpenChat()" style="background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:999px;padding:.4rem 1rem;font-weight:600;cursor:pointer"><i class="fa-solid fa-comments"></i> Chat</button>
+      <a href="#contacto" style="color:var(--text);text-decoration:none">Contacto</a>
+    </div>
+  </div>
+</nav>
+<header style="min-height:50vh;text-align:center;padding:140px 2rem 60px;position:relative">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="display:inline-block;padding:.5rem 1.5rem;border:1px solid rgba(6,182,212,.5);border-radius:50px;color:#67e8f9;font-size:.875rem;font-weight:600;margin-bottom:1.5rem"><i class="fa-solid fa-spider"></i> Datos</div>
+    <h1 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.1">Web scraping ético<br><span style="color:var(--neon);text-shadow:0 0 30px rgba(6,182,212,.8)">con Python</span></h1>
+    <p style="font-size:clamp(1rem,2.2vw,1.2rem);color:#cbd5e1;margin-top:1.5rem;max-width:760px;margin-left:auto;margin-right:auto;line-height:1.7">Extrae información pública de la web de forma responsable y técnica. Aprende a usar requests y BeautifulSoup, respetar límites, y saber cuándo es mejor usar una API oficial.</p>
+  </div>
+</header>
+<main style="padding:40px 2rem 80px">
+  <div style="max-width:900px;margin:0 auto">
+    <article class="lesson-content">
+      <section>
+        <h2><i class="fa-solid fa-scale-balanced"></i> Qué es scraping y cuándo es apropiado</h2>
+        <p>El <strong>web scraping</strong> es la extracción automatizada de información desde páginas web. Puede ser útil para investigación, monitoreo de precios propios, agregación de datos públicos o migraciones. Sin embargo, no todo lo técnicamente posible es apropiado: debes considerar términos de servicio, derechos de autor, datos personales y carga sobre los servidores.</p>
+        <p>Antes de escribir código, pregunta: ¿existe una <strong>API oficial</strong> o un dataset descargable? Las APIs son más estables, legales y eficientes. Si no hay alternativa, revisa el archivo <code>robots.txt</code> del sitio, los términos de uso y limita la frecuencia de tus solicitudes.</p>
+        <div class="highlight-box">
+          <h4>Principios de scraping ético</h4>
+          <p>Identifícate con un User-Agent claro, respeta <code>robots.txt</code> y los términos del sitio, no recolectes datos personales sin base legal, evita sobrecargar servidores (rate limiting, horarios razonables) y usa los datos conforme a la normativa aplicable.</p>
+        </div>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-code"></i> HTML, DOM y cómo encontrar datos</h2>
+        <p>Las páginas web son documentos HTML estructurados en un árbol (DOM). Para extraer datos necesitas localizar elementos por etiquetas, clases, ids o atributos. Las herramientas de desarrollador del navegador (F12 → Elements/Inspector) te permiten inspeccionar la estructura y probar selectores.</p>
+        <pre><code>&lt;article class="product"&gt;
+  &lt;h2 class="title"&gt;Teclado mecánico&lt;/h2&gt;
+  &lt;span class="price" data-currency="MXN"&gt;899.00&lt;/span&gt;
+  &lt;a href="/p/teclado-123"&gt;Ver detalle&lt;/a&gt;
+&lt;/article&gt;</code></pre>
+        <p>En este ejemplo puedes seleccionar por clase (<code>.product</code>, <code>.price</code>), etiqueta (<code>h2</code>, <code>a</code>) o atributo (<code>[data-currency]</code>). CSS selectors y métodos de búsqueda del parser son la base del scraping estático.</p>
+      </section>
+      <section>
+        <h2><i class="fa-brands fa-python"></i> requests + BeautifulSoup: flujo básico</h2>
+        <p>Para páginas HTML estáticas, la combinación estándar en Python es <code>requests</code> (descarga) y <code>beautifulsoup4</code> (parseo). Instala dependencias y prueba un flujo mínimo:</p>
+        <pre><code>pip install requests beautifulsoup4 lxml</code></pre>
+        <pre><code>import time
+import requests
+from bs4 import BeautifulSoup
+
+url = "https://example.com/productos"
+headers = {
+    "User-Agent": "MiBotEducativo/1.0 (contacto@ejemplo.com)"
+}
+
+resp = requests.get(url, headers=headers, timeout=15)
+resp.raise_for_status()  # lanza error si no es 2xx
+
+soup = BeautifulSoup(resp.text, "lxml")
+for card in soup.select("article.product"):
+    title = card.select_one(".title").get_text(strip=True)
+    price = card.select_one(".price").get_text(strip=True)
+    link = card.select_one("a")["href"]
+    print(title, price, link)
+
+time.sleep(1.5)  # pausa entre solicitudes</code></pre>
+        <p>Usa <code>timeout</code> siempre para evitar bloqueos, maneja excepciones (<code>RequestException</code>) y valida que los elementos existan antes de acceder a atributos. Las estructuras de las páginas cambian: escribe código defensivo.</p>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-shield-halved"></i> robots.txt, límites y robustez</h2>
+        <p>El archivo <code>robots.txt</code> (p. ej. <code>https://sitio.com/robots.txt</code>) indica rutas permitidas o desaconsejadas para crawlers. Respétalo como norma de buena ciudadanía web. Además, implementa límites en tu cliente:</p>
+        <ul>
+          <li>Inserta demoras (<code>time.sleep</code>) o usa rate limiters para no saturar.</li>
+          <li>Reintenta con backoff exponencial ante errores temporales (429, 503).</li>
+          <li>Cachea respuestas durante desarrollo para no repetir descargas.</li>
+          <li>Registra URLs y códigos de estado para auditoría.</li>
+          <li>No evadas barreras técnicas de acceso ni controles anti-bot de sitios que prohíben scraping.</li>
+        </ul>
+        <div class="highlight-box">
+          <h4>Páginas dinámicas</h4>
+          <p>Si el contenido se genera con JavaScript en el cliente, <code>requests</code> no verá los datos renderizados. En esos casos evalúa primero si hay una API interna (pestaña Network en DevTools) o usa herramientas de automatización de navegador (Playwright/Selenium) con las mismas consideraciones éticas y legales.</p>
+        </div>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-table"></i> Almacenar y limpiar datos</h2>
+        <p>Extraer es solo la mitad: los datos deben guardarse de forma utilizable. Para conjuntos pequeños, CSV o JSON suelen bastar; para procesos recurrentes, considera una base de datos.</p>
+        <pre><code>import csv
+
+rows = [{"title": "Teclado", "price": "899.00"},
+        {"title": "Mouse", "price": "299.00"}]
+
+with open("productos.csv", "w", newline="", encoding="utf-8") as f:
+    writer = csv.DictWriter(f, fieldnames=["title", "price"])
+    writer.writeheader()
+    writer.writerows(rows)</code></pre>
+        <p>Limpia espacios, normaliza monedas/fechas y deduplica registros. Si el proyecto crece, <code>pandas</code> facilita transformación y validación antes de cargar a tu destino final.</p>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-list-check"></i> Checklist práctico</h2>
+        <ul>
+          <li>¿Hay API o feed oficial? Prefiérelo.</li>
+          <li>¿Revisaste <code>robots.txt</code> y términos de uso?</li>
+          <li>¿Tu User-Agent identifica el propósito y contacto?</li>
+          <li>¿Tienes timeouts, manejo de errores y límites de tasa?</li>
+          <li>¿Evitas datos personales y cumples normativa?</li>
+          <li>¿El scraper es resiliente a cambios menores de HTML?</li>
+        </ul>
+        <p>El scraping responsable combina técnica y criterio. Un extractor bien diseñado es respetuoso, mantenible y produce datos limpios que realmente puedes usar.</p>
+      </section>
+      <section class="related">
+        <h2><i class="fa-solid fa-link"></i> Si te interesa esto, también mira</h2>
+        <ul>
+          <li><a href="/edu-leccion-python">Python para negocios</a> — fundamentos de Python para tus scripts.</li>
+          <li><a href="/edu-leccion-apis">APIs REST: consumir y crear</a> — alternativa preferible al scraping cuando existe.</li>
+          <li><a href="/edu-leccion-excel">Excel para operaciones</a> — analiza y presenta los datos extraídos.</li>
+        </ul>
+      </section>
+    </article>
+    <div style="text-align:center;margin-top:3rem">
+      <a href="/edu" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver a lecciones</a>
+    </div>
+  </div>
+</main>
+<footer style="background:#020617;color:#94a3b8;padding:2.5rem 2rem;text-align:center">
+  <div class="logo-text" style="margin-bottom:.7rem">WORKFORCE <span>MX</span></div>
+  <p>✉️ admin@workforcemx.com | 📞 +52 33 2953 1372</p>
+  <p style="font-size:.85rem;margin-top:.7rem">#WorkForceMX #WFConnect #Educación</p>
+</footer>
+<div id="wf-form-modal"><div class="wf-form-content"><button onclick="closeWfForm()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.8rem;cursor:pointer">×</button><h3 style="text-align:center;margin-bottom:1.5rem">Cuéntanos tu proyecto</h3><form id="wf-contact-form" action="https://formsubmit.co/admin@workforcemx.com" method="POST"><input type="hidden" name="_captcha" value="true"><input type="hidden" name="_template" value="table"><select name="tipo" required><option value="" disabled selected>Selecciona el tipo de proyecto</option><option value="App">App</option><option value="Excel">Excel</option><option value="Edición">Edición</option><option value="Publicidad">Publicidad</option><option value="Página Web">Página Web</option><option value="Otro">Otro</option></select><input type="text" name="nombre" placeholder="Nombre" required><input type="tel" name="whatsapp" placeholder="WhatsApp" required><input type="email" name="correo" placeholder="Correo"><textarea name="descripcion" placeholder="Descripción del proyecto" required></textarea><input type="hidden" name="_subject" value="Nuevo proyecto desde Workforce MX"><button type="submit" style="padding:1rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer">Enviar</button><div id="wf-form-errors"></div></form><div id="wf-success-msg"><h4 style="color:#10b981">¡Registro enviado!</h4><p>Tu registro está hecho. Espera respuesta.</p></div></div></div>
+<script>
+function openWfForm(){document.getElementById('wf-form-modal').classList.add('active');document.getElementById('wf-contact-form').style.display='flex';document.getElementById('wf-success-msg').classList.remove('active')}
+function closeWfForm(){document.getElementById('wf-form-modal').classList.remove('active')}
+document.getElementById('wf-form-modal').addEventListener('click',function(e){if(e.target.id==='wf-form-modal')closeWfForm()});
+document.getElementById('wf-contact-form').addEventListener('submit',function(e){e.preventDefault();var name=this.nombre.value.trim(),wp=this.whatsapp.value.trim(),desc=this.descripcion.value.trim(),err=[];if(!name)err.push('El nombre es obligatorio');if(!wp)err.push('El WhatsApp es obligatorio');if(!desc)err.push('La descripción del proyecto es obligatoria');var d=document.getElementById('wf-form-errors');d.innerHTML='';if(err.length){err.forEach(function(x){var p=document.createElement('p');p.className='wf-error';p.textContent=x;d.appendChild(p)});return}var btn=this.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Enviando...';fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('wf-contact-form').style.display='none';document.getElementById('wf-success-msg').classList.add('active');setTimeout(closeWfForm,3000)}else{d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}}).catch(function(){d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}).finally(function(){btn.disabled=false;btn.textContent='Enviar'})});
+</script>
+<script src="assets/js/chat.js" data-api-url="/api/chat"></script>
+</body></html>

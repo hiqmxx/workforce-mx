@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud básico: AWS / Azure / GCP | WorkForce MX</title>
+<meta name="description" content="Introducción práctica a la nube con AWS, Azure y GCP: modelos de servicio, cómputo, almacenamiento, redes, seguridad y costos.">
+<meta name="theme-color" content="#020617">
+<link rel="canonical" href="https://www.workforcemx.com/edu-leccion-cloud.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="WorkForce MX">
+<meta property="og:title" content="Cloud básico: AWS / Azure / GCP">
+<meta property="og:description" content="Introducción práctica a la nube con AWS, Azure y GCP: modelos de servicio, cómputo, almacenamiento, redes, seguridad y costos.">
+<meta property="og:url" content="https://www.workforcemx.com/edu-leccion-cloud.html">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cloud básico: AWS / Azure / GCP | WorkForce MX">
+<meta name="twitter:description" content="Introducción práctica a la nube con AWS, Azure y GCP: modelos de servicio, cómputo, almacenamiento, redes, seguridad y costos.">
+<link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020617;--bg2:#0a0e17;--card:#0f172a;--card2:#111827;--accent:#3b82f6;--neon:#06b6d4;--cyan:#22d3ee;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;--glow:0 0 20px rgba(6,182,212,.35)}
+body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(ellipse at top,#0b1226 0%,#020617 65%);color:var(--text);overflow-x:hidden}
+.logo-text{font-size:1.6rem;font-weight:900;letter-spacing:.08em}
+.logo-text span{color:var(--neon)}
+#wf-form-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,.85);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center}
+#wf-form-modal.active{display:flex}
+.wf-form-content{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative}
+#wf-contact-form{display:none;flex-direction:column;gap:1rem}
+#wf-contact-form select,#wf-contact-form input,#wf-contact-form textarea{width:100%;padding:.875rem 1rem;background:#0a0e17;border:1px solid var(--border);border-radius:10px;color:var(--text)}
+#wf-success-msg{display:none;text-align:center;padding:2rem}
+#wf-success-msg.active{display:block}
+.wf-error{color:#f87171;font-size:.875rem}
+.lesson-content h2{font-size:clamp(1.25rem,2.5vw,1.5rem);font-weight:800;color:var(--neon);margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.lesson-content h3{font-size:clamp(1.05rem,2vw,1.2rem);font-weight:700;color:var(--text);margin:1.5rem 0 .75rem}
+.lesson-content p{line-height:1.8;color:var(--muted);margin-bottom:1rem;font-size:clamp(.98rem,1.5vw,1.05rem)}
+.lesson-content ul,.lesson-content ol{margin:1rem 0 1rem 1.5rem;line-height:1.8;color:var(--muted)}
+.lesson-content li{margin-bottom:.5rem}
+.lesson-content code{background:rgba(59,130,246,.15);padding:.2rem .4rem;border-radius:6px;font-family:'JetBrains Mono',Consolas,monospace;color:#93c5fd}
+.lesson-content pre{background:#0a0e17;border:1px solid var(--border);border-radius:10px;padding:1rem;overflow-x:auto;margin:1rem 0}
+.lesson-content pre code{background:none;padding:0;color:#e2e8f0}
+.highlight-box{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:10px;padding:1.5rem;margin:1.5rem 0}
+.highlight-box h4{color:var(--neon);font-weight:800;margin-bottom:.75rem}
+.btn-back{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.75rem;background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:10px;font-weight:600;text-decoration:none;transition:all .2s}
+.btn-back:hover{background:rgba(59,130,246,.3);color:#fff;border-color:#60a5fa}
+.related a{color:#93c5fd;text-decoration:none}
+.related a:hover{color:#fff;text-decoration:underline}
+@media(max-width:768px){.top-links{display:none}}
+</style>
+</head>
+<body>
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,6,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)">
+  <div style="max-width:1280px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center">
+    <div class="logo-text">WORKFORCE <span>MX</span></div>
+    <div class="top-links" style="display:flex;gap:1.5rem;align-items:center">
+      <a href="/" style="color:var(--text);text-decoration:none">Inicio</a>
+      <a href="#servicios" style="color:var(--text);text-decoration:none">Servicios</a>
+      <a href="#productos" style="color:var(--text);text-decoration:none">Productos</a>
+      <a href="/edu" style="color:var(--neon);text-decoration:none;font-weight:700">Educación</a>
+      <button onclick="wfmxOpenChat()" style="background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:999px;padding:.4rem 1rem;font-weight:600;cursor:pointer"><i class="fa-solid fa-comments"></i> Chat</button>
+      <a href="#contacto" style="color:var(--text);text-decoration:none">Contacto</a>
+    </div>
+  </div>
+</nav>
+<header style="min-height:50vh;text-align:center;padding:140px 2rem 60px;position:relative">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="display:inline-block;padding:.5rem 1.5rem;border:1px solid rgba(6,182,212,.5);border-radius:50px;color:#67e8f9;font-size:.875rem;font-weight:600;margin-bottom:1.5rem"><i class="fa-solid fa-cloud"></i> Cloud</div>
+    <h1 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.1">Cloud básico:<br><span style="color:var(--neon);text-shadow:0 0 30px rgba(6,182,212,.8)">AWS / Azure / GCP</span></h1>
+    <p style="font-size:clamp(1rem,2.2vw,1.2rem);color:#cbd5e1;margin-top:1.5rem;max-width:760px;margin-left:auto;margin-right:auto;line-height:1.7">La nube permite consumir infraestructura y servicios bajo demanda. Conoce los conceptos comunes entre Amazon Web Services, Microsoft Azure y Google Cloud para elegir y operar recursos con criterio.</p>
+  </div>
+</header>
+<main style="padding:40px 2rem 80px">
+  <div style="max-width:900px;margin:0 auto">
+    <article class="lesson-content">
+      <section>
+        <h2><i class="fa-solid fa-cloud-arrow-up"></i> Qué es cloud computing</h2>
+        <p>La computación en la nube entrega recursos de TI (servidores, almacenamiento, bases de datos, redes, analítica, IA) a través de Internet con un modelo de pago por uso. En lugar de comprar y mantener hardware propio, provisionas capacidad cuando la necesitas y la liberas cuando no. Los proveedores operan centros de datos globales y exponen servicios mediante consola web, CLI y APIs.</p>
+        <p>Beneficios típicos: elasticidad (escalar arriba/abajo), alcance global, velocidad de aprovisionamiento y conversión de gasto de capital (CapEx) en gasto operativo (OpEx). También introduce responsabilidades nuevas: gestión de costos, seguridad de configuración y diseño para resiliencia.</p>
+        <div class="highlight-box">
+          <h4>Modelo de responsabilidad compartida</h4>
+          <p>El proveedor asegura la seguridad <em>de</em> la nube (infraestructura física, hardware, red base). El cliente es responsable de la seguridad <em>en</em> la nube: configuración, identidades, datos, cifrado, parches del sistema operativo en IaaS y control de accesos. El alcance varía según el servicio.</p>
+        </div>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-layer-group"></i> Modelos de servicio: IaaS, PaaS, SaaS</h2>
+        <ul>
+          <li><strong>IaaS (Infrastructure as a Service)</strong>: máquinas virtuales, redes y almacenamiento administrados a bajo nivel. Tú gestionas SO, runtime y aplicaciones. Ejemplos: Amazon EC2, Azure Virtual Machines, Google Compute Engine.</li>
+          <li><strong>PaaS (Platform as a Service)</strong>: la plataforma gestiona infraestructura y runtime; tú te enfocas en código y datos. Ejemplos: AWS Elastic Beanstalk, Azure App Service, Google App Engine/Cloud Run (según enfoque).</li>
+          <li><strong>SaaS (Software as a Service)</strong>: aplicación lista para usar vía suscripción. El proveedor opera casi todo; tú administras usuarios y datos. Ejemplos: Microsoft 365, Google Workspace.</li>
+        </ul>
+        <p>Elegir el modelo implica balancear control vs. carga operativa. Para aprender fundamentos, IaaS revela cómo funcionan redes y servidores; para entregar rápido, PaaS y servicios gestionados suelen ser más eficientes.</p>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-globe"></i> Regiones, zonas y diseño resiliente</h2>
+        <p>Los tres grandes proveedores organizan su infraestructura en <strong>regiones</strong> geográficas (p. ej. este de EE.UU., São Paulo, Europa) compuestas por múltiples <strong>zonas de disponibilidad</strong> (datacenters aislados con alimentación y red independientes). Desplegar en varias zonas mejora tolerancia a fallos; desplegar en varias regiones mejora cercanía a usuarios y continuidad ante eventos regionales.</p>
+        <p>Conceptos transversales: latencia (elige región cercana a tus usuarios), residencia de datos (cumplimiento normativo) y servicios globales vs regionales. Antes de producción, define objetivos de disponibilidad y recuperación (RTO/RPO).</p>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-server"></i> Servicios esenciales por categoría</h2>
+        <h3>Cómputo</h3>
+        <p><strong>AWS</strong>: EC2 (VMs), Lambda (serverless). <strong>Azure</strong>: Virtual Machines, Functions. <strong>GCP</strong>: Compute Engine, Cloud Functions/Cloud Run. Permiten ejecutar desde procesos event-driven hasta servidores de larga duración.</p>
+        <h3>Almacenamiento</h3>
+        <p>Objetos para archivos y backups: <strong>S3</strong> (AWS), <strong>Blob Storage</strong> (Azure), <strong>Cloud Storage</strong> (GCP). Bloques para discos de VM y opciones de archivos compartidos. Clases de almacenamiento equilibran costo y frecuencia de acceso.</p>
+        <h3>Bases de datos</h3>
+        <p>Relacionales gestionadas: RDS/Aurora, Azure SQL Database, Cloud SQL. NoSQL: DynamoDB, Cosmos DB, Firestore/Bigtable. Los servicios gestionados automatizan respaldos, parches y alta disponibilidad según configuración.</p>
+        <h3>Redes</h3>
+        <p>Redes virtuales privadas (VPC/VNet), subredes, tablas de rutas, balanceadores de carga, DNS (Route 53, Azure DNS, Cloud DNS) y CDN. Una red bien segmentada (pública/privada) es clave para seguridad.</p>
+        <div class="highlight-box">
+          <h4>Contenedores y orquestación</h4>
+          <p>Los tres ofrecen registro de imágenes y Kubernetes gestionado: Amazon EKS/ECS, Azure AKS, Google GKE. Si ya usas Docker, estos servicios facilitan escalar contenedores con control operativo.</p>
+        </div>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-user-shield"></i> Identidad, seguridad y gobierno</h2>
+        <p>La gestión de identidad y acceso es el perímetro principal en la nube: <strong>IAM</strong> (AWS), <strong>Microsoft Entra ID + RBAC</strong> (Azure), <strong>Cloud IAM</strong> (GCP). Aplica privilegio mínimo, usa roles en lugar de credenciales de larga vida, habilita MFA y audita con registros (CloudTrail, Azure Monitor/Activity Log, Cloud Audit Logs).</p>
+        <ul>
+          <li>Cifra datos en tránsito (TLS) y en reposo (claves gestionadas o propias).</li>
+          <li>Segmenta redes y limita exposición pública de recursos administrativos.</li>
+          <li>Automatiza políticas y cumplimiento con etiquetas/tags y guardrails.</li>
+        </ul>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-coins"></i> Costos y operación</h2>
+        <p>El modelo por uso requiere observabilidad financiera: dimensiona recursos, apaga entornos no productivos, usa instancias reservadas o planes de ahorro cuando el consumo sea estable y configura alertas de presupuesto. Herramientas nativas: AWS Cost Explorer/Budgets, Azure Cost Management, GCP Billing Reports.</p>
+        <pre><code># Ejemplos de CLIs oficiales
+aws s3 ls
+az group list
+gcloud compute instances list</code></pre>
+        <p>Para empezar, usa niveles gratuitos (free tiers) con límites y fechas claros, y elimina recursos de laboratorio para evitar cargos sorpresa. Documenta arquitectura con diagramas simples (cliente → balanceador → cómputo → base de datos/almacenamiento) para razonar dependencias y fallos.</p>
+        <div class="highlight-box">
+          <h4>Ruta de aprendizaje práctica</h4>
+          <p>1) Crea una cuenta y configura alertas de costo. 2) Despliega un sitio estático en almacenamiento de objetos o una VM mínima. 3) Añade una base de datos gestionada. 4) Automatiza con infraestructura como código (CloudFormation/Bicep/Terraform) cuando domines lo básico.</p>
+        </div>
+      </section>
+      <section class="related">
+        <h2><i class="fa-solid fa-link"></i> Si te interesa esto, también mira</h2>
+        <ul>
+          <li><a href="/edu-leccion-docker">Docker y contenedores básicos</a> — empaqueta apps para desplegarlas en la nube.</li>
+          <li><a href="/edu-leccion-linux">Linux terminal esencial</a> — administra instancias y servicios cloud.</li>
+          <li><a href="/edu-leccion-apis">APIs REST: consumir y crear</a> — integra servicios y automatiza con APIs cloud.</li>
+        </ul>
+      </section>
+    </article>
+    <div style="text-align:center;margin-top:3rem">
+      <a href="/edu" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver a lecciones</a>
+    </div>
+  </div>
+</main>
+<footer style="background:#020617;color:#94a3b8;padding:2.5rem 2rem;text-align:center">
+  <div class="logo-text" style="margin-bottom:.7rem">WORKFORCE <span>MX</span></div>
+  <p>✉️ admin@workforcemx.com | 📞 +52 33 2953 1372</p>
+  <p style="font-size:.85rem;margin-top:.7rem">#WorkForceMX #WFConnect #Educación</p>
+</footer>
+<div id="wf-form-modal"><div class="wf-form-content"><button onclick="closeWfForm()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.8rem;cursor:pointer">×</button><h3 style="text-align:center;margin-bottom:1.5rem">Cuéntanos tu proyecto</h3><form id="wf-contact-form" action="https://formsubmit.co/admin@workforcemx.com" method="POST"><input type="hidden" name="_captcha" value="true"><input type="hidden" name="_template" value="table"><select name="tipo" required><option value="" disabled selected>Selecciona el tipo de proyecto</option><option value="App">App</option><option value="Excel">Excel</option><option value="Edición">Edición</option><option value="Publicidad">Publicidad</option><option value="Página Web">Página Web</option><option value="Otro">Otro</option></select><input type="text" name="nombre" placeholder="Nombre" required><input type="tel" name="whatsapp" placeholder="WhatsApp" required><input type="email" name="correo" placeholder="Correo"><textarea name="descripcion" placeholder="Descripción del proyecto" required></textarea><input type="hidden" name="_subject" value="Nuevo proyecto desde Workforce MX"><button type="submit" style="padding:1rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer">Enviar</button><div id="wf-form-errors"></div></form><div id="wf-success-msg"><h4 style="color:#10b981">¡Registro enviado!</h4><p>Tu registro está hecho. Espera respuesta.</p></div></div></div>
+<script>
+function openWfForm(){document.getElementById('wf-form-modal').classList.add('active');document.getElementById('wf-contact-form').style.display='flex';document.getElementById('wf-success-msg').classList.remove('active')}
+function closeWfForm(){document.getElementById('wf-form-modal').classList.remove('active')}
+document.getElementById('wf-form-modal').addEventListener('click',function(e){if(e.target.id==='wf-form-modal')closeWfForm()});
+document.getElementById('wf-contact-form').addEventListener('submit',function(e){e.preventDefault();var name=this.nombre.value.trim(),wp=this.whatsapp.value.trim(),desc=this.descripcion.value.trim(),err=[];if(!name)err.push('El nombre es obligatorio');if(!wp)err.push('El WhatsApp es obligatorio');if(!desc)err.push('La descripción del proyecto es obligatoria');var d=document.getElementById('wf-form-errors');d.innerHTML='';if(err.length){err.forEach(function(x){var p=document.createElement('p');p.className='wf-error';p.textContent=x;d.appendChild(p)});return}var btn=this.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Enviando...';fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('wf-contact-form').style.display='none';document.getElementById('wf-success-msg').classList.add('active');setTimeout(closeWfForm,3000)}else{d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}}).catch(function(){d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}).finally(function(){btn.disabled=false;btn.textContent='Enviar'})});
+</script>
+<script src="assets/js/chat.js" data-api-url="/api/chat"></script>
+</body></html>

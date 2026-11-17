@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>n8n: automatiza sin código | WorkForce MX</title>
+<meta name="description" content="Aprende n8n para automatizar flujos entre apps sin código: nodos, triggers, credenciales, webhooks y buenas prácticas.">
+<meta name="theme-color" content="#020617">
+<link rel="canonical" href="https://www.workforcemx.com/edu-leccion-n8n.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="WorkForce MX">
+<meta property="og:title" content="n8n: automatiza sin código">
+<meta property="og:description" content="Aprende n8n para automatizar flujos entre apps sin código: nodos, triggers, credenciales, webhooks y buenas prácticas.">
+<meta property="og:url" content="https://www.workforcemx.com/edu-leccion-n8n.html">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="n8n: automatiza sin código | WorkForce MX">
+<meta name="twitter:description" content="Aprende n8n para automatizar flujos entre apps sin código: nodos, triggers, credenciales, webhooks y buenas prácticas.">
+<link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#020617;--bg2:#0a0e17;--card:#0f172a;--card2:#111827;--accent:#3b82f6;--neon:#06b6d4;--cyan:#22d3ee;--text:#e2e8f0;--muted:#94a3b8;--border:#1e3a5f;--glow:0 0 20px rgba(6,182,212,.35)}
+body{font-family:'Inter',system-ui,sans-serif;background:radial-gradient(ellipse at top,#0b1226 0%,#020617 65%);color:var(--text);overflow-x:hidden}
+.logo-text{font-size:1.6rem;font-weight:900;letter-spacing:.08em}
+.logo-text span{color:var(--neon)}
+#wf-form-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,.85);backdrop-filter:blur(8px);z-index:10000;align-items:center;justify-content:center}
+#wf-form-modal.active{display:flex}
+.wf-form-content{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative}
+#wf-contact-form{display:none;flex-direction:column;gap:1rem}
+#wf-contact-form select,#wf-contact-form input,#wf-contact-form textarea{width:100%;padding:.875rem 1rem;background:#0a0e17;border:1px solid var(--border);border-radius:10px;color:var(--text)}
+#wf-success-msg{display:none;text-align:center;padding:2rem}
+#wf-success-msg.active{display:block}
+.wf-error{color:#f87171;font-size:.875rem}
+.lesson-content h2{font-size:clamp(1.25rem,2.5vw,1.5rem);font-weight:800;color:var(--neon);margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.lesson-content h3{font-size:clamp(1.05rem,2vw,1.2rem);font-weight:700;color:var(--text);margin:1.5rem 0 .75rem}
+.lesson-content p{line-height:1.8;color:var(--muted);margin-bottom:1rem;font-size:clamp(.98rem,1.5vw,1.05rem)}
+.lesson-content ul,.lesson-content ol{margin:1rem 0 1rem 1.5rem;line-height:1.8;color:var(--muted)}
+.lesson-content li{margin-bottom:.5rem}
+.lesson-content code{background:rgba(59,130,246,.15);padding:.2rem .4rem;border-radius:6px;font-family:'JetBrains Mono',Consolas,monospace;color:#93c5fd}
+.lesson-content pre{background:#0a0e17;border:1px solid var(--border);border-radius:10px;padding:1rem;overflow-x:auto;margin:1rem 0}
+.lesson-content pre code{background:none;padding:0;color:#e2e8f0}
+.highlight-box{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:10px;padding:1.5rem;margin:1.5rem 0}
+.highlight-box h4{color:var(--neon);font-weight:800;margin-bottom:.75rem}
+.btn-back{display:inline-flex;align-items:center;gap:.5rem;padding:.875rem 1.75rem;background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:10px;font-weight:600;text-decoration:none;transition:all .2s}
+.btn-back:hover{background:rgba(59,130,246,.3);color:#fff;border-color:#60a5fa}
+.related a{color:#93c5fd;text-decoration:none}
+.related a:hover{color:#fff;text-decoration:underline}
+@media(max-width:768px){.top-links{display:none}}
+</style>
+</head>
+<body>
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,6,23,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)">
+  <div style="max-width:1280px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center">
+    <div class="logo-text">WORKFORCE <span>MX</span></div>
+    <div class="top-links" style="display:flex;gap:1.5rem;align-items:center">
+      <a href="/" style="color:var(--text);text-decoration:none">Inicio</a>
+      <a href="#servicios" style="color:var(--text);text-decoration:none">Servicios</a>
+      <a href="#productos" style="color:var(--text);text-decoration:none">Productos</a>
+      <a href="/edu" style="color:var(--neon);text-decoration:none;font-weight:700">Educación</a>
+      <button onclick="wfmxOpenChat()" style="background:rgba(59,130,246,.15);border:1px solid #3b82f6;color:#93c5fd;border-radius:999px;padding:.4rem 1rem;font-weight:600;cursor:pointer"><i class="fa-solid fa-comments"></i> Chat</button>
+      <a href="#contacto" style="color:var(--text);text-decoration:none">Contacto</a>
+    </div>
+  </div>
+</nav>
+<header style="min-height:50vh;text-align:center;padding:140px 2rem 60px;position:relative">
+  <div style="max-width:900px;margin:0 auto">
+    <div style="display:inline-block;padding:.5rem 1.5rem;border:1px solid rgba(6,182,212,.5);border-radius:50px;color:#67e8f9;font-size:.875rem;font-weight:600;margin-bottom:1.5rem"><i class="fa-solid fa-diagram-project"></i> Automatización</div>
+    <h1 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.1">n8n:<br><span style="color:var(--neon);text-shadow:0 0 30px rgba(6,182,212,.8)">automatiza sin código</span></h1>
+    <p style="font-size:clamp(1rem,2.2vw,1.2rem);color:#cbd5e1;margin-top:1.5rem;max-width:760px;margin-left:auto;margin-right:auto;line-height:1.7">Conecta servicios, transforma datos y orquesta procesos visualmente. n8n es una plataforma de automatización de flujos (workflows) que combina nodos low-code con la flexibilidad de código cuando lo necesitas.</p>
+  </div>
+</header>
+<main style="padding:40px 2rem 80px">
+  <div style="max-width:900px;margin:0 auto">
+    <article class="lesson-content">
+      <section>
+        <h2><i class="fa-solid fa-bolt"></i> Qué es n8n</h2>
+        <p><strong>n8n</strong> (pronunciado “n-eight-n”) es una herramienta de automatización de flujos de trabajo que permite conectar APIs y servicios mediante un editor visual basado en nodos. Puedes construir integraciones como “cuando llegue un formulario, guarda en hoja de cálculo y envía notificación” sin escribir una aplicación completa. Es de código fuente disponible (fair-code), puede ejecutarse en la nube de n8n o auto-hospedarse en tu infraestructura.</p>
+        <p>El modelo mental: cada <strong>workflow</strong> es un grafo dirigido de <strong>nodos</strong>. Un nodo recibe datos, los procesa y pasa ítems al siguiente. Los datos fluyen como estructuras JSON entre nodos, lo que facilita mapear campos y aplicar transformaciones.</p>
+        <div class="highlight-box">
+          <h4>Por qué elegir n8n</h4>
+          <p>Combina rapidez low-code con control técnico: puedes usar nodos preconstruidos para cientos de servicios, añadir lógica con nodos IF/Switch, y ejecutar JavaScript en nodos Code cuando una integración requiere transformación avanzada.</p>
+        </div>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-play"></i> Conceptos fundamentales</h2>
+        <ul>
+          <li><strong>Trigger (disparador)</strong>: inicia el flujo. Puede ser manual, programado (Schedule/Cron), por webhook, al recibir un correo, o por eventos de una app.</li>
+          <li><strong>Nodos de acción</strong>: realizan operaciones (HTTP Request, Google Sheets, Slack, bases de datos, etc.).</li>
+          <li><strong>Credenciales</strong>: almacenan autenticación de forma segura y reutilizable entre nodos.</li>
+          <li><strong>Ejecuciones</strong>: cada corrida del workflow genera un registro con datos de entrada/salida por nodo, útil para depurar.</li>
+          <li><strong>Expresiones</strong>: permiten referenciar datos de nodos anteriores (por ejemplo <code>{{$json.email}}</code>) para mapear campos dinámicamente.</li>
+        </ul>
+        <p>Un flujo típico: <em>Webhook Trigger → Set/Transform → HTTP Request → IF → Notificación</em>. Esta composición hace visible la lógica de negocio y reduce código repetitivo.</p>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-server"></i> Instalación y despliegue</h2>
+        <p>Para pruebas locales puedes usar npx o Docker. En producción se recomienda Docker con base de datos persistente y variables de entorno configuradas.</p>
+        <pre><code># Prueba rápida con npx (Node.js instalado)
+npx n8n
+
+# Docker (persistencia en volumen)
+docker volume create n8n_data
+docker run -it --rm -p 5678:5678 -v n8n_data:/home/node/.n8n n8nio/n8n</code></pre>
+        <p>Accede a <code>http://localhost:5678</code>, crea tu usuario propietario y comienza a diseñar workflows. Para despliegues serios configura <code>N8N_HOST</code>, <code>N8N_PROTOCOL</code>, <code>WEBHOOK_URL</code> y una base de datos externa (PostgreSQL) según la documentación oficial.</p>
+        <div class="highlight-box">
+          <h4>Seguridad básica</h4>
+          <p>Protege la instancia con HTTPS, credenciales fuertes y acceso restringido. No expongas el editor públicamente sin autenticación; usa redes privadas o VPN cuando sea posible.</p>
+        </div>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-diagram-next"></i> Construir tu primer workflow</h2>
+        <p>Ejemplo: recibir datos por webhook, transformarlos y responder. Este patrón es la base de integraciones personalizadas.</p>
+        <ol>
+          <li>Añade un nodo <strong>Webhook</strong> (método POST, ruta <code>/nuevo-lead</code>) y copia la URL de prueba.</li>
+          <li>Conecta un nodo <strong>Edit Fields (Set)</strong> para normalizar campos (nombre, correo, origen).</li>
+          <li>Agrega un nodo <strong>IF</strong> para validar que el correo exista.</li>
+          <li>En la rama verdadera, usa <strong>HTTP Request</strong> o un nodo de app (CRM, Sheets, Slack) para guardar/notificar.</li>
+          <li>Finaliza con <strong>Respond to Webhook</strong> para devolver un JSON de confirmación.</li>
+        </ol>
+        <pre><code>// Ejemplo de cuerpo recibido en el Webhook
+{
+  "nombre": "Ana López",
+  "email": "ana@empresa.com",
+  "mensaje": "Quiero demo"
+}
+
+// Respuesta sugerida
+{ "ok": true, "id": "lead_12345" }</code></pre>
+        <p>Ejecuta en modo manual para inspeccionar los datos que salen de cada nodo. La vista de ejecución muestra el JSON exacto, lo que hace la depuración muy visual.</p>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-clock"></i> Triggers, programación y webhooks</h2>
+        <p>Los <strong>Schedule Triggers</strong> ejecutan flujos en intervalos (cada hora, diario a las 9:00) usando expresiones tipo cron o selectores. Son ideales para reportes, sincronizaciones y limpieza de datos. Los <strong>Webhooks</strong> reciben llamadas HTTP en tiempo real desde servicios externos: cuando un evento ocurre en otro sistema, este notifica a n8n inmediatamente.</p>
+        <p>Diferencia clave: el webhook es reactivo (evento externo) y el schedule es proactivo (tiempo). Algunos nodos de app ofrecen triggers nativos que abstraen la suscripción a eventos del proveedor.</p>
+      </section>
+      <section>
+        <h2><i class="fa-solid fa-code"></i> Datos, expresiones y manejo de errores</h2>
+        <p>n8n pasa ítems (items) entre nodos. Puedes dividir, fusionar y filtrar listas con nodos como Split Out, Merge y Filter. Las expresiones permiten construir valores dinámicos a partir de campos previos, fechas y funciones.</p>
+        <ul>
+          <li>Usa <strong>Pin Data</strong> durante el desarrollo para probar con datos fijos sin disparar el trigger.</li>
+          <li>Activa <strong>Error Workflow</strong> para capturar fallos y alertar (correo/Slack) cuando una ejecución falle.</li>
+          <li>Configura reintentos en nodos HTTP cuando consumas APIs con intermitencia.</li>
+          <li>Versiona y documenta flujos críticos; exporta workflows como JSON para respaldo.</li>
+        </ul>
+        <div class="highlight-box">
+          <h4>Buen diseño de automatizaciones</h4>
+          <p>Empieza pequeño, valida entradas, maneja ramas de error y registra resultados. Las automatizaciones deben ser observables: si algo falla a las 3 a.m., necesitas saber qué pasó y con qué datos. n8n facilita esto con su historial de ejecuciones y notificaciones de error.</p>
+        </div>
+      </section>
+      <section class="related">
+        <h2><i class="fa-solid fa-link"></i> Si te interesa esto, también mira</h2>
+        <ul>
+          <li><a href="/edu-leccion-python">Python para negocios</a> — complementa n8n con scripts para lógica avanzada.</li>
+          <li><a href="/edu-leccion-scripts">Scripts y automatización</a> — patrones de automatización reutilizables.</li>
+          <li><a href="/edu-leccion-apis">APIs REST: consumir y crear</a> — entiende los webhooks y HTTP que usa n8n.</li>
+        </ul>
+      </section>
+    </article>
+    <div style="text-align:center;margin-top:3rem">
+      <a href="/edu" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Volver a lecciones</a>
+    </div>
+  </div>
+</main>
+<footer style="background:#020617;color:#94a3b8;padding:2.5rem 2rem;text-align:center">
+  <div class="logo-text" style="margin-bottom:.7rem">WORKFORCE <span>MX</span></div>
+  <p>✉️ admin@workforcemx.com | 📞 +52 33 2953 1372</p>
+  <p style="font-size:.85rem;margin-top:.7rem">#WorkForceMX #WFConnect #Educación</p>
+</footer>
+<div id="wf-form-modal"><div class="wf-form-content"><button onclick="closeWfForm()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:#94a3b8;font-size:1.8rem;cursor:pointer">×</button><h3 style="text-align:center;margin-bottom:1.5rem">Cuéntanos tu proyecto</h3><form id="wf-contact-form" action="https://formsubmit.co/admin@workforcemx.com" method="POST"><input type="hidden" name="_captcha" value="true"><input type="hidden" name="_template" value="table"><select name="tipo" required><option value="" disabled selected>Selecciona el tipo de proyecto</option><option value="App">App</option><option value="Excel">Excel</option><option value="Edición">Edición</option><option value="Publicidad">Publicidad</option><option value="Página Web">Página Web</option><option value="Otro">Otro</option></select><input type="text" name="nombre" placeholder="Nombre" required><input type="tel" name="whatsapp" placeholder="WhatsApp" required><input type="email" name="correo" placeholder="Correo"><textarea name="descripcion" placeholder="Descripción del proyecto" required></textarea><input type="hidden" name="_subject" value="Nuevo proyecto desde Workforce MX"><button type="submit" style="padding:1rem;background:linear-gradient(135deg,#3b82f6,#06b6d4);color:white;border:none;border-radius:10px;font-weight:700;cursor:pointer">Enviar</button><div id="wf-form-errors"></div></form><div id="wf-success-msg"><h4 style="color:#10b981">¡Registro enviado!</h4><p>Tu registro está hecho. Espera respuesta.</p></div></div></div>
+<script>
+function openWfForm(){document.getElementById('wf-form-modal').classList.add('active');document.getElementById('wf-contact-form').style.display='flex';document.getElementById('wf-success-msg').classList.remove('active')}
+function closeWfForm(){document.getElementById('wf-form-modal').classList.remove('active')}
+document.getElementById('wf-form-modal').addEventListener('click',function(e){if(e.target.id==='wf-form-modal')closeWfForm()});
+document.getElementById('wf-contact-form').addEventListener('submit',function(e){e.preventDefault();var name=this.nombre.value.trim(),wp=this.whatsapp.value.trim(),desc=this.descripcion.value.trim(),err=[];if(!name)err.push('El nombre es obligatorio');if(!wp)err.push('El WhatsApp es obligatorio');if(!desc)err.push('La descripción del proyecto es obligatoria');var d=document.getElementById('wf-form-errors');d.innerHTML='';if(err.length){err.forEach(function(x){var p=document.createElement('p');p.className='wf-error';p.textContent=x;d.appendChild(p)});return}var btn=this.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Enviando...';fetch(this.action,{method:'POST',body:new FormData(this),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){document.getElementById('wf-contact-form').style.display='none';document.getElementById('wf-success-msg').classList.add('active');setTimeout(closeWfForm,3000)}else{d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}}).catch(function(){d.innerHTML='<p class="wf-error">Hubo un error al enviar.</p>'}).finally(function(){btn.disabled=false;btn.textContent='Enviar'})});
+</script>
+<script src="assets/js/chat.js" data-api-url="/api/chat"></script>
+</body></html>
