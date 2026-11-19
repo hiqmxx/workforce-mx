@@ -1,7 +1,7 @@
-﻿import fs from 'node:fs';
+import fs from 'node:fs';
 
 const knowledge = JSON.parse(fs.readFileSync(new URL('./knowledge.json', import.meta.url)));
-const RL = new Map(); // per-IP rate limit (best-effort, per Lambda instance)
+const RL = new Map();
 
 function systemPrompt() {
   const k = knowledge;
@@ -34,17 +34,25 @@ function fixMojibake(text) {
   return text.replace(/Â/g, '').trim();
 }
 
-const OPENCODE_API_KEY = process.env.OPENCODE_API_KEY;
-const OPENCODE_MODEL = process.env.OPENCODE_MODEL || 'longcat-2.5-free';
+const keys = [];
+for (let i = 1; i <= 3; i++) {
+  const k = process.env[`GEMINI_API_KEY_${i}`];
+  if (k && !keys.includes(k)) keys.push(k);
+}
+const legacyKey = process.env.GEMINI_API_KEY;
+if (legacyKey && !keys.includes(legacyKey)) keys.push(legacyKey);
+
+let currentKeyIndex = 0;
+const models = [process.env.GEMINI_MODEL || 'gemini-2.5-flash', process.env.GEMINI_MODEL_FALLBACK || 'gemini-2.5-pro'];
 
 export default async function handler(req, res) {
-  // solo POST
+  // POST only
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Método no permitido' });
     return;
   }
 
-  // Rate limit por IP
+  // Rate limiting (15 req/min per IP)
   const ip = (req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'anon').toString().split(',')[0].trim();
   const now = Date.now();
   const hits = (RL.get(ip) || []).filter(t => now - t < 60_000);
@@ -55,7 +63,7 @@ export default async function handler(req, res) {
   hits.push(now);
   RL.set(ip, hits);
 
-  // parsear y validar el cuerpo
+  // Parse body, validate message
   let body = req.body;
   if (typeof body === 'string') {
     try { body = JSON.parse(body); } catch { body = {}; }
@@ -66,40 +74,57 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (!OPENCODE_API_KEY) {
-    res.status(500).json({ error: 'Servidor mal configurado: falta OPENCODE_API_KEY' });
+  // No keys configured
+  if (keys.length === 0) {
+    res.status(500).json({ error: 'Servidor mal configurado: falta GEMINI_API_KEY' });
     return;
   }
 
   const prompt = `${systemPrompt()}\n\nVisitante: ${message}`;
   const payload = {
-    model: OPENCODE_MODEL,
-    messages: [{ role: 'user', content: prompt }],
-    temperature: 0.4,
-    max_tokens: 2000,
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    generationConfig: { temperature: 0.4, maxOutputTokens: 2000 },
   };
 
   let reply = null;
+  let workingKeyIndex = currentKeyIndex;
+  const keyCount = keys.length;
 
-  try {
-    const r = await fetch('https://api.opencode-go.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENCODE_API_KEY}`,
-      },
-      body: JSON.stringify(payload),
-    });
-    if (r.ok) {
-      const data = await r.json();
-      reply = data?.choices?.[0]?.message?.content ?? null;
+  // Multi-key + multi-model loop: try each key with each model until one works
+  for (let offset = 0; offset < keyCount; offset++) {
+    const keyIndex = (currentKeyIndex + offset) % keyCount;
+    const key = keys[keyIndex];
+    for (const model of models) {
+      try {
+        const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': key,
+          },
+          body: JSON.stringify(payload),
+        });
+        if (!r.ok) continue;
+        const data = await r.json();
+        reply = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? null;
+        if (reply) {
+          workingKeyIndex = keyIndex;
+          break;
+        }
+      } catch {
+        continue;
+      }
     }
-  } catch {}
+    if (reply) break;
+  }
 
+  // On failure: 502 with friendly message
   if (!reply) {
     res.status(502).json({ error: 'El asistente no está disponible ahora. Intenta de nuevo o escríbenos por WhatsApp.' });
     return;
   }
+
+  currentKeyIndex = workingKeyIndex;
 
   const cleanReply = fixMojibake(reply || '');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
