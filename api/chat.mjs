@@ -1,4 +1,4 @@
-import fs from 'node:fs';
+Ôªøimport fs from 'node:fs';
 
 const knowledge = JSON.parse(fs.readFileSync(new URL('./knowledge.json', import.meta.url)));
 const RL = new Map();
@@ -8,48 +8,48 @@ function fixMojibake(text) {
     const fixed = Buffer.from(text, 'latin1').toString('utf8');
     if (!fixed.includes('\uFFFD')) return fixed;
   } catch {}
-  return text.replace(/¬/g, '').trim();
+  return text.replace(/√Ç/g, '').trim();
 }
 
-function buildReply(message) {
+function systemPrompt() {
   const k = knowledge;
-  const msg = message.toLowerCase();
-  const contacto = k.negocio.contacto;
-  const whatsapp = '+52 33 2953 1372';
-  const email = 'admin@workforcemx.com';
+  return `Eres el asistente de Workforce MX. Responde en espa√±ol, de forma breve y directa.
+Servicios: ${k.servicios.map(s => `${s.nombre}: ${s.descripcion}`).join('; ')}
+Productos: ${k.productos.map(p => `${p.nombre}: ${p.descripcion}`).join('; ')}
+Contacto: ${k.negocio.contacto.horario}, ${k.negocio.contacto.ubicacion}
+WhatsApp: +52 33 2953 1372 | Email: admin@workforcemx.com
+Si no sabes algo, deriva a WhatsApp/Email.`;
+}
 
-  if (msg.includes('servicio') || msg.includes('servicios')) {
-    const lista = k.servicios.map(s => `ï ${s.nombre}: ${s.descripcion}`).join('\n');
-    return fixMojibake(`°Claro! Te cuento quÈ servicios ofrecemos:\n\n${lista}\n\nøTe interesa alguno en particular? EscrÌbenos por WhatsApp al ${whatsapp} o al correo ${email} y te cotizamos sin compromiso.`);
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+const GEMINI_MODEL_FALLBACK = process.env.GEMINI_MODEL_FALLBACK || 'gemini-2.5-pro';
+
+async function callGemini(model, prompt) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+  const body = {
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    generationConfig: { temperature: 0.4, maxOutputTokens: 2000 }
+  };
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-goog-api-key': GEMINI_API_KEY
+    },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`${res.status}: ${err}`);
   }
-
-  if (msg.includes('producto') || msg.includes('productos')) {
-    const lista = k.productos.map(p => `ï ${p.nombre}: ${p.descripcion}`).join('\n');
-    return fixMojibake(`Tenemos estos sistemas listos para usar:\n\n${lista}\n\nLos precios son personalizados. Cont·ctanos por WhatsApp al ${whatsapp} o al correo ${email} y te pasamos la cotizaciÛn.`);
-  }
-
-  if (msg.includes('whatsapp') || msg.includes('contacto') || msg.includes('llamar') || msg.includes('ll·manos')) {
-    return fixMojibake(`°Claro! Puedes escribirnos directo por WhatsApp al ${whatsapp} o mandarnos un correo a ${email}. Te respondemos el mismo dÌa.`);
-  }
-
-  if (msg.includes('precio') || msg.includes('cotizar')) {
-    return fixMojibake(`Los precios los damos solo por WhatsApp para que sean precisos a tu caso. EscrÌbenos al ${whatsapp} y te cotizamos sin compromiso.`);
-  }
-
-  if (msg.includes('horario')) {
-    return fixMojibake(`Nuestro horario es: ${contacto.horario}.\n\nSi necesitas algo fuera de ese horario, m·ndanos WhatsApp al ${whatsapp} y te contestamos en cuanto podamos.`);
-  }
-
-  if (msg.includes('ubicaciÛn') || msg.includes('donde') || msg.includes('dÛnde')) {
-    return fixMojibake(`Estamos en ${contacto.ubicacion}.\n\nAtendemos en lÌnea a todo MÈxico. Si quieres la ubicaciÛn exacta o agendar una visita, escrÌbenos por WhatsApp al ${whatsapp}.`);
-  }
-
-  return fixMojibake(`°Hola! ?? Soy el asistente de Workforce MX. Puedo contarte sobre nuestros servicios, productos, horarios o ubicaciÛn.\n\nSi necesitas una cotizaciÛn o tienes alguna duda especÌfica, escrÌbenos directo por WhatsApp al ${whatsapp} o al correo ${email} y te atendemos al tiro.`);
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
 }
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    res.status(405).json({ error: 'MÈtodo no permitido' });
+    res.status(405).json({ error: 'M√©todo no permitido' });
     return;
   }
 
@@ -69,11 +69,32 @@ export default async function handler(req, res) {
   }
   const message = (body && typeof body.message === 'string' ? body.message : '').trim();
   if (!message || message.length > 500) {
-    res.status(400).json({ error: 'Mensaje vacÌo o demasiado largo (m·x 500 caracteres)' });
+    res.status(400).json({ error: 'Mensaje vac√≠o o demasiado largo (m√°x 500 caracteres)' });
     return;
   }
 
-  const reply = buildReply(message);
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  res.status(200).json({ reply });
+  if (!GEMINI_API_KEY) {
+    res.status(500).json({ error: 'Servidor mal configurado: falta GEMINI_API_KEY' });
+    return;
+  }
+
+  const prompt = `${systemPrompt()}\n\nUsuario: ${message}`;
+
+  try {
+    let reply = await callGemini(GEMINI_MODEL, prompt);
+    if (!reply) throw new Error('empty');
+    reply = fixMojibake(reply);
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.status(200).json({ reply });
+  } catch (e1) {
+    try {
+      let reply = await callGemini(GEMINI_MODEL_FALLBACK, prompt);
+      if (!reply) throw new Error('empty');
+      reply = fixMojibake(reply);
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      res.status(200).json({ reply });
+    } catch (e2) {
+      res.status(502).json({ error: 'El servicio de IA no est√° disponible, intenta m√°s tarde.' });
+    }
+  }
 }
