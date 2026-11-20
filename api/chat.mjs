@@ -1,4 +1,4 @@
-﻿import fs from 'node:fs';
+import fs from 'node:fs';
 
 const knowledge = JSON.parse(fs.readFileSync(new URL('./knowledge.json', import.meta.url)));
 const RL = new Map();
@@ -11,40 +11,28 @@ function fixMojibake(text) {
   return text.replace(/Â/g, '').trim();
 }
 
-function systemPrompt() {
+function keywordResponse(message) {
+  const m = message.toLowerCase();
   const k = knowledge;
-  return `Eres el asistente de Workforce MX. Responde en español, de forma breve y directa.
-Servicios: ${k.servicios.map(s => `${s.nombre}: ${s.descripcion}`).join('; ')}
-Productos: ${k.productos.map(p => `${p.nombre}: ${p.descripcion}`).join('; ')}
-Contacto: ${k.negocio.contacto.horario}, ${k.negocio.contacto.ubicacion}
-WhatsApp: +52 33 2953 1372 | Email: admin@workforcemx.com
-Si no sabes algo, deriva a WhatsApp/Email.`;
-}
-
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
-const GEMINI_MODEL_FALLBACK = process.env.GEMINI_MODEL_FALLBACK || 'gemini-2.5-pro';
-
-async function callGemini(model, prompt) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
-  const body = {
-    contents: [{ role: 'user', parts: [{ text: prompt }] }],
-    generationConfig: { temperature: 0.4, maxOutputTokens: 2000 }
-  };
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-goog-api-key': GEMINI_API_KEY
-    },
-    body: JSON.stringify(body)
-  });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`${res.status}: ${err}`);
+  if (m.includes('servicio') || m.includes('servicios')) {
+    return 'Servicios:\n' + k.servicios.map(s => '- ' + s.nombre + ': ' + s.descripcion).join('\n');
   }
-  const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+  if (m.includes('producto') || m.includes('productos')) {
+    return 'Productos:\n' + k.productos.map(p => '- ' + p.nombre + ': ' + p.descripcion).join('\n');
+  }
+  if (m.includes('whatsapp') || m.includes('contacto') || m.includes('llamar') || m.includes('llámanos')) {
+    return 'Contacto: WhatsApp +52 33 2953 1372 | Email: admin@workforcemx.com';
+  }
+  if (m.includes('precio') || m.includes('cotizar')) {
+    return 'Los precios son por cotización. Escríbenos por WhatsApp al +52 33 2953 1372 para una cotización personalizada.';
+  }
+  if (m.includes('horario')) {
+    return 'Horario: ' + k.negocio.contacto.horario;
+  }
+  if (m.includes('ubicación') || m.includes('ubicacion') || m.includes('donde') || m.includes('dónde')) {
+    return 'Ubicación: ' + k.negocio.contacto.ubicacion;
+  }
+  return 'Hola, soy el asistente de Workforce MX. Puedo ayudarte con servicios, productos, precios, horario y ubicación. Para cotizaciones o más info, escríbenos por WhatsApp al +52 33 2953 1372 o por email a admin@workforcemx.com.';
 }
 
 export default async function handler(req, res) {
@@ -73,28 +61,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (!GEMINI_API_KEY) {
-    res.status(500).json({ error: 'Servidor mal configurado: falta GEMINI_API_KEY' });
-    return;
-  }
-
-  const prompt = `${systemPrompt()}\n\nUsuario: ${message}`;
-
-  try {
-    let reply = await callGemini(GEMINI_MODEL, prompt);
-    if (!reply) throw new Error('empty');
-    reply = fixMojibake(reply);
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    res.status(200).json({ reply });
-  } catch (e1) {
-    try {
-      let reply = await callGemini(GEMINI_MODEL_FALLBACK, prompt);
-      if (!reply) throw new Error('empty');
-      reply = fixMojibake(reply);
-      res.setHeader('Content-Type', 'application/json; charset=utf-8');
-      res.status(200).json({ reply });
-    } catch (e2) {
-      res.status(502).json({ error: 'El servicio de IA no está disponible, intenta más tarde.' });
-    }
-  }
+  const reply = fixMojibake(keywordResponse(message));
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.status(200).json({ reply });
 }
