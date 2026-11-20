@@ -11,6 +11,18 @@ function fixMojibake(text) {
   return text.replace(/Â/g, '').trim();
 }
 
+function systemPrompt() {
+  const k = knowledge;
+  const c = k.negocio.contacto;
+  return `Eres el asistente de Workforce MX. Responde en español, de forma breve y directa.
+Servicios: ${k.servicios.map(s => `${s.nombre}: ${s.descripcion}`).join('; ')}
+Productos: ${k.productos.map(p => `${p.nombre}: ${p.descripcion}`).join('; ')}
+Contacto: ${c.horario}, ${c.ubicacion}
+WhatsApp: ${c.whatsapp} | Email: ${c.correo}
+Tono: ${k.tono?.estilo ?? 'Tuteo, cercano y profesional. Respuestas cortas.'}
+Si no sabes algo, deriva a WhatsApp/Email. Nunca inventes precios que no esten en este archivo.`;
+}
+
 function keywordResponse(message) {
   const m = message.toLowerCase();
   const k = knowledge;
@@ -33,6 +45,42 @@ function keywordResponse(message) {
     return 'Ubicación: ' + k.negocio.contacto.ubicacion;
   }
   return 'Hola, soy el asistente de Workforce MX. Puedo ayudarte con servicios, productos, precios, horario y ubicación. Para cotizaciones o más info, escríbenos por WhatsApp al +52 33 2953 1372 o por email a admin@workforcemx.com.';
+}
+
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-3.5-flash-lite';
+const GEMINI_MODEL_FALLBACK = process.env.GEMINI_MODEL_FALLBACK || 'gemini-3.1-flash-lite';
+const BUDGET_MS = 9000;
+const PER_MODEL_MS = 3500;
+
+async function callGemini(model, prompt, timeoutMs) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+  const body = {
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    generationConfig: { temperature: 0.4, maxOutputTokens: 1024 }
+  };
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-goog-api-key': GEMINI_API_KEY
+    },
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(timeoutMs)
+  });
+  if (!res.ok) {
+    const err = await res.text().catch(() => '');
+    throw new Error(`${res.status}: ${err.slice(0, 200)}`);
+  }
+  const data = await res.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+  if (!text) throw new Error('respuesta vacia');
+  return text;
+}
+
+function send(res, reply) {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.status(200).json({ reply });
 }
 
 export default async function handler(req, res) {
@@ -61,7 +109,27 @@ export default async function handler(req, res) {
     return;
   }
 
-  const reply = fixMojibake(keywordResponse(message));
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  res.status(200).json({ reply });
+  // IA con presupuesto de tiempo; si falla o se tarda, responde el bot estatico.
+  if (GEMINI_API_KEY) {
+    // Los modelos buenos van siempre al final: aunque Vercel tenga un modelo
+    // viejo configurado (ej. gemini-2.5-flash, hoy 404), se llega a ellos.
+    const models = [...new Set([GEMINI_MODEL, GEMINI_MODEL_FALLBACK, 'gemini-3.5-flash-lite', 'gemini-3.1-flash-lite'])];
+    const start = Date.now();
+    for (const model of models) {
+      const remaining = BUDGET_MS - (Date.now() - start);
+      if (remaining < 1000) break;
+      const timeoutMs = Math.min(remaining, PER_MODEL_MS);
+      try {
+        const reply = fixMojibake(await callGemini(model, systemPrompt() + `\n\nUsuario: ${message}`, timeoutMs));
+        send(res, reply);
+        return;
+      } catch (e) {
+        console.error(`[chat] Gemini ${model} fallo: ${e.message}`);
+      }
+    }
+  } else {
+    console.error('[chat] falta GEMINI_API_KEY; usando respuesta estatica');
+  }
+
+  send(res, fixMojibake(keywordResponse(message)));
 }
